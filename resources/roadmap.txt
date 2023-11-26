@@ -1,0 +1,170 @@
+
+
+
+ALL UPCOMING FEATURES:
+    epsilon fix
+    random stuff
+    fake words
+    color stuff
+    fuzzy string searching
+    adi dif denk nüm ekleme
+    a-star ekleme
+    kompleks ekleme
+    wiki projesi
+    numpy type arrays
+    istatistik visualization
+    DoubleHashMap<?, ?>
+    Odd-ordered Magic Square
+    ist veri analizi
+    veri madenciliğine giriş
+
+
+DoubleHashMap {
+    https://stackoverflow.com/questions/1383797/java-hashmap-how-to-get-key-from-value
+
+    findKey, findValue olur içinde iki tane HashMap<?,?> saklayabilirim ya da başka bir çözüm var mı diye bakarım
+}
+
+
+MagicSquareBuilder#createOddOrderedMagicSquare(int oddNumber) {
+    https://www.youtube.com/watch?v=FANbncTMCGc
+}
+
+
+epsilon fix {
+    TMathConstants.EPSILON değeri her yerde kullanılmadı, precision arttırılmalı ve tüm framework'e yeniden bir göz atılmalı
+}
+
+
+
+Numpy type arrays {
+    https://cs231n.github.io/python-numpy-tutorial/
+}
+
+
+random stuff {
+    Rastgele sayı üretme metotları yazılmalı belki bunun için bir betik okurum
+
+    OpenSimplexNoise elde etme zamanı
+
+    En çok kullanılan sınıflar için rastgele nesne üreten bir sınıf yazarım, TVector2D, TPoint2D vb.
+
+    TRandom, TNoise sınıflarını güzelce noise ve randomness hakkında bir betik okuyarak yaz
+    Ayrıca OpenSimplexNoise'u doğrudan internetten alabilirim java ve unlicensed
+
+    Rastgele sayı üretme metotları ile rastgele string, arr[], vec2, vec3 vb. üretme metotları yazılmalı
+
+    UniqueRandomIntGenerator intGen = new UniqueRandomIntGenerator(int min, int step, int max);
+    if(intGen.hasNext())
+        int x = intGen.getNext();
+
+    TRandomString  =>  getRandString("??-###-##-?", "ABCDEF") // "AE-509-54-F" gibi bir şey
+                   =>  getRandHexStr("^^:^^::^^^") // "A1:BF::FF1" gibi bir şey
+
+    Sampler yeniden yazılacak (bir int[] randomIndexes dönülecek böylece bir sürü veri türü desteklenmesi gerekmeyecek)
+        https://gist.github.com/oziris78/aefa73a4314fe6d37023946ca4b490d6
+
+    UUID generation
+    https://www.youtube.com/watch?v=2zsxlA0OPrY
+
+    4 adet rastgele sayı girdisi ile TMat4 üretiyor magic square şeklinde (euler square)
+    https://www.youtube.com/watch?v=hNn0j4Kay8g
+}
+
+
+
+fuzzy string searching {
+
+}
+
+fake words {
+    Initial string alabilir bir de başkaları string verebilir
+    https://feldarkrealms.com/
+}
+
+
+
+color stuff {
+    TPalette ve Color[] ya da TPalette alacak ve yeni bir Color[] / TPalette dönecek ki bu dizi/palet en yakın
+    renklerin bulunduğu bir palet olacak
+    fotoğraf exporting'i için de metot yazacağım hem test olur hem de güzel implementasyon
+
+}
+
+
+
+adi dif denk nüm ekleme {
+    com.twistral.tephrium.special.ODESolver
+    adi dif denk nüm dersini gözden geçirip ekle
+        türlü türlü adi dif denk türü ve çözüm yöntemi görmüştük, runge kutta filan implemente et defterden bakıp
+}
+
+
+
+a-star ekleme {
+    com.twistral.tephrium.advanced.ai.AStarPathFinder
+    AI Star yazılması  =>  belki libgdx uzantıma koyarım belki de burada tutarım
+    libgdx kütüphanemdeki şeylere yeniden göz atıp libgdx'ten ayırabildiğim her şeyi burada depolamalıyım
+}
+
+
+veri madenciliğine giriş {
+    derste (pdf'te) gördüğümüz kolay implemente edilebilir algoritmaları ekleyebilirim
+    TephriumModel diye abstract bir sınıf tanımlarım içinde fit(), predict() fonksiyonları olur
+}
+
+
+ist veri analizi {
+    derste gördüğümüz kolay implemente edilebilir stats paketine eklemelik algoritmalar vardı
+    fisher's exact test vb. gibi, pdf'e baştan sona bakıp birkaç şey implemente et
+}
+
+
+kompleks ekleme {
+    com.twistral.tephrium.core.complex?
+    kompleks analiz dersini gözden geçirip ekle
+
+    ÖNCEKİ KODLARI YEDEKLEDİM ONLARI ALIP GEÇİRECEĞİM
+        https://gist.github.com/oziris78/bf5229ea35fc2b672d62a2c6b0d04ebe
+
+    kompleks analizi gözden geçirip bir şeyler ekle complexNumber sınıfına?
+    ayrıca ismini Complex diye değiştirebilirim
+    yeni bir core paketi oluşturabilirim complex diye
+    ayrıca kompleks fonksiyon filan implemente ederim
+    ComplexFunc sınıfı yazılabilir ??? üstteki fonksiyonlara
+        benzetilir ve ya complex paketinde durur ya da fonksiyon paketininin içine complex paketi açarım evet o daha mantıklı gibi
+
+    complex visualization?!?
+
+    sin, cos gibi fonksiyonların kompleks halini kodlanabilir ve bir sınıfa eklenebilir
+}
+
+
+
+wiki projesi {
+    Web projesi bir bakıma ama tephrium'a wiki gerekli artık...
+}
+
+
+
+istatistik visualization {
+    tephrium-vstat? / tephrium-stats?
+    tephrium-graphs?!?  gibi ismi olan yeni bir extension?
+
+    dot plots?
+    stem and leaf plots?
+    - frequency dist. table visualization
+    line plots?
+    - histograms
+    - boxplots
+    - istatistik dersinde gördüğüm her tür grafiğe bakabilirim hepsini not almamıştım sanırım
+
+    complex visualization?!?
+
+}
+
+
+
+https://natureofcode.com/book/chapter-10-neural-networks/
+
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.twistral.tests.matrices.TMat2Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-11-26T16:53:46" hostname="TUNERIKGEZGINI" time="0.925">
+  <properties/>
+  <testcase name="allOperationsTest" classname="com.twistral.tests.matrices.TMat2Test" time="0.925"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
