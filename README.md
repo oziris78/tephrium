@@ -12,7 +12,10 @@
 
 <b>Tephrium is general purpose Java library mostly focused on mathematics.</b>
 
-Tephrium is not focused on speed in particular, meaning that it's sometimes faster than other libraries and sometimes slower. For example, the matrix classes TMat2, TMat3, TMat4 mutable row-major double matrices and they are actually faster than JOML's Matrix2d, Matrix3d and Matrix4d classes. (see <a hreF="https://github.com/oziris78/tephrium/tree/main/src/test/java/com/twistral/benchmarks">benchmarks</a>)
+Tephrium is not focused on speed in particular, meaning that it's sometimes faster than other libraries and sometimes slower. 
+For example, the matrix classes TMat2, TMat3, TMat4 are mutable row-major double matrices and they are actually faster 
+than JOML's Matrix2d, Matrix3d and Matrix4d classes. 
+(see <a hreF="https://github.com/oziris78/tephrium/tree/main/src/test/java/com/twistral/benchmarks">benchmarks</a>)
 
 
 
