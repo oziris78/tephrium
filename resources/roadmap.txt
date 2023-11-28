@@ -1,6 +1,17 @@
 
 
 
+Will be implemented before v1.0.0:
+    1 random and noise
+    2 crpytography
+    3 color stuff
+    4 numpy type arrays
+    5 fake words
+    6 epsilon fix
+    7 fuzzy string matching
+    8 doublehashmap
+
+
 ALL UPCOMING FEATURES:
     epsilon fix
     random stuff
