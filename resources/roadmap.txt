@@ -1,104 +1,21 @@
 
 
 
-Will be implemented before v1.0.0:
-    1 random and noise
-    2 crpytography
-    3 color stuff
-    4 numpy type arrays
-    5 fake words
-    6 epsilon fix
-    7 fuzzy string matching
-    8 doublehashmap
-
 
 ALL UPCOMING FEATURES:
-    epsilon fix
-    random stuff
-    fake words
-    color stuff
-    fuzzy string searching
     adi dif denk nüm ekleme
     a-star ekleme
     kompleks ekleme
     wiki projesi
-    numpy type arrays
-    DoubleHashMap<?, ?>
     Odd-ordered Magic Square
     ist veri analizi
     veri madenciliğine giriş
 
 
-DoubleHashMap {
-    https://stackoverflow.com/questions/1383797/java-hashmap-how-to-get-key-from-value
-
-    findKey, findValue olur içinde iki tane HashMap<?,?> saklayabilirim ya da başka bir çözüm var mı diye bakarım
-}
 
 
 MagicSquareBuilder#createOddOrderedMagicSquare(int oddNumber) {
     https://www.youtube.com/watch?v=FANbncTMCGc
-}
-
-
-epsilon fix {
-    TMathConstants.EPSILON değeri her yerde kullanılmadı, precision arttırılmalı ve tüm framework'e yeniden bir göz atılmalı
-}
-
-
-
-Numpy type arrays {
-    https://cs231n.github.io/python-numpy-tutorial/
-}
-
-
-random stuff {
-    Rastgele sayı üretme metotları yazılmalı belki bunun için bir betik okurum
-
-    OpenSimplexNoise elde etme zamanı
-
-    En çok kullanılan sınıflar için rastgele nesne üreten bir sınıf yazarım, TVector2D, TPoint2D vb.
-
-    TRandom, TNoise sınıflarını güzelce noise ve randomness hakkında bir betik okuyarak yaz
-    Ayrıca OpenSimplexNoise'u doğrudan internetten alabilirim java ve unlicensed
-
-    Rastgele sayı üretme metotları ile rastgele string, arr[], vec2, vec3 vb. üretme metotları yazılmalı
-
-    UniqueRandomIntGenerator intGen = new UniqueRandomIntGenerator(int min, int step, int max);
-    if(intGen.hasNext())
-        int x = intGen.getNext();
-
-    TRandomString  =>  getRandString("??-###-##-?", "ABCDEF") // "AE-509-54-F" gibi bir şey
-                   =>  getRandHexStr("^^:^^::^^^") // "A1:BF::FF1" gibi bir şey
-
-    Sampler yeniden yazılacak (bir int[] randomIndexes dönülecek böylece bir sürü veri türü desteklenmesi gerekmeyecek)
-        https://gist.github.com/oziris78/aefa73a4314fe6d37023946ca4b490d6
-
-    UUID generation
-    https://www.youtube.com/watch?v=2zsxlA0OPrY
-
-    4 adet rastgele sayı girdisi ile TMat4 üretiyor magic square şeklinde (euler square)
-    https://www.youtube.com/watch?v=hNn0j4Kay8g
-}
-
-
-
-fuzzy string searching {
-
-}
-
-fake words {
-    Initial string alabilir bir de başkaları string verebilir
-    https://feldarkrealms.com/
-}
-
-
-
-color stuff {
-    TPalette ve Color[] ya da TPalette alacak ve yeni bir Color[] / TPalette dönecek ki bu dizi/palet en yakın
-    renklerin bulunduğu bir palet olacak
-    fotoğraf exporting'i için de metot yazacağım hem test olur hem de güzel implementasyon
-
 }
 
 
