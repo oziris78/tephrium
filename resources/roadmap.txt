@@ -1,54 +1,7 @@
 
-
-
-
-ALL UPCOMING FEATURES:
-    adi dif denk nüm ekleme
-    a-star ekleme
-    kompleks ekleme
-    wiki projesi
-    Odd-ordered Magic Square
-    ist veri analizi
-    veri madenciliğine giriş
-
-
-
-
-MagicSquareBuilder#createOddOrderedMagicSquare(int oddNumber) {
-    https://www.youtube.com/watch?v=FANbncTMCGc
-}
-
-
-
-adi dif denk nüm ekleme {
-    com.twistral.tephrium.special.ODESolver
-    adi dif denk nüm dersini gözden geçirip ekle
-        türlü türlü adi dif denk türü ve çözüm yöntemi görmüştük, runge kutta filan implemente et defterden bakıp
-}
-
-
-
-a-star ekleme {
-    com.twistral.tephrium.advanced.ai.AStarPathFinder
-    AI Star yazılması  =>  belki libgdx uzantıma koyarım belki de burada tutarım
-    libgdx kütüphanemdeki şeylere yeniden göz atıp libgdx'ten ayırabildiğim her şeyi burada depolamalıyım
-}
-
-
-veri madenciliğine giriş {
-    derste (pdf'te) gördüğümüz kolay implemente edilebilir algoritmaları ekleyebilirim
-    TephriumModel diye abstract bir sınıf tanımlarım içinde fit(), predict() fonksiyonları olur
-}
-
-
-ist veri analizi {
-    derste gördüğümüz kolay implemente edilebilir stats paketine eklemelik algoritmalar vardı
-    fisher's exact test vb. gibi, pdf'e baştan sona bakıp birkaç şey implemente et
-}
-
+wiki projesi -   Web projesi bir bakıma ama tephrium'a wiki gerekli artık...
 
 kompleks ekleme {
-    com.twistral.tephrium.core.complex?
     kompleks analiz dersini gözden geçirip ekle
 
     ÖNCEKİ KODLARI YEDEKLEDİM ONLARI ALIP GEÇİRECEĞİM
@@ -57,25 +10,8 @@ kompleks ekleme {
     kompleks analizi gözden geçirip bir şeyler ekle complexNumber sınıfına?
     ayrıca ismini Complex diye değiştirebilirim
     yeni bir core paketi oluşturabilirim complex diye
-    ayrıca kompleks fonksiyon filan implemente ederim
-    ComplexFunc sınıfı yazılabilir ??? üstteki fonksiyonlara
-        benzetilir ve ya complex paketinde durur ya da fonksiyon paketininin içine complex paketi açarım evet o daha mantıklı gibi
 
     complex visualization?!?
 
     sin, cos gibi fonksiyonların kompleks halini kodlanabilir ve bir sınıfa eklenebilir
 }
-
-
-
-wiki projesi {
-    Web projesi bir bakıma ama tephrium'a wiki gerekli artık...
-}
-
-
-
-
-
-https://natureofcode.com/book/chapter-10-neural-networks/
-
-
