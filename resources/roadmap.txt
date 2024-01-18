@@ -1,17 +1,9 @@
 
+
+
+
 wiki projesi -   Web projesi bir bakıma ama tephrium'a wiki gerekli artık...
 
-kompleks ekleme {
-    kompleks analiz dersini gözden geçirip ekle
 
-    ÖNCEKİ KODLARI YEDEKLEDİM ONLARI ALIP GEÇİRECEĞİM
-        https://gist.github.com/oziris78/bf5229ea35fc2b672d62a2c6b0d04ebe
 
-    kompleks analizi gözden geçirip bir şeyler ekle complexNumber sınıfına?
-    ayrıca ismini Complex diye değiştirebilirim
-    yeni bir core paketi oluşturabilirim complex diye
 
-    complex visualization?!?
-
-    sin, cos gibi fonksiyonların kompleks halini kodlanabilir ve bir sınıfa eklenebilir
-}
