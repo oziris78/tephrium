@@ -27,9 +27,6 @@ public class TMath {
     /*  CONSTANTS  */
     /////////////////
 
-    // Tephrium currently uses a bigger epsilon value, this value will be updated to 1E-6 or 1E-8 in the future
-    public static final double EPSILON = 1E-4;
-
     public static final double PI = 3.14159265358979323846d;
     public static final double PI_OVER_TWO = PI / 2d;
 
@@ -72,29 +69,76 @@ public class TMath {
     /*  EQUALITY FUNCS  */
     //////////////////////
 
+    public static boolean areEqual(int a, int b){ return a == b; }
+    public static boolean areEqual(byte a, byte b) { return a == b; }
+    public static boolean areEqual(char a, char b) { return a == b; }
+    public static boolean areEqual(long a, long b) { return a == b; }
+    public static boolean areEqual(short a, short b) { return a == b; }
 
-    public static boolean areEqual(int i1, int i2){
-        return i1 == i2;
+
+    /**
+     * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
+     * <b>Keep in mind that this function DOES NOT WORK with very small values.
+     * For example, areEqual(Float.MIN_VALUE, 0f) should return false but it returns true</b>
+     * @param a first number
+     * @param b second number
+     * @return |a-b| < EPSILON
+     */
+    public static boolean areEqual(float a, float b) {
+        // Handle NAN values
+        boolean b1 = Float.isNaN(a);
+        boolean b2 = Float.isNaN(b);
+        if(b1 || b2) return b1 && b2;
+
+        // Handle infinities
+        if(Float.isInfinite(a) || Float.isInfinite(b))
+            return a == b;
+
+        // Handle actual numbers
+        int ai = Float.floatToIntBits(a);
+        int bi = Float.floatToIntBits(b);
+
+        if (ai < 0) ai = 0x80000000 - ai;
+        if (bi < 0) bi = 0x80000000 - bi;
+
+        return abs(b - a) <= 1E-8f || abs(bi - ai) <= 1; // EPS_F=1E-8f, MAX_ULPS=1
     }
 
-    public static boolean areEqual(double d1, double d2){
-        boolean b1 = Double.isNaN(d1);
-        boolean b2 = Double.isNaN(d2);
-        if(b1 || b2)
-            return b1 && b2;
 
-        boolean b3 = Double.isInfinite(d1);
-        boolean b4 = Double.isInfinite(d2);
-        if(b3 || b4)
-            return b3 && b4;
+    /**
+     * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
+     * <b>Keep in mind that this function DOES NOT WORK with very small values.
+     * For example, areEqual(Double.MIN_VALUE, 0d) should return false but it returns true</b>
+     * @param a first number
+     * @param b second number
+     * @return |a-b| < EPSILON
+     */
+    public static boolean areEqual(double a, double b) {
+        // Handle NAN values
+        boolean b1 = Double.isNaN(a);
+        boolean b2 = Double.isNaN(b);
+        if(b1 || b2) return b1 && b2;
 
-        return Math.abs(d1 - d2) < EPSILON;
+        // Handle infinities
+        if(Double.isInfinite(a) || Double.isInfinite(b))
+            return a == b;
+
+        // Handle actual numbers (including very smol numbers)
+        long ai = Double.doubleToLongBits(a);
+        long bi = Double.doubleToLongBits(b);
+
+        if (ai < 0) ai = 0x8000000000000000L - ai;
+        if (bi < 0) bi = 0x8000000000000000L - bi;
+
+        return abs(b - a) <= 1E-8d || abs(bi - ai) <= 1; // EPS_D=1E-8d, MAX_ULPS=1
     }
+
 
 
     /////////////////////////
     /*  FLOOR, CEIL FUNCS  */
     /////////////////////////
+
 
     /**
      * This method is A lot faster than using <code>(int) Math.floor(x)</code>
@@ -164,6 +208,14 @@ public class TMath {
 
     public static double sqrt(double x) {
         return Math.sqrt(x);
+    }
+
+    public static float ulp(float a) {
+        return Math.ulp(a);
+    }
+
+    public static double ulp(double a) {
+        return Math.ulp(a);
     }
 
 

@@ -21,6 +21,7 @@ import com.twistral.tests.stats.exampledata.*;
 import org.junit.jupiter.api.*;
 import java.util.*;
 
+import static com.twistral.TephriumTestFramework.PRINT_VISUALS;
 
 
 public class FreqDistTableTest {
@@ -58,7 +59,8 @@ public class FreqDistTableTest {
         FrequencyDistTable table = new FrequencyDistTable(heights, 6);
 
         // FOR VISUALIZATION:
-        System.out.println(table);
+        if(PRINT_VISUALS)
+            System.out.println(table);
 
         // TESTS
         FrequencyDistTable.FrequencyClass row0 = table.getTableRow(0);

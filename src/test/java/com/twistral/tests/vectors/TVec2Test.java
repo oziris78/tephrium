@@ -62,7 +62,7 @@ public class TVec2Test {
         Assertions.assertEquals(v1.copy().symmetricalVectorToTheAxes(true, true), new TVec2(-1d, -1d));
         Assertions.assertEquals(v1.copy().symmetricalVectorTo(TVec2.ZERO), new TVec2(-1d, -1d));
 
-        v1.set(0.000000001d, 0d);
+        v1.set(0d, 0d);
         Assertions.assertTrue(v1.isZeroVector());
         v1.set(0.001d, 0d);
         Assertions.assertFalse(v1.isZeroVector());
