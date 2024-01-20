@@ -20,8 +20,7 @@ import com.twistral.tephrium.stats.*;
 import com.twistral.tests.stats.exampledata.*;
 import org.junit.jupiter.api.*;
 import java.util.*;
-
-import static com.twistral.TephriumTestFramework.PRINT_VISUALS;
+import static com.twistral.TephriumTestFramework.*;
 
 
 public class FreqDistTableTest {

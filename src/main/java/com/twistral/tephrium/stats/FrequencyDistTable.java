@@ -20,7 +20,7 @@ import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.utils.TArrays;
 import java.util.*;
 
-import static com.twistral.tephrium.core.functions.TMath.equalsd;
+import static com.twistral.tephrium.core.functions.TMath.*;
 
 
 public class FrequencyDistTable {

@@ -42,7 +42,7 @@ public class TRange {
 
     public TRange(double inclusiveLeft, double inclusiveRight){
         if(inclusiveLeft >= inclusiveRight)
-            throw new TephriumException("[" + inclusiveLeft + ", " + inclusiveRight + "] is an invalid range.");
+            throw new TephriumException("[%.3f, %.3f] is an invalid range.", inclusiveLeft, inclusiveRight);
 
         this.left = inclusiveLeft;
         this.right = inclusiveRight;

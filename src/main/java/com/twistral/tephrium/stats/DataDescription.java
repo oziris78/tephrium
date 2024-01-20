@@ -19,7 +19,7 @@ package com.twistral.tephrium.stats;
 import com.twistral.tephrium.core.functions.TMath;
 import java.util.Objects;
 
-import static com.twistral.tephrium.core.functions.TMath.equalsd;
+import static com.twistral.tephrium.core.functions.TMath.*;
 
 
 /**

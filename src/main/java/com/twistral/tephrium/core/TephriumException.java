@@ -23,4 +23,9 @@ public final class TephriumException extends RuntimeException {
         super(message);
     }
 
+    public TephriumException(String format, Object... args) {
+        super(String.format(format, args));
+    }
+
+
 }
