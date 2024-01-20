@@ -15,5 +15,4 @@ hs_err_pid*
 *.iml
 
 # My stuff
-# none for now
-
+/build/

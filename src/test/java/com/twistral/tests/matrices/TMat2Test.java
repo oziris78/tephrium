@@ -102,7 +102,7 @@ public class TMat2Test {
             };
             TMat2 t = new TMat2(m00, m01, m10, m11);
             double res = new FieldLUDecomposition<>(MatrixUtils.createFieldMatrix(data)).getDeterminant().doubleValue();
-            Assertions.assertTrue(TMath.areEqual(t.determinant(), res));
+            Assertions.assertTrue(TMath.equalsd(t.determinant(), res));
         }
 
 

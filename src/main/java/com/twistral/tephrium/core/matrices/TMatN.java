@@ -356,7 +356,7 @@ public class TMatN {
      */
     public TMatN invert(){
         double det = this.determinant();
-        if(TMath.areEqual(det, 0d))
+        if(TMath.equalsd(det, 0d))
             return null;
 
         double newMatrix[][] = new double[N][N];
@@ -536,7 +536,7 @@ public class TMatN {
     public boolean isSymmetrical(){
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                if (mat[i][j] != mat[j][i])
+                if (!TMath.equalsd(mat[i][j], mat[j][i]))
                     return false;
         return true;
     }
@@ -544,7 +544,7 @@ public class TMatN {
 
     /**  @return true if this matrix's determinant is zero  */
     public boolean isSingular(){
-        return TMath.areEqual(this.determinant(), 0d);
+        return TMath.equalsd(this.determinant(), 0d);
     }
 
 
@@ -553,11 +553,11 @@ public class TMatN {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if( i == j ){
-                    if(!TMath.areEqual(this.mat[i][j], 1d))
+                    if(!TMath.equalsd(this.mat[i][j], 1d))
                         return false;
                 }
                 else{
-                    if(!TMath.areEqual(this.mat[i][j], 0d))
+                    if(!TMath.equalsd(this.mat[i][j], 0d))
                         return false;
                 }
             }
@@ -629,7 +629,7 @@ public class TMatN {
             return false;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if(!TMath.areEqual(other.mat[i][j], this.mat[i][j]))
+                if(!TMath.equalsd(other.mat[i][j], this.mat[i][j]))
                     return false;
             }
         }

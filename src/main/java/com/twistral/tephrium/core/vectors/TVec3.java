@@ -331,7 +331,7 @@ public class TVec3 {
      * @return true if this vector is (0, 0)
      */
     public boolean isZeroVector() {
-        return TMath.areEqual(this.x, 0d) && TMath.areEqual(this.y, 0d) && TMath.areEqual(this.z, 0d);
+        return TMath.equalsd(this.x, 0d) && TMath.equalsd(this.y, 0d) && TMath.equalsd(this.z, 0d);
     }
 
 
@@ -339,7 +339,7 @@ public class TVec3 {
      * @return true if this vector is unit vector
      */
     public boolean isUnitVector() {
-        return TMath.areEqual(this.length(), 1d);
+        return TMath.equalsd(this.length(), 1d);
     }
 
 
@@ -368,8 +368,8 @@ public class TVec3 {
      * @return true if the given vectors are orthogonal
      */
     public static boolean areOrthogonal(TVec3 vec1, TVec3 vec2, TVec3 vec3){
-        return TMath.areEqual(vec1.dot(vec2), 0d) && TMath.areEqual(vec1.dot(vec3), 0d)
-                && TMath.areEqual(vec2.dot(vec3), 0d);
+        return TMath.equalsd(vec1.dot(vec2), 0d) && TMath.equalsd(vec1.dot(vec3), 0d)
+                && TMath.equalsd(vec2.dot(vec3), 0d);
     }
 
 
@@ -400,7 +400,7 @@ public class TVec3 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TVec3 other = (TVec3) o;
-        return TMath.areEqual(other.x, x) && TMath.areEqual(other.y, y) && TMath.areEqual(other.z, z) ;
+        return TMath.equalsd(other.x, x) && TMath.equalsd(other.y, y) && TMath.equalsd(other.z, z) ;
     }
 
 

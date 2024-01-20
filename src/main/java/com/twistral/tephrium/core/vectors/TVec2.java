@@ -343,7 +343,7 @@ public class TVec2 {
      * @return true if this vector is (0, 0)
      */
     public boolean isZeroVector() {
-        return TMath.areEqual(this.x, 0d) && TMath.areEqual(this.y, 0d);
+        return TMath.equalsd(this.x, 0d) && TMath.equalsd(this.y, 0d);
     }
 
 
@@ -351,7 +351,7 @@ public class TVec2 {
      * @return true if this vector is unit vector
      */
     public boolean isUnitVector() {
-        return TMath.areEqual(this.length(), 1d);
+        return TMath.equalsd(this.length(), 1d);
     }
 
 
@@ -378,8 +378,8 @@ public class TVec2 {
      * @return true if the given vectors are orthogonal
      */
     public static boolean areOrthogonal(TVec2 vec1, TVec2 vec2, TVec2 vec3){
-        return TMath.areEqual(vec1.dot(vec2), 0d) && TMath.areEqual(vec1.dot(vec3), 0d)
-                && TMath.areEqual(vec2.dot(vec3), 0d);
+        return TMath.equalsd(vec1.dot(vec2), 0d) && TMath.equalsd(vec1.dot(vec3), 0d)
+                && TMath.equalsd(vec2.dot(vec3), 0d);
     }
 
 
@@ -412,7 +412,7 @@ public class TVec2 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TVec2 other = (TVec2) o;
-        return TMath.areEqual(other.x, x) && TMath.areEqual(other.y, y);
+        return TMath.equalsd(other.x, x) && TMath.equalsd(other.y, y);
     }
 
 

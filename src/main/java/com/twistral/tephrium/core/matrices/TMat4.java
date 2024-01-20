@@ -551,7 +551,7 @@ public class TMat4 {
      */
     public TMat4 invert(){
         double det = this.determinant();
-        if(TMath.areEqual(det, 0d))
+        if(TMath.equalsd(det, 0d))
             return null;
 
         this.set( // definitely first try ;)
@@ -857,27 +857,27 @@ public class TMat4 {
 
     /**  @return true if this matrix's transpose is equal to itself  */
     public boolean isSymmetrical(){
-        return TMath.areEqual(this.m01, this.m10) &&
-                TMath.areEqual(this.m02, this.m20) &&
-                TMath.areEqual(this.m21, this.m12) &&
-                TMath.areEqual(this.m30, this.m03) &&
-                TMath.areEqual(this.m23, this.m32) &&
-                TMath.areEqual(this.m13, this.m31);
+        return TMath.equalsd(this.m01, this.m10) &&
+                TMath.equalsd(this.m02, this.m20) &&
+                TMath.equalsd(this.m21, this.m12) &&
+                TMath.equalsd(this.m30, this.m03) &&
+                TMath.equalsd(this.m23, this.m32) &&
+                TMath.equalsd(this.m13, this.m31);
     }
 
 
     /**  @return true if this matrix's determinant is zero  */
     public boolean isSingular(){
-        return TMath.areEqual(this.determinant(), 0d);
+        return TMath.equalsd(this.determinant(), 0d);
     }
 
 
     /**  @return true if this matrix is equal to I<sub>4</sub>  */
     public boolean isIdentityMatrix(){
-        return  TMath.areEqual(m00, 1d) && TMath.areEqual(m01, 0d) && TMath.areEqual(m02, 0d) && TMath.areEqual(m03, 0d) &&
-                TMath.areEqual(m10, 0d) && TMath.areEqual(m11, 1d) && TMath.areEqual(m12, 0d) && TMath.areEqual(m13, 0d) &&
-                TMath.areEqual(m20, 0d) && TMath.areEqual(m21, 0d) && TMath.areEqual(m22, 1d) && TMath.areEqual(m23, 0d) &&
-                TMath.areEqual(m30, 0d) && TMath.areEqual(m31, 0d) && TMath.areEqual(m32, 0d) && TMath.areEqual(m33, 1d);
+        return  TMath.equalsd(m00, 1d) && TMath.equalsd(m01, 0d) && TMath.equalsd(m02, 0d) && TMath.equalsd(m03, 0d) &&
+                TMath.equalsd(m10, 0d) && TMath.equalsd(m11, 1d) && TMath.equalsd(m12, 0d) && TMath.equalsd(m13, 0d) &&
+                TMath.equalsd(m20, 0d) && TMath.equalsd(m21, 0d) && TMath.equalsd(m22, 1d) && TMath.equalsd(m23, 0d) &&
+                TMath.equalsd(m30, 0d) && TMath.equalsd(m31, 0d) && TMath.equalsd(m32, 0d) && TMath.equalsd(m33, 1d);
     }
 
 
@@ -907,12 +907,12 @@ public class TMat4 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TMat4 tMat4 = (TMat4) o;
-        return  TMath.areEqual(tMat4.m00, m00) && TMath.areEqual(tMat4.m01, m01) && TMath.areEqual(tMat4.m02, m02) &&
-                TMath.areEqual(tMat4.m03, m03) && TMath.areEqual(tMat4.m10, m10) && TMath.areEqual(tMat4.m11, m11) &&
-                TMath.areEqual(tMat4.m12, m12) && TMath.areEqual(tMat4.m13, m13) && TMath.areEqual(tMat4.m20, m20) &&
-                TMath.areEqual(tMat4.m21, m21) && TMath.areEqual(tMat4.m22, m22) && TMath.areEqual(tMat4.m23, m23) &&
-                TMath.areEqual(tMat4.m30, m30) && TMath.areEqual(tMat4.m31, m31) && TMath.areEqual(tMat4.m32, m32) &&
-                TMath.areEqual(tMat4.m33, m33);
+        return  TMath.equalsd(tMat4.m00, m00) && TMath.equalsd(tMat4.m01, m01) && TMath.equalsd(tMat4.m02, m02) &&
+                TMath.equalsd(tMat4.m03, m03) && TMath.equalsd(tMat4.m10, m10) && TMath.equalsd(tMat4.m11, m11) &&
+                TMath.equalsd(tMat4.m12, m12) && TMath.equalsd(tMat4.m13, m13) && TMath.equalsd(tMat4.m20, m20) &&
+                TMath.equalsd(tMat4.m21, m21) && TMath.equalsd(tMat4.m22, m22) && TMath.equalsd(tMat4.m23, m23) &&
+                TMath.equalsd(tMat4.m30, m30) && TMath.equalsd(tMat4.m31, m31) && TMath.equalsd(tMat4.m32, m32) &&
+                TMath.equalsd(tMat4.m33, m33);
     }
 
 

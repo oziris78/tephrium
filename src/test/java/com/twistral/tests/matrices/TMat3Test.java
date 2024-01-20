@@ -59,7 +59,7 @@ public class TMat3Test {
         Assertions.assertEquals(mat1.trace(), 1 + 1 + 1);
         Assertions.assertEquals(new TMat3(50d).trace(), 50d + 50d + 50d);
 
-        Assertions.assertTrue(TMath.areEqual(
+        Assertions.assertTrue(TMath.equalsd(
             new TMat3(-9.5, 156, 100, 500, -15, 3.1415, 78, 99, 100).determinant(),
             -2677569.64725d
         ));

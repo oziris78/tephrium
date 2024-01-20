@@ -69,22 +69,33 @@ public class TMath {
     /*  EQUALITY FUNCS  */
     //////////////////////
 
-    public static boolean areEqual(int a, int b){ return a == b; }
-    public static boolean areEqual(byte a, byte b) { return a == b; }
-    public static boolean areEqual(char a, char b) { return a == b; }
-    public static boolean areEqual(long a, long b) { return a == b; }
-    public static boolean areEqual(short a, short b) { return a == b; }
+    /**
+     * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
+     * <b>Keep in mind that this function DOES NOT WORK with very small values.
+     * For example, {@link #equalsf(1.4E-45f, 0f)} should return false but it returns true</b>
+     * @param a first number
+     * @param b second number
+     * @return true if a and b are approximately equal
+     */
+    public static boolean equalsf(float a, float b) {
+        return equalsf(a, b, 1E-8f, 1);
+    }
 
 
     /**
      * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
      * <b>Keep in mind that this function DOES NOT WORK with very small values.
-     * For example, areEqual(Float.MIN_VALUE, 0f) should return false but it returns true</b>
+     * For example, {@link #equalsd(4.9E-324d, 0d)} should return false but it returns true</b>
      * @param a first number
      * @param b second number
-     * @return |a-b| < EPSILON
+     * @return true if a and b are approximately equal
      */
-    public static boolean areEqual(float a, float b) {
+    public static boolean equalsd(double a, double b) {
+        return equalsd(a, b, 1E-8d, 1);
+    }
+
+
+    public static boolean equalsf(float a, float b, float epsilon, int maxUlps) {
         // Handle NAN values
         boolean b1 = Float.isNaN(a);
         boolean b2 = Float.isNaN(b);
@@ -101,19 +112,11 @@ public class TMath {
         if (ai < 0) ai = 0x80000000 - ai;
         if (bi < 0) bi = 0x80000000 - bi;
 
-        return abs(b - a) <= 1E-8f || abs(bi - ai) <= 1; // EPS_F=1E-8f, MAX_ULPS=1
+        return abs(b - a) <= epsilon || abs(bi - ai) <= maxUlps;
     }
 
 
-    /**
-     * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
-     * <b>Keep in mind that this function DOES NOT WORK with very small values.
-     * For example, areEqual(Double.MIN_VALUE, 0d) should return false but it returns true</b>
-     * @param a first number
-     * @param b second number
-     * @return |a-b| < EPSILON
-     */
-    public static boolean areEqual(double a, double b) {
+    public static boolean equalsd(double a, double b, double epsilon, int maxUlps) {
         // Handle NAN values
         boolean b1 = Double.isNaN(a);
         boolean b2 = Double.isNaN(b);
@@ -130,7 +133,7 @@ public class TMath {
         if (ai < 0) ai = 0x8000000000000000L - ai;
         if (bi < 0) bi = 0x8000000000000000L - bi;
 
-        return abs(b - a) <= 1E-8d || abs(bi - ai) <= 1; // EPS_D=1E-8d, MAX_ULPS=1
+        return abs(b - a) <= epsilon || abs(bi - ai) <= maxUlps;
     }
 
 

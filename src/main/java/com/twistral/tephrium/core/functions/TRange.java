@@ -129,7 +129,7 @@ public class TRange {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TRange other = (TRange) o;
-        return TMath.areEqual(this.left, other.left) && TMath.areEqual(this.right, other.right);
+        return TMath.equalsd(this.left, other.left) && TMath.equalsd(this.right, other.right);
     }
 
     @Override

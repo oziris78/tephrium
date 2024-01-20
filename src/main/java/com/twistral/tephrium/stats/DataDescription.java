@@ -19,6 +19,8 @@ package com.twistral.tephrium.stats;
 import com.twistral.tephrium.core.functions.TMath;
 import java.util.Objects;
 
+import static com.twistral.tephrium.core.functions.TMath.equalsd;
+
 
 /**
  * A class containing all descriptive statistics measures inside it.
@@ -108,25 +110,13 @@ public class DataDescription {
             return false;
         }
         DataDescription that = (DataDescription) o;
-        return (Double.compare(that.modeValue, modeValue) == 0) &&
-                (Double.compare(that.modeCount, modeCount) == 0) &&
-                (Double.compare(that.count, count) == 0) &&
-                (Double.compare(that.mean, mean) == 0) &&
-                (Double.compare(that.sum, sum) == 0) &&
-                (Double.compare(that.interquartileRange, interquartileRange) == 0)
-                && (Double.compare(that.sampleVariance, sampleVariance) == 0) &&
-                (Double.compare(that.variance, variance) == 0) &&
-                (Double.compare(that.sampleStddev, sampleStddev) == 0)
-                && (Double.compare(that.median, median) == 0)
-                && (Double.compare(that.quartile1, quartile1) == 0)
-                && (Double.compare(that.quartile2, quartile2) == 0)
-                && (Double.compare(that.quartile3, quartile3) == 0)
-                && (Double.compare(that.min, min) == 0)
-                && (Double.compare(that.max, max) == 0)
-                && (Double.compare(that.range, range) == 0)
-                && (Double.compare(that.stddev, stddev) == 0)
-                && (Double.compare(that.pearsonSkewCoef, pearsonSkewCoef) == 0)
-                && (Double.compare(that.bowleySkewCoef, bowleySkewCoef) == 0);
+        return  equalsd(that.modeValue, modeValue) && equalsd(that.modeCount, modeCount) && equalsd(that.count, count) &&
+                equalsd(that.mean, mean) && equalsd(that.sum, sum) && equalsd(that.interquartileRange, interquartileRange) &&
+                equalsd(that.sampleVariance, sampleVariance) && equalsd(that.variance, variance) &&
+                equalsd(that.sampleStddev, sampleStddev) && equalsd(that.median, median) && equalsd(that.quartile1, quartile1) &&
+                equalsd(that.quartile2, quartile2) && equalsd(that.quartile3, quartile3) && equalsd(that.min, min) &&
+                equalsd(that.max, max) && equalsd(that.range, range) && equalsd(that.stddev, stddev) &&
+                equalsd(that.pearsonSkewCoef, pearsonSkewCoef) && equalsd(that.bowleySkewCoef, bowleySkewCoef);
     }
 
 

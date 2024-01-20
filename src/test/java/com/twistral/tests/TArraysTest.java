@@ -16,6 +16,7 @@
 package com.twistral.tests;
 
 
+import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.utils.TArrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -42,19 +43,10 @@ public class TArraysTest {
         arr23copy[0][1] = 999;
         arr24copy[0][1] = 999;
 
-        Assertions.assertTrue(arr21[0][1] != arr21copy[0][1]);
-        Assertions.assertTrue(arr22[0][1] != arr22copy[0][1]);
-        Assertions.assertTrue(arr23[0][1] != arr23copy[0][1]);
-        Assertions.assertTrue(arr24[0][1] != arr24copy[0][1]);
-
-//        System.out.println(TArrays.toString(arr21));
-//        System.out.println(TArrays.toString(arr22));
-//        System.out.println(TArrays.toString(arr23));
-//        System.out.println(TArrays.toString(arr24));
-//        System.out.println(TArrays.toString(arr21copy));
-//        System.out.println(TArrays.toString(arr22copy));
-//        System.out.println(TArrays.toString(arr23copy));
-//        System.out.println(TArrays.toString(arr24copy));
+        Assertions.assertFalse(TMath.equalsd(arr21[0][1], arr21copy[0][1]));
+        Assertions.assertFalse(TMath.equalsd(arr22[0][1], arr22copy[0][1]));
+        Assertions.assertFalse(TMath.equalsd(arr23[0][1], arr23copy[0][1]));
+        Assertions.assertFalse(TMath.equalsd(arr24[0][1].doubleValue(), arr24copy[0][1].doubleValue()));
     }
 
     @Test
@@ -72,9 +64,9 @@ public class TArraysTest {
         cast2[1] = -999;
         cast3[1] = -999;
 
-        Assertions.assertTrue(arr12[1] != cast1[1]);
-        Assertions.assertTrue(arr13[1] != cast2[1]);
-        Assertions.assertTrue(arr14[1].doubleValue() != cast3[1]);
+        Assertions.assertFalse(TMath.equalsd(arr12[1], cast1[1]));
+        Assertions.assertFalse(TMath.equalsd(arr13[1], cast2[1]));
+        Assertions.assertFalse(TMath.equalsd(arr14[1].doubleValue(), cast3[1]));
 
 
         int[][] arr22 = new int[][]{{1, 2, 3}, {10, 20, 30}};
@@ -89,9 +81,9 @@ public class TArraysTest {
         cast22[0][1] = -999;
         cast23[0][1] = -999;
 
-        Assertions.assertTrue(arr22[0][1] != cast21[0][1]);
-        Assertions.assertTrue(arr23[0][1] != cast22[0][1]);
-        Assertions.assertTrue(arr24[0][1].doubleValue() != cast23[0][1]);
+        Assertions.assertFalse(TMath.equalsd(arr22[0][1], cast21[0][1]));
+        Assertions.assertFalse(TMath.equalsd(arr23[0][1], cast22[0][1]));
+        Assertions.assertFalse(TMath.equalsd(arr24[0][1].doubleValue(), cast23[0][1]));
     }
 
 }

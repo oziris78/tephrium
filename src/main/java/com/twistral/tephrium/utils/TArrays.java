@@ -294,7 +294,7 @@ public final class TArrays {
         double inc = TMath.abs(step);
 
         int len = 1 + (int) ((max - min) / inc);
-        if(TMath.areEqual((min + len * inc), max))
+        if(TMath.equalsd((min + len * inc), max))
             len++; // make end inclusive for doubles
 
         double[] arr = new double[len];

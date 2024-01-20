@@ -54,12 +54,12 @@ public class TVec3Test {
 
         v1.set(0d, 1d, -2d);
         v2.set(10d, 20d, 30d);
-        Assertions.assertTrue(TMath.areEqual(v1.dot(v2), 20d - 60d));
-        Assertions.assertTrue(TMath.areEqual(v1.dot(0d, 0d, 1d), -2d));
+        Assertions.assertTrue(TMath.equalsd(v1.dot(v2), 20d - 60d));
+        Assertions.assertTrue(TMath.equalsd(v1.dot(0d, 0d, 1d), -2d));
 
         v1.set(0d, 1d, -2d);
-        Assertions.assertTrue(TMath.areEqual(v1.lengthSquared(), v1.length() * v1.length()));
-        Assertions.assertTrue(TMath.areEqual(TMath.SQRT5, v1.length()));
+        Assertions.assertTrue(TMath.equalsd(v1.lengthSquared(), v1.length() * v1.length()));
+        Assertions.assertTrue(TMath.equalsd(TMath.SQRT5, v1.length()));
 
         Assertions.assertEquals(new TVec3(1, 1, 1).length(), TMath.SQRT3);
         Assertions.assertEquals(new TVec3(2, 2, 1).length(), 3);

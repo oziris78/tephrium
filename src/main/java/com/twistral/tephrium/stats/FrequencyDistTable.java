@@ -20,6 +20,7 @@ import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.utils.TArrays;
 import java.util.*;
 
+import static com.twistral.tephrium.core.functions.TMath.equalsd;
 
 
 public class FrequencyDistTable {
@@ -54,11 +55,11 @@ public class FrequencyDistTable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             FrequencyClass t = (FrequencyClass) o;
-            return Double.compare(t.cLeft, cLeft) == 0 && Double.compare(t.cRight, cRight) == 0 &&
-                    Double.compare(t.midpoint, midpoint) == 0 && Double.compare(t.freq, freq) == 0 &&
-                    Double.compare(t.relFreq, relFreq) == 0 && Double.compare(t.incCumFreq, incCumFreq) == 0 &&
-                    Double.compare(t.incRelFreq, incRelFreq) == 0;
+            return equalsd(t.cLeft, cLeft) && equalsd(t.cRight, cRight) && equalsd(t.midpoint, midpoint) &&
+                    equalsd(t.freq, freq) && equalsd(t.relFreq, relFreq) && equalsd(t.incCumFreq, incCumFreq) &&
+                    equalsd(t.incRelFreq, incRelFreq);
         }
+
     }
 
 
