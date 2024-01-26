@@ -23,9 +23,9 @@ package com.twistral.tephrium.core.functions;
  */
 public class TMath {
 
-    /////////////////
-    /*  CONSTANTS  */
-    /////////////////
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTANTS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
     public static final double PI = 3.14159265358979323846d;
     public static final double PI_OVER_TWO = PI / 2d;
@@ -39,24 +39,51 @@ public class TMath {
     public static final double SQRT5 = 2.23606797749978969640d;
 
 
-    /* No constructor */
+    // No constructor
     private TMath(){}
 
 
 
-    /////////////////////
-    /*  MIN, MAX, ABS  */
-    /////////////////////
+    /////////////////////////////////////////////////////////////////////
+    //////////////////////////  MIN, MAX, ABS  //////////////////////////
+    /////////////////////////////////////////////////////////////////////
 
+
+    public static long min(long a, long b) { return (a <= b) ? a : b; }
+    public static int min(int a, int b) { return (a <= b) ? a : b; }
     public static double min(double a, double b) { return Math.min(a, b); }
-    public static long min(long a, long b) { return Math.min(a, b); }
     public static float min(float a, float b) { return Math.min(a, b); }
-    public static int min(int a, int b) { return Math.min(a, b); }
+    public static float min(float... values) {
+        float res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] < res) res = values[i];
+        return res;
+    }
+    public static double min(double... values) {
+        double res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] < res) res = values[i];
+        return res;
+    }
 
+
+    public static long max(long a, long b) { return (a >= b) ? a : b; }
+    public static int max(int a, int b) { return (a >= b) ? a : b; }
     public static double max(double a, double b) { return Math.max(a, b); }
-    public static long max(long a, long b) { return Math.max(a, b); }
     public static float max(float a, float b) { return Math.max(a, b); }
-    public static int max(int a, int b) { return Math.max(a, b); }
+    public static float max(float... values) {
+        float res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] > res) res = values[i];
+        return res;
+    }
+    public static double max(double... values) {
+        double res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] > res) res = values[i];
+        return res;
+    }
+
 
     public static double abs(double x) { return (x < 0.0) ? -x : (x == 0.0) ? 0.0 : x; }
     public static int abs(int x) { return Math.abs(x); }
@@ -64,10 +91,30 @@ public class TMath {
     public static float abs(float x) { return Math.abs(x); }
 
 
+    public static double sum(double... values) {
+        double res = values[0];
+        for (int i = 1; i < values.length; i++)
+            res += values[i];
+        return res;
+    }
+    public static float sum(float... values) {
+        float res = values[0];
+        for (int i = 1; i < values.length; i++)
+            res += values[i];
+        return res;
+    }
+    public static int sum(int... values) {
+        int res = values[0];
+        for (int i = 1; i < values.length; i++)
+            res += values[i];
+        return res;
+    }
 
-    //////////////////////
-    /*  EQUALITY FUNCS  */
-    //////////////////////
+
+
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////  EQUALITY FUNCS  //////////////////////////
+    //////////////////////////////////////////////////////////////////////
 
     /**
      * Checks if both input values are actual numbers (not NaN or Infinity) and actually equal to each other. <br>
@@ -138,9 +185,9 @@ public class TMath {
 
 
 
-    /////////////////////////
-    /*  FLOOR, CEIL FUNCS  */
-    /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////  FLOOR, CEIL FUNCS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
 
     /**
@@ -162,10 +209,9 @@ public class TMath {
     }
 
 
-    /////////////////////
-    /*  RANGE MAPPING  */
-    /////////////////////
-
+    ///////////////////////////////////////////////////////////////////
+    /////////////////////////  RANGE MAPPING  /////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     /**
      * Takes oldValue from the range [oldA, oldB] and returns what it would represent if it was in range [newA, newB]
@@ -199,10 +245,30 @@ public class TMath {
     }
 
 
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  TRIGONOMETRY  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
-    ///////////////////
-    /*  OTHER FUNCS  */
-    ///////////////////
+    public static double cos(double x) { return Math.cos(x); }
+    public static double sin(double x) { return Math.sin(x); }
+    public static double tan(double x) { return Math.tan(x); }
+
+    public static double acos(double x) { return Math.acos(x); }
+    public static double asin(double x) { return Math.asin(x); }
+    public static double atan(double x) { return Math.atan(x); }
+
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  HYPERBOLICS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+    public static double cosh(double x) { return Math.cosh(x); }
+    public static double sinh(double x) { return Math.sinh(x); }
+    public static double tanh(double x) { return Math.tanh(x); }
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OTHER FUNCS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
 
     public static double pow(double x, double i) {
@@ -221,5 +287,8 @@ public class TMath {
         return Math.ulp(a);
     }
 
+    public static double square(double a) {
+        return a * a;
+    }
 
 }

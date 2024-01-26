@@ -17,7 +17,7 @@ package com.twistral.tests.funcs;
 
 import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.core.functions.TRange;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,23 +30,23 @@ public class TRangeTest {
         TRange r2 = new TRange(0, 10);
         TRange r3 = new TRange(-1, 10);
 
-        Assertions.assertThrows(TephriumException.class, () -> {
+        assertThrows(TephriumException.class, () -> {
             new TRange(0, 0);
         });
-        Assertions.assertThrows(TephriumException.class, () -> {
+        assertThrows(TephriumException.class, () -> {
             new TRange(10, 0);
         });
-        Assertions.assertThrows(TephriumException.class, () -> {
+        assertThrows(TephriumException.class, () -> {
             new TRange(-1, -1);
         });
-        Assertions.assertThrows(TephriumException.class, () -> {
+        assertThrows(TephriumException.class, () -> {
             new TRange(1, 1);
         });
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             new TRange(0, 0.000000000000001);
         });
 
-        Assertions.assertEquals(r1, r2);
-        Assertions.assertNotEquals(r1, r3);
+        assertEquals(r1, r2);
+        assertNotEquals(r1, r3);
     }
 }

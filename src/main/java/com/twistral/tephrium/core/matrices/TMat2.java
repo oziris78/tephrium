@@ -16,10 +16,9 @@
 package com.twistral.tephrium.core.matrices;
 
 
-import com.twistral.tephrium.core.vectors.TVec2;
 import com.twistral.tephrium.core.functions.TMath;
-
 import java.util.Objects;
+import java.util.function.Function;
 
 
 /**
@@ -29,97 +28,50 @@ import java.util.Objects;
  */
 public class TMat2 {
 
-    private double m00, m01;   /*    [ m00, m01 ]    */
-    private double m10, m11;   /*    [ m10, m11 ]    */
+    private double m00, m01,   /*    [ m00, m01 ]    */
+                   m10, m11;   /*    [ m10, m11 ]    */
 
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTRUCTORS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
-    ////////////////////
-    /*  CONSTRUCTORS  */
-    ////////////////////
-
-    /**
-     * Creates a matrix using the specified values
-     * @param m00 any double
-     * @param m01 any double
-     * @param m10 any double
-     * @param m11 any double
-     */
-    public TMat2(double m00, double m01, double m10, double m11){
-        this.m00 = m00; this.m01 = m01; this.m10 = m10; this.m11 = m11;
+    public TMat2(double m00, double m01, double m10, double m11) {
+        set(m00, m01, m10, m11);
     }
 
 
-    /**  Returns a I<sub>2</sub> which is the 2x2 identity matrix.  */
-    public TMat2(){
-        this(1d, 0d, 0d, 1d);
+    /**  Returns I<sub>2</sub> which is the 2x2 identity matrix.  */
+    public TMat2() {
+        set(1d, 0d, 0d, 1d);
     }
 
 
-    /**
-     * Returns a 2x2 matrix where all cells are equal to fillValue
-     * @param fillValue any double to set all cells equal to
-     */
-    public TMat2(double fillValue){
-        this(fillValue, fillValue, fillValue, fillValue);
+    public TMat2(double fillValue) {
+        set(fillValue, fillValue, fillValue, fillValue);
     }
 
 
-    /**
-     * Copy constructor. <br>
-     * You can also use {@link #copy()} to create a copy of this matrix. <br>
-     * @param mat any matrix to copy
-     */
-    public TMat2(TMat2 mat){
-        this(mat.m00, mat.m01, mat.m10, mat.m11);
+    public double[][] getAsArray(){
+        return new double[][]{ { m00, m01 }, { m10, m11 } };
     }
 
 
-    /**
-     * Creates a matrix using the column vectors.
-     * @param col1 {m00, m10}
-     * @param col2 {m01, m11}
-     */
-    public TMat2(TVec2 col1, TVec2 col2){
-        this(col1.getX(), col2.getX(), col1.getY(), col2.getY());
-    }
-
-
-    /**
-     * Creates a copy of this matrix and returns it. <br>
-     * You can also use the copy constructor {@link #TMat2(TMat2)} to create a copy of this matrix.
-     * @return a copy of this matrix
-     */
     public TMat2 copy(){
-        return new TMat2(this);
+        return new TMat2(m00, m01, m10, m11);
     }
 
 
-    /////////////////////////
-    /*  GETTERS / SETTERS  */
-    /////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  GETTERS & SETTERS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
 
-    /**
-     * Sets all of the values of this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @return this matrix for method chaining
-     */
     public TMat2 set(double m00, double m01, double m10, double m11) {
         this.m00 = m00; this.m01 = m01; this.m10 = m10; this.m11 = m11;
         return this;
     }
 
 
-    /**
-     * Sets the value of mat[row][col]
-     * @param row 0-based row index
-     * @param col 0-based column index
-     * @param value any double
-     * @return this matrix for method chaining
-     */
     public TMat2 setCell(int row, int col, double value){
         if(row == 0 && col == 0) m00 = value;
         else if(row == 0 && col == 1) m01 = value;
@@ -129,11 +81,6 @@ public class TMat2 {
     }
 
 
-    /**
-     * @param row 0-based row index
-     * @param col 0-based column index
-     * @return the value of mat[row][col]
-     */
     public double getCell(int row, int col){
         if(row == 0 && col == 0) return this.m00;
         if(row == 0 && col == 1) return this.m01;
@@ -143,159 +90,132 @@ public class TMat2 {
     }
 
 
-
-    /**
-     * Creates a new double[2][2] object to represent this matrix and returns it.
-     * @return this matrix as a double[2][2]
-     */
-    public double[][] getAsArray(){
-        return new double[][]{{ m00, m01 }, { m10, m11 }};
+    public double getMaxOfRow(int row) {
+        if(row == 0) return TMath.max(m00, m01);
+        if(row == 1) return TMath.max(m10, m11);
+        return Double.NaN;
     }
 
 
-    /////////////////////////////
-    /*  SPECIAL VALUE METHODS  */
-    /////////////////////////////
-
-
-    /**  @return the determinant of this matrix  */
-    public double determinant(){
-        return m00 * m11 - m01 * m10;
+    public double getMinOfRow(int row) {
+        if(row == 0) return TMath.min(m00, m01);
+        if(row == 1) return TMath.min(m10, m11);
+        return Double.NaN;
     }
 
 
-    /**  @return the trace (sum of all values on diagonals) of this matrix  */
-    public double trace(){
-        return m00 + m11;
+    public double getSumOfRow(int row) {
+        if(row == 0) return m00 + m01;
+        if(row == 1) return m10 + m11;
+        return Double.NaN;
     }
 
 
-    ////////////////////////
-    /*  BASIC OPERATIONS  */
-    ////////////////////////
+    public double getMaxOfCol(int col) {
+        if(col == 0) return TMath.max(m00, m10);
+        if(col == 1) return TMath.max(m01, m11);
+        return Double.NaN;
+    }
 
 
-    /**
-     * Adds the parameter matrix to this matrix.
-     * @param mat the matrix to add to this matrix
-     * @return this matrix for method chaining
-     */
+    public double getMinOfCol(int col) {
+        if(col == 0) return TMath.min(m00, m10);
+        if(col == 1) return TMath.min(m01, m11);
+        return Double.NaN;
+    }
+
+
+    public double getSumOfCol(int col) {
+        if(col == 0) return m00 + m10;
+        if(col == 1) return m01 + m11;
+        return Double.NaN;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////  ARITHMETIC OPERATIONS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+
+    public TMat2 add(double m00, double m01, double m10, double m11) {
+        this.m00 += m00; this.m01 += m01; this.m10 += m10; this.m11 += m11;
+        return this;
+    }
+
+
     public TMat2 add(TMat2 mat){
-        this.m00 += mat.m00;
-        this.m01 += mat.m01;
-        this.m10 += mat.m10;
-        this.m11 += mat.m11;
+        return add(mat.m00, mat.m01, mat.m10, mat.m11);
+    }
+
+    // ----------------------- //
+
+    public TMat2 sub(double m00, double m01, double m10, double m11) {
+        this.m00 -= m00; this.m01 -= m01; this.m10 -= m10; this.m11 -= m11;
         return this;
     }
 
 
-    /**
-     * Adds the parameters to this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @return this matrix for method chaining
-     */
-    public TMat2 add(double m00, double m01, double m10, double m11){
-        this.m00 += m00;
-        this.m01 += m01;
-        this.m10 += m10;
-        this.m11 += m11;
-        return this;
+    public TMat2 sub(TMat2 mat){
+        return sub(mat.m00, mat.m01, mat.m10, mat.m11);
     }
 
+    // ----------------------- //
 
-    /**
-     * Subtracts the parameter matrix to this matrix.
-     * @param mat the matrix to add to this matrix
-     * @return this matrix for method chaining
-     */
-    public TMat2 subtract(TMat2 mat){
-        this.m00 -= mat.m00;
-        this.m01 -= mat.m01;
-        this.m10 -= mat.m10;
-        this.m11 -= mat.m11;
-        return this;
-    }
-
-
-    /**
-     * Subtracts the parameters to this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @return this matrix for method chaining
-     */
-    public TMat2 subtract(double m00, double m01, double m10, double m11){
-        this.m00 -= m00;
-        this.m01 -= m01;
-        this.m10 -= m10;
-        this.m11 -= m11;
-        return this;
-    }
-
-
-    /**
-     * Scales this matrix by the specified amount.
-     * @param scale any double
-     * @return this matrix for method chaining
-     */
     public TMat2 scale(double scale){
-        this.m00 *= scale;
-        this.m01 *= scale;
-        this.m10 *= scale;
-        this.m11 *= scale;
+        this.m00 *= scale; this.m01 *= scale; this.m10 *= scale; this.m11 *= scale;
         return this;
     }
 
+    // ----------------------- //
 
     /**
-     * Does matrix multiplication for A, B and assigns the result to this matrix. <br>
-     * Simply does A = A x B where A is this matrix and B is the parameter matrix.
-     * @param mat any matrix
+     * Does thisMatrix = thisMatrix * parameterMatrix. <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat2 multiply(TMat2 mat){
-        double newM00 = this.m00 * mat.m00 + this.m01 * mat.m10;
-        double newM01 = this.m00 * mat.m01 + this.m01 * mat.m11;
-        double newM10 = this.m10 * mat.m00 + this.m11 * mat.m10;
-        double newM11 = this.m10 * mat.m01 + this.m11 * mat.m11;
-        this.m00 = newM00;
-        this.m01 = newM01;
-        this.m10 = newM10;
-        this.m11 = newM11;
-        return this;
-    }
-
-
-    /**
-     * Does matrix multiplication for A, B and assigns the result to this matrix. <br>
-     * Simply does A = A x B where A is this matrix and B is the parameters.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @return this matrix for method chaining
-     */
-    public TMat2 multiply(double m00, double m01, double m10, double m11){
+    public TMat2 multiply(double m00, double m01, double m10, double m11) {
         double newM00 = this.m00 * m00 + this.m01 * m10;
         double newM01 = this.m00 * m01 + this.m01 * m11;
         double newM10 = this.m10 * m00 + this.m11 * m10;
         double newM11 = this.m10 * m01 + this.m11 * m11;
-        this.m00 = newM00;
-        this.m01 = newM01;
-        this.m10 = newM10;
-        this.m11 = newM11;
+
+        set(newM00, newM01, newM10, newM11);
+
         return this;
     }
 
 
     /**
-     * Calculates the inverse of this matrix and assigns it to this matrix. <br>
-     * Simply does A = A<sup>-1</sup>. <br>
-     * This method will return null if the matrix is not invertable (determinant is zero). <br>
+     * Does thisMatrix = thisMatrix * parameterMatrix. <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
+     * @return this matrix for method chaining
+     */
+    public TMat2 multiply(TMat2 mat) {
+        return multiply(mat.m00, mat.m01, mat.m10, mat.m11);
+    }
+
+    // ----------------------- //
+
+    public TMat2 divide(double m00, double m01, double m10, double m11) {
+        this.m00 /= m00; this.m01 /= m01; this.m10 /= m10; this.m11 /= m11;
+        return this;
+    }
+
+
+    /**
+     * Performs element-wise division.
+     * @param mat any matrix
+     * @return this matrix for method chaining
+     */
+    public TMat2 divide(TMat2 mat){
+        return divide(mat.m00, mat.m01, mat.m10, mat.m11);
+    }
+
+    // ----------------------- //
+
+    /**
+     * Does thisMatrix = inverse(thisMatrix). <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
     public TMat2 invert(){
@@ -303,22 +223,46 @@ public class TMat2 {
         if(TMath.equalsd(det, 0d))
             return null;
 
-        // make the changes
         double temp = this.m00;
-        this.m00 = this.m11;
-        this.m11 = temp;
-        this.m01 *= -1d;
-        this.m10 *= -1d;
+        this.m00 = this.m11 / det;
+        this.m11 = temp / det;
+        this.m01 = -this.m01 / det;
+        this.m10 = -this.m10 / det;
 
-        // scale and return
-        return this.scale(1d / det);
+        return this;
     }
 
+    // ----------------------- //
+
+    /**
+     * Applies the given function to all elements. <br>
+     * Example usage: myMatrix.applyFunctionElementWise(x -> x*2 + 2);
+     * @param function any function that takes in a double and returns one
+     * @return this matrix for method chaining
+     */
+    public TMat2 applyFunctionElementWise(Function<Double, Double> function) {
+        set(function.apply(m00), function.apply(m01), function.apply(m10), function.apply(m11));
+        return this;
+    }
+
+    public TMat2 sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMat2 cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMat2 tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMat2 arcsin() { return applyFunctionElementWise(TMath::asin); }
+    public TMat2 arccos() { return applyFunctionElementWise(TMath::acos); }
+    public TMat2 arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMat2 floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMat2 ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMat2 sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMat2 square() { return applyFunctionElementWise(TMath::square); }
+    public TMat2 sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMat2 cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMat2 tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
-    ////////////////////////////
-    /*  GEOMETRIC OPERATIONS  */
-    ////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////  GEOMETRIC OPERATIONS  /////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
 
     /**
@@ -425,53 +369,69 @@ public class TMat2 {
     }
 
 
-    ////////////////////////////////
-    /*   SPECIAL MATRIX METHODS   */
-    ////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////  SPECIAL VALUE FUNCS  /////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
-    /**  @return true if this matrix's transpose is equal to itself  */
-    public boolean isSymmetrical(){
+    public double trace(){
+        return m00 + m11;
+    }
+
+    // ------------- //
+
+    public static double determinant(double m00, double m01, double m10, double m11) {
+        return m00 * m11 - m01 * m10;
+    }
+
+
+    public double determinant() {
+        return determinant(m00, m01, m10, m11);
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+        /////////////////////////  BOOLEAN FUNCS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////
+
+
+    public boolean isSymmetrical() {
         return TMath.equalsd(this.m01, this.m10);
     }
 
 
-    /**  @return true if this matrix's determinant is zero  */
     public boolean isSingular(){
         return TMath.equalsd(this.determinant(), 0d);
     }
 
 
-    /**  @return true if this matrix is equal to I<sub>2</sub>  */
-    public boolean isIdentityMatrix(){
+    public boolean isIdentity(){
         return TMath.equalsd(this.m00, 1d) && TMath.equalsd(this.m01, 0d) &&
-               TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d);
+                TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d);
     }
 
 
-    ////////////////////////
-    /*   OBJECT METHODS   */
-    ////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    /////////////////////////  OBJECT METHODS  /////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
-    /**  @return the string representation of this matrix with high precision (%.12f)  */
-    public String toStringPrecise() {
-        return String.format("[%.12f, %.12f]\n[%.12f, %.12f]\n", this.m00, this.m01, this.m10, this.m11);
-    }
 
     @Override
     public String toString() {
-        return String.format("[%f, %f]\n[%f, %f]\n", this.m00, this.m01, this.m10, this.m11);
+        return String.format("[%.5f, %.5f]\n[%.5f, %.5f]\n", m00, m01, m10, m11);
     }
 
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TMat2 tMat2 = (TMat2) o;
-        return TMath.equalsd(tMat2.m00, m00) &&
-                TMath.equalsd(tMat2.m01, m01) &&
-                TMath.equalsd(tMat2.m10, m10) &&
-                TMath.equalsd(tMat2.m11, m11);
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        TMat2 other = (TMat2) o;
+        return TMath.equalsd(other.m00, m00) && TMath.equalsd(other.m01, m01) &&
+                TMath.equalsd(other.m10, m10) && TMath.equalsd(other.m11, m11);
     }
 
 

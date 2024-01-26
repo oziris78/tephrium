@@ -16,11 +16,9 @@
 package com.twistral.tephrium.core.matrices;
 
 
-import com.twistral.tephrium.core.vectors.TVec3;
 import com.twistral.tephrium.core.functions.TMath;
-
 import java.util.Objects;
-
+import java.util.function.Function;
 
 
 /**
@@ -29,19 +27,31 @@ import java.util.Objects;
  * Also see {@link TMat2}, {@link TMat4}, {@link TMatN}
  */
 public class TMat3 {
-    private double m00, m01, m02;   /*    [ m00, m01, m02 ]    */
-    private double m10, m11, m12;   /*    [ m10, m11, m12 ]    */
-    private double m20, m21, m22;   /*    [ m20, m21, m22 ]    */
+
+    private double m00, m01, m02,   /*    [ m00, m01, m02 ]    */
+                   m10, m11, m12,   /*    [ m10, m11, m12 ]    */
+                   m20, m21, m22;   /*    [ m20, m21, m22 ]    */
 
 
-    ////////////////////
-    /*  CONSTRUCTORS  */
-    ////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTRUCTORS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
+    public TMat3(double m00, double m01, double m02,
+                 double m10, double m11, double m12,
+                 double m20, double m21, double m22)
+    {
+        set(
+                m00, m01, m02,
+                m10, m11, m12,
+                m20, m21, m22
+        );
+    }
 
 
-    /**  Returns a I<sub>3</sub> which is the 3x3 identity matrix.  */
+    /**  Returns I<sub>3</sub> which is the 3x3 identity matrix.  */
     public TMat3(){
-        this(
+        set(
                 1d, 0d, 0d,
                 0d, 1d, 0d,
                 0d, 0d, 1d
@@ -49,89 +59,38 @@ public class TMat3 {
     }
 
 
-    /**
-     * Returns a 3x3 matrix where all cells are equal to fillValue
-     * @param fillValue any double to set all cells equal to
-     */
     public TMat3(double fillValue){
-        this(fillValue, fillValue, fillValue, fillValue, fillValue, fillValue, fillValue, fillValue, fillValue);
-    }
-
-
-    /**
-     * Copy constructor. <br>
-     * You can also use {@link #copy()} to create a copy of this matrix. <br>
-     * @param mat any matrix to copy
-     */
-    public TMat3(TMat3 mat){
-        this(mat.m00, mat.m01, mat.m02, mat.m10, mat.m11, mat.m12, mat.m20, mat.m21, mat.m22);
-    }
-
-
-    /**
-     * Creates a matrix using the column vectors.
-     * @param col1 {m00, m10, m20}
-     * @param col2 {m01, m11, m21}
-     * @param col3 {m02, m12, m22}
-     */
-    public TMat3(TVec3 col1, TVec3 col2, TVec3 col3){
-        this(
-            col1.getX(), col2.getX(), col3.getX(),
-            col1.getY(), col2.getY(), col3.getY(),
-            col1.getZ(), col2.getZ(), col3.getZ()
+        set(
+                fillValue, fillValue, fillValue,
+                fillValue, fillValue, fillValue,
+                fillValue, fillValue, fillValue
         );
     }
 
 
-    /**
-     * Creates a matrix using the specified values
-     * @param m00 any double
-     * @param m01 any double
-     * @param m02 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @param m12 any double
-     * @param m20 any double
-     * @param m21 any double
-     * @param m22 any double
-     */
-    public TMat3(double m00, double m01, double m02,
-                 double m10, double m11, double m12,
-                 double m20, double m21, double m22)
-    {
-        this.m00 = m00; this.m01 = m01; this.m02 = m02;
-        this.m10 = m10; this.m11 = m11; this.m12 = m12;
-        this.m20 = m20; this.m21 = m21; this.m22 = m22;
+    public double[][] getAsArray(){
+        return new double[][]{
+                { m00, m01, m02 },
+                { m10, m11, m12 },
+                { m20, m21, m22 }
+        };
     }
 
 
-    /**
-     * Creates a copy of this matrix and returns it. <br>
-     * You can also use the copy constructor {@link #TMat3(TMat3)} to create a copy of this matrix. <br>
-     * @return a copy of this matrix
-     */
     public TMat3 copy(){
-        return new TMat3(this);
+        return new TMat3(
+                m00, m01, m02,
+                m10, m11, m12,
+                m20, m21, m22
+        );
     }
 
 
-    /////////////////////////
-    /*  GETTERS / SETTERS  */
-    /////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  GETTERS & SETTERS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
 
-    /**
-     * Sets all of the values of this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m02 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @param m12 any double
-     * @param m20 any double
-     * @param m21 any double
-     * @param m22 any doubleq
-     */
     public TMat3 set(double m00, double m01, double m02,
                      double m10, double m11, double m12,
                      double m20, double m21, double m22)
@@ -143,13 +102,6 @@ public class TMat3 {
     }
 
 
-    /**
-     * Sets the value of mat[row][col]
-     * @param row 0-based row index
-     * @param col 0-based column index
-     * @param value any double
-     * @return this matrix for method chaining
-     */
     public TMat3 setCell(int row, int col, double value){
         if(row == 0 && col == 0) m00 = value;
         else if(row == 0 && col == 1) m01 = value;
@@ -164,227 +116,127 @@ public class TMat3 {
     }
 
 
-    /**
-     * @param row 0-based row index
-     * @param col 0-based column index
-     * @return the value of mat[row][col]
-     */
     public double getCell(int row, int col){
-        if(row == 0){
-            if(col == 0) return this.m00;
-            if(col == 1) return this.m01;
-            if(col == 2) return this.m02;
-        }
-        else if(row == 1){
-            if(col == 0) return this.m10;
-            if(col == 1) return this.m11;
-            if(col == 2) return this.m12;
-        }
-        else if(row == 2){
-            if(col == 0) return this.m20;
-            if(col == 1) return this.m21;
-            if(col == 2) return this.m22;
-        }
+        if(row == 0 && col == 0) return this.m00;
+        if(row == 0 && col == 1) return this.m01;
+        if(row == 0 && col == 2) return this.m02;
+        if(row == 1 && col == 0) return this.m10;
+        if(row == 1 && col == 1) return this.m11;
+        if(row == 1 && col == 2) return this.m12;
+        if(row == 2 && col == 0) return this.m20;
+        if(row == 2 && col == 1) return this.m21;
+        if(row == 2 && col == 2) return this.m22;
         return Double.NaN;
     }
 
 
-    /**
-     * Creates a new double[3][3] object to represent this matrix and returns it.
-     * @return this matrix as a double[3][3]
-     */
-    public double[][] getAsArray(){
-        return new double[][]{
-            { m00, m01, m02 },
-            { m10, m11, m12 },
-            { m20, m21, m22 }
-        };
+    public double getMaxOfRow(int row) {
+        if(row == 0) return TMath.max(m00, m01, m02);
+        if(row == 1) return TMath.max(m10, m11, m12);
+        if(row == 2) return TMath.max(m20, m21, m22);
+        return Double.NaN;
     }
 
 
-    /////////////////////////////
-    /*  SPECIAL VALUE METHODS  */
-    /////////////////////////////
-
-
-    /**  @return the determinant of this matrix  */
-    public double determinant(){
-        return ( (m00 * m11 * m22) + (m10 * m21 * m02) + (m20 * m01 * m12) ) -
-               ( (m20 * m11 * m02) + (m12 * m21 * m00) + (m10 * m01 * m22) );
+    public double getMinOfRow(int row) {
+        if(row == 0) return TMath.min(m00, m01, m02);
+        if(row == 1) return TMath.min(m10, m11, m12);
+        if(row == 2) return TMath.min(m20, m21, m22);
+        return Double.NaN;
     }
 
 
-    /**  @return the trace (sum of all values on diagonals) of this matrix  */
-    public double trace(){
-        return m00 + m11 + m22;
+    public double getSumOfRow(int row) {
+        if(row == 0) return m00 + m01 + m02;
+        if(row == 1) return m10 + m11 + m12;
+        if(row == 2) return m20 + m21 + m22;
+        return Double.NaN;
     }
 
 
-    ////////////////////////
-    /*  BASIC OPERATIONS  */
-    ////////////////////////
-
-
-    /**
-     * Adds the parameter matrix to this matrix.
-     * @param mat the matrix to add to this matrix
-     * @return this matrix for method chaining
-     */
-    public TMat3 add(TMat3 mat){
-        this.m00 += mat.m00;
-        this.m01 += mat.m01;
-        this.m02 += mat.m02;
-        this.m10 += mat.m10;
-        this.m11 += mat.m11;
-        this.m12 += mat.m12;
-        this.m20 += mat.m20;
-        this.m21 += mat.m21;
-        this.m22 += mat.m22;
-        return this;
+    public double getMaxOfCol(int col) {
+        if(col == 0) return TMath.max(m00, m10, m20);
+        if(col == 1) return TMath.max(m01, m11, m21);
+        if(col == 2) return TMath.max(m02, m12, m22);
+        return Double.NaN;
     }
 
 
-    /**
-     * Adds the parameters to this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m02 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @param m12 any double
-     * @param m20 any double
-     * @param m21 any double
-     * @param m22 any double
-     * @return this matrix for method chaining
-     */
+    public double getMinOfCol(int col) {
+        if(col == 0) return TMath.min(m00, m10, m20);
+        if(col == 1) return TMath.min(m01, m11, m21);
+        if(col == 2) return TMath.min(m02, m12, m22);
+        return Double.NaN;
+    }
+
+
+    public double getSumOfCol(int col) {
+        if(col == 0) return m00 + m10 + m20;
+        if(col == 1) return m01 + m11 + m21;
+        if(col == 2) return m02 + m12 + m22;
+        return Double.NaN;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////  ARITHMETIC OPERATIONS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+
     public TMat3 add(double m00, double m01, double m02,
                      double m10, double m11, double m12,
                      double m20, double m21, double m22)
     {
-        this.m00 += m00;
-        this.m01 += m01;
-        this.m02 += m02;
-        this.m10 += m10;
-        this.m11 += m11;
-        this.m12 += m12;
-        this.m20 += m20;
-        this.m21 += m21;
-        this.m22 += m22;
+        this.m00 += m00; this.m01 += m01; this.m02 += m02;
+        this.m10 += m10; this.m11 += m11; this.m12 += m12;
+        this.m20 += m20; this.m21 += m21; this.m22 += m22;
         return this;
     }
 
 
-    /**
-     * Subtracts the parameter matrix to this matrix.
-     * @param mat the matrix to add to this matrix
-     * @return this matrix for method chaining
-     */
-    public TMat3 subtract(TMat3 mat){
-        this.m00 -= mat.m00;
-        this.m01 -= mat.m01;
-        this.m02 -= mat.m02;
-        this.m10 -= mat.m10;
-        this.m11 -= mat.m11;
-        this.m12 -= mat.m12;
-        this.m20 -= mat.m20;
-        this.m21 -= mat.m21;
-        this.m22 -= mat.m22;
-        return this;
+    public TMat3 add(TMat3 mat){
+        return add(
+                mat.m00, mat.m01, mat.m02,
+                mat.m10, mat.m11, mat.m12,
+                mat.m20, mat.m21, mat.m22
+        );
     }
 
+    // ----------------------- //
 
-    /**
-     * Subtracts the parameters to this matrix.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m02 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @param m12 any double
-     * @param m20 any double
-     * @param m21 any double
-     * @param m22 any double
-     * @return this matrix for method chaining
-     */
-    public TMat3 subtract(double m00, double m01, double m02,
-                          double m10, double m11, double m12,
-                          double m20, double m21, double m22)
+    public TMat3 sub(double m00, double m01, double m02,
+                     double m10, double m11, double m12,
+                     double m20, double m21, double m22)
     {
-        this.m00 -= m00;
-        this.m01 -= m01;
-        this.m02 -= m02;
-        this.m10 -= m10;
-        this.m11 -= m11;
-        this.m12 -= m12;
-        this.m20 -= m20;
-        this.m21 -= m21;
-        this.m22 -= m22;
+        this.m00 -= m00; this.m01 -= m01; this.m02 -= m02;
+        this.m10 -= m10; this.m11 -= m11; this.m12 -= m12;
+        this.m20 -= m20; this.m21 -= m21; this.m22 -= m22;
         return this;
     }
 
 
-    /**
-     * Scales this matrix by the specified amount.
-     * @param scale any double
-     * @return this matrix for method chaining
-     */
+    public TMat3 sub(TMat3 mat){
+        return sub(
+                mat.m00, mat.m01, mat.m02,
+                mat.m10, mat.m11, mat.m12,
+                mat.m20, mat.m21, mat.m22
+        );
+    }
+
+    // ----------------------- //
+
     public TMat3 scale(double scale){
-        this.m00 *= scale;
-        this.m01 *= scale;
-        this.m02 *= scale;
-        this.m10 *= scale;
-        this.m11 *= scale;
-        this.m12 *= scale;
-        this.m20 *= scale;
-        this.m21 *= scale;
-        this.m22 *= scale;
+        this.m00 *= scale; this.m01 *= scale; this.m02 *= scale;
+        this.m10 *= scale; this.m11 *= scale; this.m12 *= scale;
+        this.m20 *= scale; this.m21 *= scale; this.m22 *= scale;
         return this;
     }
 
+    // ----------------------- //
 
     /**
-     * Does matrix multiplication for A, B and assigns the result to this matrix. <br>
-     * Simply does A = A x B where A is this matrix and B is the parameter matrix.
-     * @param mat any matrix
-     * @return this matrix for method chaining
-     */
-    public TMat3 multiply(TMat3 mat){
-        double newM00 = this.m00 * mat.m00 + this.m01 * mat.m10 + this.m02 * mat.m20;
-        double newM01 = this.m00 * mat.m01 + this.m01 * mat.m11 + this.m02 * mat.m21;
-        double newM02 = this.m00 * mat.m02 + this.m01 * mat.m12 + this.m02 * mat.m22;
-        double newM10 = this.m10 * mat.m00 + this.m11 * mat.m10 + this.m12 * mat.m20;
-        double newM11 = this.m10 * mat.m01 + this.m11 * mat.m11 + this.m12 * mat.m21;
-        double newM12 = this.m10 * mat.m02 + this.m11 * mat.m12 + this.m12 * mat.m22;
-        double newM20 = this.m20 * mat.m00 + this.m21 * mat.m10 + this.m22 * mat.m20;
-        double newM21 = this.m20 * mat.m01 + this.m21 * mat.m11 + this.m22 * mat.m21;
-        double newM22 = this.m20 * mat.m02 + this.m21 * mat.m12 + this.m22 * mat.m22;
-
-        this.m00 = newM00;
-        this.m01 = newM01;
-        this.m02 = newM02;
-        this.m10 = newM10;
-        this.m11 = newM11;
-        this.m12 = newM12;
-        this.m20 = newM20;
-        this.m21 = newM21;
-        this.m22 = newM22;
-
-        return this;
-    }
-
-
-    /**
-     * Does matrix multiplication for A, B and assigns the result to this matrix. <br>
-     * Simply does A = A x B where A is this matrix and B is the parameters.
-     * @param m00 any double
-     * @param m01 any double
-     * @param m02 any double
-     * @param m10 any double
-     * @param m11 any double
-     * @param m12 any double
-     * @param m20 any double
-     * @param m21 any double
-     * @param m22 any double
+     * Does thisMatrix = thisMatrix * parameterMatrix. <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
     public TMat3 multiply(double m00, double m01, double m02,
@@ -401,24 +253,60 @@ public class TMat3 {
         double newM21 = this.m20 * m01 + this.m21 * m11 + this.m22 * m21;
         double newM22 = this.m20 * m02 + this.m21 * m12 + this.m22 * m22;
 
-        this.m00 = newM00;
-        this.m01 = newM01;
-        this.m02 = newM02;
-        this.m10 = newM10;
-        this.m11 = newM11;
-        this.m12 = newM12;
-        this.m20 = newM20;
-        this.m21 = newM21;
-        this.m22 = newM22;
+        set(
+            newM00, newM01, newM02,
+            newM10, newM11, newM12,
+            newM20, newM21, newM22
+        );
 
         return this;
     }
 
 
     /**
-     * Calculates the inverse of this matrix and assigns it to this matrix. <br>
-     * Simply does A = A<sup>-1</sup>. <br>
-     * This method will return null if the matrix is not invertable (determinant is zero). <br>
+     * Does thisMatrix = thisMatrix * parameterMatrix. <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
+     * @return this matrix for method chaining
+     */
+    public TMat3 multiply(TMat3 mat) {
+        return multiply(
+                mat.m00, mat.m01, mat.m02,
+                mat.m10, mat.m11, mat.m12,
+                mat.m20, mat.m21, mat.m22
+        );
+    }
+
+    // ----------------------- //
+
+    public TMat3 divide(double m00, double m01, double m02,
+                        double m10, double m11, double m12,
+                        double m20, double m21, double m22)
+    {
+        this.m00 /= m00; this.m01 /= m01; this.m02 /= m02;
+        this.m10 /= m10; this.m11 /= m11; this.m12 /= m12;
+        this.m20 /= m20; this.m21 /= m21; this.m22 /= m22;
+        return this;
+    }
+
+
+    /**
+     * Performs element-wise division.
+     * @param mat any matrix
+     * @return this matrix for method chaining
+     */
+    public TMat3 divide(TMat3 mat){
+        return divide(
+                mat.m00, mat.m01, mat.m02,
+                mat.m10, mat.m11, mat.m12,
+                mat.m20, mat.m21, mat.m22
+        );
+    }
+
+    // ----------------------- //
+
+    /**
+     * Does thisMatrix = inverse(thisMatrix). <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
     public TMat3 invert(){
@@ -427,26 +315,55 @@ public class TMat3 {
             return null;
 
         this.set(
-            (this.m11 * this.m22 - this.m12 * this.m21) / det,
-            (this.m02 * this.m21 - this.m01 * this.m22) / det,
-            (this.m01 * this.m12 - this.m02 * this.m11) / det,
-            (this.m12 * this.m20 - this.m10 * this.m22) / det,
-            (this.m00 * this.m22 - this.m02 * this.m20) / det,
-            (this.m02 * this.m10 - this.m00 * this.m12) / det,
-            (this.m10 * this.m21 - this.m11 * this.m20) / det,
-            (this.m01 * this.m20 - this.m00 * this.m21) / det,
-            (this.m00 * this.m11 - this.m01 * this.m10) / det
+                (this.m11 * this.m22 - this.m12 * this.m21) / det,
+                (this.m02 * this.m21 - this.m01 * this.m22) / det,
+                (this.m01 * this.m12 - this.m02 * this.m11) / det,
+                (this.m12 * this.m20 - this.m10 * this.m22) / det,
+                (this.m00 * this.m22 - this.m02 * this.m20) / det,
+                (this.m02 * this.m10 - this.m00 * this.m12) / det,
+                (this.m10 * this.m21 - this.m11 * this.m20) / det,
+                (this.m01 * this.m20 - this.m00 * this.m21) / det,
+                (this.m00 * this.m11 - this.m01 * this.m10) / det
         );
 
         return this;
     }
 
+    // ----------------------- //
+
+    /**
+     * Applies the given function to all elements. <br>
+     * Example usage: myMatrix.applyFunctionElementWise(x -> x*2 + 2);
+     * @param function any function that takes in a double and returns one
+     * @return this matrix for method chaining
+     */
+    public TMat3 applyFunctionElementWise(Function<Double, Double> function) {
+        set(
+            function.apply(m00), function.apply(m01), function.apply(m02),
+            function.apply(m10), function.apply(m11), function.apply(m12),
+            function.apply(m20), function.apply(m21), function.apply(m22)
+        );
+        return this;
+    }
+
+    public TMat3 sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMat3 cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMat3 tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMat3 arcsin() { return applyFunctionElementWise(TMath::asin); }
+    public TMat3 arccos() { return applyFunctionElementWise(TMath::acos); }
+    public TMat3 arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMat3 floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMat3 ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMat3 sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMat3 square() { return applyFunctionElementWise(TMath::square); }
+    public TMat3 sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMat3 cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMat3 tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
-    ////////////////////////////
-    /*  GEOMETRIC OPERATIONS  */
-    ////////////////////////////
-
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////  GEOMETRIC OPERATIONS  /////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
 
     /**
@@ -588,70 +505,83 @@ public class TMat3 {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////  SPECIAL VALUE FUNCS  /////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////
-    /*   SPECIAL MATRIX METHODS   */
-    ////////////////////////////////
+    public double trace(){
+        return m00 + m11 + m22;
+    }
 
+    // ------------- //
 
-    /**  @return true if this matrix's transpose is equal to itself  */
-    public boolean isSymmetrical(){
-        return TMath.equalsd(this.m01, this.m10) &&
-               TMath.equalsd(this.m02, this.m20) &&
-               TMath.equalsd(this.m21, this.m12);
+    public static double determinant(double m00, double m01, double m02,
+                                     double m10, double m11, double m12,
+                                     double m20, double m21, double m22)
+    {
+        return (m00 * m11 * m22) + (m10 * m21 * m02) + (m20 * m01 * m12)
+                - (m20 * m11 * m02) - (m12 * m21 * m00) - (m10 * m01 * m22);
     }
 
 
-    /**  @return true if this matrix's determinant is zero  */
+    public double determinant() {
+        return determinant(
+                m00, m01, m02,
+                m10, m11, m12,
+                m20, m21, m22
+        );
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////////////  BOOLEAN FUNCS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////
+
+
+    public boolean isSymmetrical(){
+        return TMath.equalsd(this.m01, this.m10) &&
+                TMath.equalsd(this.m02, this.m20) &&
+                TMath.equalsd(this.m21, this.m12);
+    }
+
+
     public boolean isSingular(){
         return TMath.equalsd(this.determinant(), 0d);
     }
 
 
-    /**  @return true if this matrix is equal to I<sub>3</sub>  */
-    public boolean isIdentityMatrix(){
+    public boolean isIdentity(){
         return TMath.equalsd(this.m00, 1d) && TMath.equalsd(this.m01, 0d) && TMath.equalsd(this.m02, 0d) &&
-               TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d) && TMath.equalsd(this.m12, 0d) &&
-               TMath.equalsd(this.m20, 0d) && TMath.equalsd(this.m21, 0d) && TMath.equalsd(this.m22, 1d);
+                TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d) && TMath.equalsd(this.m12, 0d) &&
+                TMath.equalsd(this.m20, 0d) && TMath.equalsd(this.m21, 0d) && TMath.equalsd(this.m22, 1d);
     }
 
 
-
-    ////////////////////////
-    /*   OBJECT METHODS   */
-    ////////////////////////
-
-
-    /**  @return the string representation of this matrix with high precision (%.12f)  */
-    public String toStringPrecise() {
-        return String.format("[%.12f, %.12f, %.12f]\n[%.12f, %.12f, %.12f]\n[%.12f, %.12f, %.12f]\n",
-                this.m00, this.m01, this.m02, this.m10, this.m11, this.m12, this.m20, this.m21, this.m22);
-    }
+    ////////////////////////////////////////////////////////////////////
+    /////////////////////////  OBJECT METHODS  /////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
 
     @Override
     public String toString() {
-        return String.format("[%f, %f, %f]\n[%f, %f, %f]\n[%f, %f, %f]\n",
-                this.m00, this.m01, this.m02, this.m10, this.m11, this.m12, this.m20, this.m21, this.m22);
+        return String.format("[%.5f, %.5f, %.5f]\n[%.5f, %.5f, %.5f]\n[%.5f, %.5f, %.5f]\n",
+                m00, m01, m02, m10, m11, m12, m20, m21, m22);
     }
 
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TMat3 tMat3 = (TMat3) o;
-        return  TMath.equalsd(tMat3.m00, m00) &&
-                TMath.equalsd(tMat3.m01, m01) &&
-                TMath.equalsd(tMat3.m02, m02) &&
-                TMath.equalsd(tMat3.m10, m10) &&
-                TMath.equalsd(tMat3.m11, m11) &&
-                TMath.equalsd(tMat3.m12, m12) &&
-                TMath.equalsd(tMat3.m20, m20) &&
-                TMath.equalsd(tMat3.m21, m21) &&
-                TMath.equalsd(tMat3.m22, m22);
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        TMat3 other = (TMat3) o;
+        return TMath.equalsd(other.m00, m00) && TMath.equalsd(other.m01, m01) && TMath.equalsd(other.m02, m02) &&
+            TMath.equalsd(other.m10, m10) && TMath.equalsd(other.m11, m11) && TMath.equalsd(other.m12, m12) &&
+            TMath.equalsd(other.m20, m20) && TMath.equalsd(other.m21, m21) && TMath.equalsd(other.m22, m22);
     }
-
 
     @Override
     public int hashCode() {

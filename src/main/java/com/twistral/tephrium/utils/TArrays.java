@@ -17,8 +17,6 @@ package com.twistral.tephrium.utils;
 
 
 import com.twistral.tephrium.core.functions.TMath;
-
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -153,67 +151,6 @@ public final class TArrays {
     }
 
 
-    ///////////////////////////////////////
-    /////// PRINTING ARRAY METHODS ////////
-    ///////////////////////////////////////
-
-    public static String toString(double[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(float[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(int[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(long[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(byte[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(short[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(Number[] arr){
-        return Arrays.toString(arr);
-    }
-
-    public static String toString(double[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(float[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(int[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(long[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(byte[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(short[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-    public static String toString(Number[][] arr){
-        return Arrays.deepToString(arr);
-    }
-
-
 
     ////////////////////////////////////
     ///// ARRAY CREATION METHODS //////
@@ -306,32 +243,13 @@ public final class TArrays {
     }
 
 
-    /**
-     * @param start first value (inclusive)
-     * @param end last value (inclusive)
-     * @param step increment value
-     * @return an array containing start, start+step, start+2step, ...
-     */
-    public static int[] intArr(int start, int end, int step){
-        int min = Math.min(start, end);
-        int max = Math.max(start, end);
-        int inc = Math.abs(step);
-
-        int len = 1 + ((max - min) / inc);
-        int[] arr = new int[len];
-
-        for (int i = 0; i < len; i++)
-            arr[i] = min + i * inc;
-
-        return arr;
-    }
-
     public static double[] doubleFilledArr(int size, double fillValue){
         double[] arrToReturn = new double[size];
         for(int i = 0; i < size; i++)
             arrToReturn[i] = fillValue;
         return arrToReturn;
     }
+
 
     public static int[] intFilledArr(int size, int fillValue){
         int[] arrToReturn = new int[size];
@@ -418,5 +336,12 @@ public final class TArrays {
         return Arrays.stream(arr).boxed().toArray(Double[]::new);
     }
 
+
+    private static int tempInt;
+    public static void swapIndices(int[] array, int i, int j) {
+        tempInt = array[i];
+        array[i] = array[j];
+        array[j] = tempInt;
+    }
 
 }

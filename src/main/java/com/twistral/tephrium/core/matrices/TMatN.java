@@ -16,20 +16,21 @@
 package com.twistral.tephrium.core.matrices;
 
 
-import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.utils.TArrays;
+
 import java.util.Arrays;
 import java.util.Objects;
-
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 
 /**
- * A very slow and mutable NxN double matrix class. <br>
- * If your matrix size is 2, 3 or 4 then do not use this class. <br>
- * This class only exists to be a generic and functional matrix class and is nowhere close to being
- * as fast as {@link TMat2}, {@link TMat3}, {@link TMat4} classes. <br>
- * All methods either return a numeric value or this matrix for method chaining purposes. <br>
+ * A mutable and variable sized (NxN) double matrix class. <br>
+ * This class is slower than {@link TMat2}, {@link TMat3}, {@link TMat4} classes
+ * so if your matrix size is less than 5, use those classes instead. <br>
+ * All methods either return a numeric value or this matrix for method chaining purposes.
  */
 public class TMatN {
 
@@ -37,18 +38,21 @@ public class TMatN {
     private double[][] mat;
 
 
-    ////////////////////
-    /*  CONSTRUCTORS  */
-    ////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTRUCTORS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
 
-    /**  Returns I<sub>N</sub> which is the NxN identity matrix.  */
+    /**
+     * Creates I<sub>N</sub> which is the NxN identity matrix.
+     * @param N matrix's size
+     */
     public TMatN(int N){
-        if(N <= 0)
-            throw new TephriumException("Matrix size has to be greater than zero.");
+        if(N <= 0) throw new TephriumException("Invalid matrix size: N=%d", N);
 
         this.N = N;
         this.mat = new double[N][N];
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 this.mat[i][j] = (i == j) ? 1d : 0d;
@@ -57,207 +61,190 @@ public class TMatN {
     }
 
 
-    /**  Converts a {@link TMat2} object into a {@link TMatN} object and returns it.  */
-    public TMatN(TMat2 mat){
-        this(new double[][]{
-                { mat.getCell(0, 0), mat.getCell(0, 1) },
-                { mat.getCell(1, 0), mat.getCell(1, 1) }
-        });
-    }
-
-
-    /**  Converts a {@link TMat3} object into a {@link TMatN} object and returns it.  */
-    public TMatN(TMat3 mat){
-        this(new double[][]{
-                { mat.getCell(0, 0), mat.getCell(0, 1), mat.getCell(0, 2) },
-                { mat.getCell(1, 0), mat.getCell(1, 1), mat.getCell(1, 2) },
-                { mat.getCell(2, 0), mat.getCell(2, 1), mat.getCell(2, 2) }
-        });
-    }
-
-
-    /**  Converts a {@link TMat4} object into a {@link TMatN} object and returns it.  */
-    public TMatN(TMat4 mat){
-        this(new double[][]{
-                { mat.getCell(0, 0), mat.getCell(0, 1), mat.getCell(0, 2), mat.getCell(0, 3) },
-                { mat.getCell(1, 0), mat.getCell(1, 1), mat.getCell(1, 2), mat.getCell(1, 3) },
-                { mat.getCell(2, 0), mat.getCell(2, 1), mat.getCell(2, 2), mat.getCell(2, 3) },
-                { mat.getCell(3, 0), mat.getCell(3, 1), mat.getCell(3, 2), mat.getCell(3, 3) }
-        });
-    }
-
-
     /**
-     * Copy constructor. <br>
-     * You can also use {@link #copy()} to create a copy of this matrix. <br>
-     * @param mat any matrix to copy
+     * Creates a TMatN instance using the given matrix. No copying happens since
+     * the matrix only references the given double[][].
+     * @param matrixToReference any square two-dimensional double array
      */
-    public TMatN(TMatN mat){
-        this.N = mat.N;
-        this.mat = TArrays.getCopyOf(mat.mat);
-    }
+    public TMatN(double[][] matrixToReference){
+        if(matrixToReference.length <= 0) 
+            throw new TephriumException("Invalid matrix size: N=%d", matrixToReference.length);
 
-
-    /**
-     * Creates a {@link TMatN} object using the given two dimensional array. <br>
-     * A reference to the array will be kept so any methods of this class will modify the array. <br>
-     * If you have a two-dimensional array with a different type (float, int, ...) use the
-     * {@link TArrays#getCastedDouble2CopyOf(int[][])},
-     * {@link TArrays#getCastedDouble2CopyOf(float[][])},
-     * {@link TArrays#getCastedDouble2CopyOf(Number[][])}
-     * methods to convert your array into a double[][] array.
-     * @param matrixData any two dimensional array
-     */
-    public TMatN(double[][] matrixData){
-        for (int i = 0; i < matrixData.length; i++)
-            if(matrixData.length != matrixData[i].length)
+        for (int i = 0; i < matrixToReference.length; i++) 
+            if(matrixToReference.length != matrixToReference[i].length) 
                 throw new TephriumException("This matrix is not a square matrix.");
-
-        if(matrixData.length == 0)
-            throw new TephriumException("Matrix size can't be 0");
-
-        this.N = matrixData.length;
-        this.mat = matrixData;
+        
+        this.N = matrixToReference.length;
+        this.mat = matrixToReference;
     }
 
 
     /**
-     * Creates a copy of this matrix and returns it. <br>
-     * You can also use the copy constructor {@link #TMatN(TMatN)} to create a copy of this matrix. <br>
-     * @return a copy of this matrix
+     * Creates an NxN matrix where all the cells are filled with fillValue.
+     * @param N matrix's size
+     * @param fillValue any double value
      */
+    public TMatN(int N, double fillValue){
+        if(N <= 0) throw new TephriumException("Invalid matrix size: N=%d", N);
+
+        this.N = N;
+        this.mat = new double[N][N];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                this.mat[i][j] = fillValue;
+            }
+        }
+    }
+
+
+    /**
+     * This method does not create a new double array unlike {@link TMat2#getAsArray()},
+     * {@link TMat3#getAsArray()}, {@link TMat4#getAsArray()} methods. <br>
+     * @return the matrix referenced or stored by this matrix
+     */
+    public double[][] getAsArray(){
+        return this.mat;
+    }
+
+
     public TMatN copy(){
-        return new TMatN(this);
-    }
+        double[][] matCopy = new double[this.N][this.N];
+        for (int i = 0; i < this.N; i++) {
+            for (int j = 0; j < this.N; j++) {
+                matCopy[i][j] = this.mat[i][j];
+            }
+        }
 
-
-    /////////////////////////
-    /*  GETTERS / SETTERS  */
-    /////////////////////////
-
-
-    /**
-     * Replaces this matrix's array reference.
-     * @param matrixData any square double matrix as a double[][]
-     * @return this matrix for method chaining
-     */
-    public TMatN set(double[][] matrixData){
-        for (int i = 0; i < matrixData.length; i++)
-            if(matrixData.length != matrixData[i].length)
-                throw new TephriumException("This matrix is not a square matrix.");
-
-        if(matrixData.length == 0)
-            throw new TephriumException("Matrix size can't be 0");
-
-        this.N = matrixData.length;
-        this.mat = matrixData;
-        return this;
+        return new TMatN(matCopy);
     }
 
 
     /**
-     * Sets the value of mat[row][col] if the indexes are valid, if not it just returns the matrix.
-     * @param row row index
-     * @param col column index
-     * @param value value to set
-     * @return this matrix for method chaining
+     * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
+     * @param matrix any matrix
      */
-    public TMatN setCell(int row, int col, double value){
-        if( !(row < 0 || row > N-1 || col < 0 || col > N-1) ) // if it's a valid [row][col]
-            this.mat[row][col] = value;
-        return this;
+    public TMatN(TMat2 matrix) {
+        this(matrix.getAsArray());
     }
 
 
     /**
-     * @return the dimension of this matrix (NxN)
+     * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
+     * @param matrix any matrix
      */
+    public TMatN(TMat3 matrix) {
+        this(matrix.getAsArray());
+    }
+
+
+    /**
+     * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
+     * @param matrix any matrix
+     */
+    public TMatN(TMat4 matrix) {
+        this(matrix.getAsArray());
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  GETTERS & SETTERS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+
+
     public int getN(){
         return this.N;
     }
 
 
     /**
-     * Returns the value of mat[row][col]
-     * @param row row index
-     * @param col column index
-     * @return the value of mat[row][col] or {@link Double#NaN} if any index is not valid
-     */
-    public double getCell(int row, int col){
-        if( !(row < 0 || row > N-1 || col < 0 || col > N-1) ) // if it's a valid [row][col]
-            return this.mat[row][col];
-        return Double.NaN;
-    }
-
-
-
-
-    /**
-     * Returns the double[][] this matrix <b>already has</b> inside it. <br>
-     * This method does NOT create a new array like these methods do:
-     * {@link TMat2#getAsArray()}, {@link TMat3#getAsArray()}, {@link TMat4#getAsArray()} <br>
-     * @return the double[][] object this matrix has inside it
-     */
-    public double[][] getAsArray(){
-        return mat;
-    }
-
-
-
-
-    /////////////////////////////
-    /*  SPECIAL VALUE METHODS  */
-    /////////////////////////////
-
-
-    /**  @return the determinant of this matrix  */
-    public double determinant(){
-        return determinantOfMatrix(this.mat, N);
-    }
-
-
-
-    /**  @return the trace (sum of all values on diagonals) of this matrix  */
-    public double trace(){
-        double sum = 0d;
-        for (int i = 0; i < N; i++)
-            sum += this.mat[i][i];
-
-        return sum;
-    }
-
-
-    ////////////////////////
-    /*  BASIC OPERATIONS  */
-    ////////////////////////
-
-
-    /**
-     * If A is this matrix and B is the other matrix then this method does A = A + B. <br>
-     * @param other any matrix
+     * Sets matrix[row][col] to value if (row, col) is a valid cell. <br>
+     * <b>DOES NOT THROW INDEX OUT OF BOUNDS ERROR, simply does nothing if it happens</b>
+     * @param row any integer
+     * @param col any integer
+     * @param value any double
      * @return this matrix for method chaining
      */
-    public TMatN add(TMatN other){
-        this.add(other.mat);
+    public TMatN setCell(int row, int col, double value){
+        if(!(row < 0 || row >= N || col < 0 || col >= N)) // If valid;
+            this.mat[row][col] = value;
+
         return this;
     }
 
 
     /**
-     * If A is this matrix and B is the other matrix then this method does A = A + B. <br>
-     * @param other any matrix
-     * @return this matrix for method chaining
+     * @param row any integer
+     * @param col any integer
+     * @return matrix[row][col] if (row, col) is a valid cell, otherwise returns {@link Double#NaN}
      */
-    public TMatN add(double[][] other){
-        for (int i = 0; i < other.length; i++)
-            if(other.length != other[i].length)
-                throw new TephriumException("This matrix is not a square matrix.");
+    public double getCell(int row, int col){
+        if(row < 0 || row >= N || col < 0 || col >= N) {
+            return Double.NaN;
+        }
 
-        if(other.length == 0)
-            throw new TephriumException("Matrix size can't be 0");
+        return this.mat[row][col];
+    }
 
-        if(this.N != other.length)
-            throw new TephriumException("Matrix sizes must be the same.");
+
+    public double getMaxOfRow(int row) {
+        if(row < 0 || row >= N) return Double.NaN;
+        return TMath.max(this.mat[row]);
+    }
+
+
+    public double getMinOfRow(int row) {
+        if(row < 0 || row >= N) return Double.NaN;
+        return TMath.min(this.mat[row]);
+    }
+
+
+    public double getSumOfRow(int row) {
+        if(row < 0 || row >= N) return Double.NaN;
+        return TMath.sum(this.mat[row]);
+    }
+
+
+    public double getMaxOfCol(int col) {
+        if(col < 0 || col >= N) return Double.NaN;
+        double result = mat[0][col];
+        for (int i = 1; i < this.N; i++) {
+            double value = mat[i][col];
+            if(value > result) result = value;
+        }
+        return result;
+    }
+
+
+    public double getMinOfCol(int col) {
+        if(col < 0 || col >= N) return Double.NaN;
+        double result = mat[0][col];
+        for (int i = 1; i < this.N; i++) {
+            double value = mat[i][col];
+            if(value < result) result = value;
+        }
+        return result;
+    }
+
+
+    public double getSumOfCol(int col) {
+        if(col < 0 || col >= N) return Double.NaN;
+        double result = mat[0][col];
+        for (int i = 1; i < this.N; i++) {
+            result += mat[i][col];
+        }
+        return result;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////  ARITHMETIC OPERATIONS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+
+    public TMatN add(double[][] other) {
+        if(!parametersAreFine(this.N, other))
+            return this;
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -269,34 +256,15 @@ public class TMatN {
     }
 
 
-
-    /**
-     * If A is this matrix and B is the other matrix then this method does A = A - B. <br>
-     * @param other any matrix
-     * @return this matrix for method chaining
-     */
-    public TMatN subtract(TMatN other){
-        this.subtract(other.mat);
-        return this;
+    public TMatN add(TMatN other){
+        return this.add(other.getAsArray());
     }
 
+    // ----------------------- //
 
-
-    /**
-     * If A is this matrix and B is the other matrix then this method does A = A - B. <br>
-     * @param other any matrix
-     * @return this matrix for method chaining
-     */
-    public TMatN subtract(double[][] other){
-        for (int i = 0; i < other.length; i++)
-            if(other.length != other[i].length)
-                throw new TephriumException("This matrix is not a square matrix.");
-
-        if(other.length == 0)
-            throw new TephriumException("Matrix size can't be 0");
-
-        if(this.N != other.length)
-            throw new TephriumException("Matrix sizes must be the same.");
+    public TMatN sub(double[][] other){
+        if(!parametersAreFine(this.N, other))
+            return this;
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -308,163 +276,193 @@ public class TMatN {
     }
 
 
-    /**
-     * If A is this matrix and k is the scale value then this method does A = k * A. <br>
-     * @param scale any double
-     * @return this matrix for method chaining
-     */
-    public TMatN scale(double scale){
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                this.mat[i][j] *= scale;
+    public TMatN sub(TMatN other){
+        return this.sub(other.getAsArray());
+    }
+
+    // ----------------------- //
+
+    public TMatN divide(double[][] other){
+        if(!parametersAreFine(this.N, other))
+            return this;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                this.mat[i][j] /= other[i][j];
+            }
+        }
 
         return this;
     }
 
 
     /**
-     * If A is this matrix and B is the other matrix then this method does A = A * B. <br>
-     * @param other any matrix
+     * Performs element-wise division.
+     * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMatN multiply(TMatN other){
+    public TMatN divide(TMatN mat){
+        return this.divide(mat.getAsArray());
+    }
+
+    // ----------------------- //
+
+    public TMatN scale(double scale){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                this.mat[i][j] *= scale;
+            }
+        }
+
+        return this;
+    }
+
+    // ----------------------- //
+
+
+    public TMatN multiply(double[][] other) {
+        if(!parametersAreFine(this.N, other))
+            return this;
+
         double[][] newMatrix = new double[N][N];
-        for(int i = 0; i < N; i++){
-            for(int k = 0; k < N; k++){
-                double result = 0;
-                for(int j = 0; j < N; j++) {
-                    result += this.mat[i][j] * other.mat[j][k];
-                }
+        for(int i = 0; i < N; i++) {
+            for(int k = 0; k < N; k++) {
+                double result = 0d;
+                for(int j = 0; j < N; j++)
+                    result += this.mat[i][j] * other[j][k];
                 newMatrix[i][k] = result;
             }
         }
 
-        // slow asf lmao
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                this.mat[i][j] = newMatrix[i][j];
-
+        this.mat = newMatrix;
         return this;
     }
 
 
+    public TMatN multiply(TMatN other) {
+        return this.multiply(other.getAsArray());
+    }
+
+    // ----------------------- //
+
     /**
-     * Calculates the inverse of this matrix and assigns it to this matrix. <br>
-     * Simply does A = A<sup>-1</sup>. <br>
-     * This method will return null if the matrix is not invertable (determinant is zero). <br>
+     * Does thisMatrix = inverse(thisMatrix). <br>
+     * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMatN invert(){
+    public TMatN invert() {
         double det = this.determinant();
-        if(TMath.equalsd(det, 0d))
-            return null;
+        if (TMath.equalsd(det, 0d)) {
+            return null; // Not invertable
+        }
 
-        double newMatrix[][] = new double[N][N];
-        TMatN b = new TMatN(N);
+        TMatN matInverted = new TMatN(N);
+        int[] index = IntStream.range(0, N).toArray(); // [0, 1, ..., N-1]
+        double[] maxRowValues = IntStream.range(0, N).mapToDouble(i -> getMaxOfRow(i)).toArray();
 
-        int[] index;
-        {
-            double c[] = new double[N];
-            index = new int[N];
+        for (int col = 0; col < N - 1; col++) {
+            int pivot = 0;
+            double maxRatio = 0;
 
-            for (int i=0; i<N; ++i)
-                index[i] = i;
-
-            for (int i=0; i<N; ++i) {
-                double c1 = 0;
-                for (int j=0; j<N; ++j) {
-                    double c0 = TMath.abs(this.mat[i][j]);
-                    if (c0 > c1)
-                        c1 = c0;
+            for (int row = col; row < N; row++) {
+                double ratio = TMath.abs(mat[index[row]][col]) / maxRowValues[index[row]];
+                if (ratio > maxRatio) {
+                    maxRatio = ratio;
+                    pivot = row;
                 }
-                c[i] = c1;
             }
 
-            int k = 0;
-            for (int j=0; j<N-1; ++j) {
-                double pi1 = 0;
-                for (int i=j; i<N; ++i) {
-                    double pi0 = TMath.abs(this.mat[index[i]][j]);
-                    pi0 /= c[index[i]];
-                    if (pi0 > pi1) {
-                        pi1 = pi0;
-                        k = i;
-                    }
-                }
+            // Swap rows
+            TArrays.swapIndices(index, col, pivot);
 
-                int itmp = index[j];
-                index[j] = index[k];
-                index[k] = itmp;
-                for (int i=j+1; i<N; ++i) {
-                    double pj = this.mat[index[i]][j]/this.mat[index[j]][j];
+            // Gaussian elimination
+            for (int row = col + 1; row < N; row++) {
+                double factor = mat[index[row]][col] / mat[index[col]][col];
+                mat[index[row]][col] = factor;
 
-                    this.mat[index[i]][j] = pj;
-
-                    for (int l=j+1; l<N; ++l)
-                        this.mat[index[i]][l] -= pj*this.mat[index[j]][l];
-                }
+                for (int l = col + 1; l < N; l++)
+                    mat[index[row]][l] -= factor * mat[index[col]][l];
             }
         }
 
-        for (int i=0; i<N-1; ++i)
-            for (int j=i+1; j<N; ++j)
-                for (int k=0; k<N; ++k)
-                    b.mat[index[j]][k] -= this.mat[index[j]][i]*b.mat[index[i]][k];
+        // Back substitution
+        for (int i = 0; i < N - 1; i++)
+            for (int j = i + 1; j < N; j++)
+                for (int k = 0; k < N; k++)
+                    matInverted.mat[index[j]][k] -= mat[index[j]][i] * matInverted.mat[index[i]][k];
 
-        for (int i=0; i<N; ++i) {
-            newMatrix[N-1][i] = b.mat[index[N-1]][i]/this.mat[index[N-1]][N-1];
-            for (int j=N-2; j>=0; --j) {
-                newMatrix[j][i] = b.mat[index[j]][i];
-                for (int k=j+1; k<N; ++k)
-                    newMatrix[j][i] -= this.mat[index[j]][k]*newMatrix[k][i];
-                newMatrix[j][i] /= this.mat[index[j]][j];
-            }
-        }
-
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                this.mat[i][j] = newMatrix[i][j];
-
-        return this;
-    }
-
-
-
-    ////////////////////////////
-    /*  GEOMETRIC OPERATIONS  */
-    ////////////////////////////
-
-
-
-    /**
-     * Flips this matrix horizontally. <br>
-     * @return this matrix for method chaining
-     */
-    public TMatN flipHorizontally(){
-        int iterCount = N / 2;
+        double[][] resultMatrix = new double[N][N];
         for (int i = 0; i < N; i++) {
-            for (int j = 0; j < iterCount; j++) {
-                double heldValue = this.getCell(i,j);
-                this.mat[i][j] = this.mat[i][N - (j + 1)];
-                this.mat[i][N - (j + 1)] = heldValue;
+            resultMatrix[N - 1][i] = matInverted.mat[index[N - 1]][i] / mat[index[N - 1]][N - 1];
+            for (int j = N - 2; j >= 0; j--) {
+                resultMatrix[j][i] = matInverted.mat[index[j]][i];
+                for (int k = j + 1; k < N; k++)
+                    resultMatrix[j][i] -= mat[index[j]][k] * resultMatrix[k][i];
+                resultMatrix[j][i] /= mat[index[j]][j];
             }
         }
 
+        this.mat = resultMatrix;
         return this;
     }
 
 
+    // ----------------------- //
+
     /**
-     * Flips this matrix vertically. <br>
+     * Applies the given function to all elements. <br>
+     * Example usage: myMatrix.applyFunctionElementWise(x -> x*2 + 2);
+     * @param function any function that takes in a double and returns one
      * @return this matrix for method chaining
      */
-    public TMatN flipVertically(){
-        int iterCount = N / 2;
-        for (int i = 0; i < iterCount; i++) {
+    public TMatN applyFunctionElementWise(Function<Double, Double> function) {
+        for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                double heldValue = this.mat[i][j];
+                this.mat[i][j] = function.apply(this.mat[i][j]);
+            }
+        }
+
+        return this;
+    }
+
+    public TMatN sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMatN cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMatN tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMatN arcsin() { return applyFunctionElementWise(TMath::asin); }
+    public TMatN arccos() { return applyFunctionElementWise(TMath::acos); }
+    public TMatN arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMatN floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMatN ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMatN sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMatN square() { return applyFunctionElementWise(TMath::square); }
+    public TMatN sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMatN cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMatN tanh() { return applyFunctionElementWise(TMath::tanh); }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////  GEOMETRIC OPERATIONS  /////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
+    public TMatN flipHorizontally(){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N / 2; j++) {
+                double temp = this.getCell(i,j);
+                this.mat[i][j] = this.mat[i][N - (j + 1)];
+                this.mat[i][N - (j + 1)] = temp;
+            }
+        }
+
+        return this;
+    }
+
+
+    public TMatN flipVertically(){
+        for (int i = 0; i < N / 2; i++) {
+            for (int j = 0; j < N; j++) {
+                double temp = this.mat[i][j];
                 this.mat[i][j] = this.mat[N - (i + 1)][j];
-                this.mat[N - (i + 1)][j] = heldValue;
+                this.mat[N - (i + 1)][j] = temp;
             }
         }
 
@@ -472,67 +470,133 @@ public class TMatN {
     }
 
 
-    /**
-     * Rotates this matrix 90 degrees clockwise. <br>
-     * @return this matrix for method chaining
-     */
-    public TMatN rotate90DegClockwise(){
-        this.transpose();
-        this.flipHorizontally();
+    public TMatN rotate90DegClockwise() {
+        for (int i = 0; i < N / 2; i++) {
+            for (int j = i; j < N - i - 1; j++) {
+                double temp = this.mat[i][j];
+                this.mat[i][j] = this.mat[N - 1 - j][i];
+                this.mat[N - 1 - j][i] = this.mat[N - 1 - i][N - 1 - j];
+                this.mat[N - 1 - i][N - 1 - j] = this.mat[j][N - 1 - i];
+                this.mat[j][N - 1 - i] = temp;
+            }
+        }
         return this;
     }
 
 
-    /**
-     * Rotates this matrix 90 degrees anti-clockwise. <br>
-     * @return this matrix for method chaining
-     */
-    public TMatN rotate90DegAntiClockwise(){
-        this.transpose();
-        this.flipVertically();
+    public TMatN rotate90DegAntiClockwise() {
+        for (int i = 0; i < N / 2; i++) {
+            for (int j = i; j < N - i - 1; j++) {
+                double temp = this.mat[i][j];
+                this.mat[i][j] = this.mat[j][N - 1 - i];
+                this.mat[j][N - 1 - i] = this.mat[N - 1 - i][N - 1 - j];
+                this.mat[N - 1 - i][N - 1 - j] = this.mat[N - 1 - j][i];
+                this.mat[N - 1 - j][i] = temp;
+            }
+        }
         return this;
     }
 
 
-    /**
-     * Rotates this matrix 180 degrees clockwise / anti-clockwise. <br>
-     * @return this matrix for method chaining
-     */
     public TMatN rotate180Deg(){
-        this.rotate90DegClockwise();
-        this.rotate90DegClockwise();
+        final int N2 = N * N;
+        for (int i = 0; i < N2 / 2; i++) {
+            final int i1 = i / N;
+            final int j1 = i % N;
+            final int i2 = (N2 - 1 - i) / N;
+            final int j2 = (N2 - 1 - i) % N;
+            double temp = this.mat[i1][j1];
+            this.mat[i1][j1] = this.mat[i2][j2];
+            this.mat[i2][j2] = temp;
+        }
         return this;
     }
 
 
-    /**
-     * Calculates the transpose of this matrix and assigns it to this matrix. <br>
-     * @return this matrix for method chaining
-     */
-    public TMatN transpose(){
-        double[][] newMatrix = new double[N][N];
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                newMatrix[i][j] = this.mat[j][i];
+    public TMatN transpose() {
+        for (int i = 0; i < N; i++) {
+            for (int j = i + 1; j < N; j++) {
+                double temp = this.mat[i][j];
+                this.mat[i][j] = this.mat[j][i];
+                this.mat[j][i] = temp;
             }
         }
-
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                this.mat[i][j] = newMatrix[i][j];
-
         return this;
     }
 
 
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////  SPECIAL VALUE FUNCS  /////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+    public double trace() {
+        double sum = 0d;
+        for (int i = 0; i < N; i++)
+            sum += this.mat[i][i];
+
+        return sum;
+    }
+
+    // ----------------------- //
+
+    // Gauss elimination method, O(N^3)
+    private static double determinantInner(double[][] matrix, int size) {
+        double[][] m = new double[size][size];
+        for (int i = 0; i < size; i++) System.arraycopy(matrix[i], 0, m[i], 0, size);
+
+        double determinant = 1.0;
+        for (int i = 0; i < size; i++) {
+            int k = i;
+            for (int j = i + 1; j < size; j++) {
+                if (TMath.abs(m[j][i]) > TMath.abs(m[k][i]))
+                    k = j;
+            }
+
+            if (m[k][i] == 0) return 0;
+
+            double[] temp = m[i];
+            m[i] = m[k];
+            m[k] = temp;
+
+            if (i != k) determinant = -determinant;
+
+            determinant *= m[i][i];
+
+            for (int j = i + 1; j < size; j++)
+                m[i][j] /= m[i][i];
+
+            for (int j = 0; j < size; j++) {
+                if (j != i) {
+                    for (int l = i + 1; l < size; l++)
+                        m[j][l] -= m[j][i] * m[i][l];
+                }
+            }
+        }
+        return determinant;
+    }
 
 
-    ////////////////////////////////
-    /*   SPECIAL MATRIX METHODS   */
-    ////////////////////////////////
+    public static double determinant(double[][] mat) {
+        if(mat == null) return Double.NaN;
+        int len = mat.length;
+        if(len <= 0) return Double.NaN;
+        for (int i = 0; i < len; i++)
+            if(len != mat[i].length) return Double.NaN;
+
+        return determinantInner(mat, len);
+    }
 
 
-    /**  @return true if this matrix's transpose is equal to itself  */
+    public double determinant() {
+        return determinantInner(this.mat, N);
+    }
+
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////////////  BOOLEAN FUNCS  /////////////////////////
+    ///////////////////////////////////////////////////////////////////
+
+
     public boolean isSymmetrical(){
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
@@ -542,21 +606,19 @@ public class TMatN {
     }
 
 
-    /**  @return true if this matrix's determinant is zero  */
     public boolean isSingular(){
         return TMath.equalsd(this.determinant(), 0d);
     }
 
 
-    /**  @return true if this matrix is equal to I<sub>N</sub>  */
-    public boolean isIdentityMatrix(){
+    public boolean isIdentity(){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if( i == j ){
+                if(i == j) {
                     if(!TMath.equalsd(this.mat[i][j], 1d))
                         return false;
                 }
-                else{
+                else {
                     if(!TMath.equalsd(this.mat[i][j], 0d))
                         return false;
                 }
@@ -566,49 +628,26 @@ public class TMatN {
     }
 
 
+    //////////////////////////////////////////////////////////////////////
+    /////////////////////////  HELPER FUNCTIONS  /////////////////////////
+    //////////////////////////////////////////////////////////////////////
 
-    ////////////////////////
-    /*   HELPER METHODS   */
-    ////////////////////////
 
+    private static boolean parametersAreFine(int size1, double[][] mat2) {
+        if(mat2 == null) return false; // null
+        if(mat2.length <= 0) return false; // invalid size
+        if(size1 != mat2.length) return false; // size mismatch
 
-    private double determinantOfMatrix(double matrix[][], int n) {
-        double determinant = 0;
-        if (n == 1)
-            return matrix[0][0];
-        if (n == 2)
-            return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-        double temp[][] = new double[N][N];
-        int sign = 1;
-        for (int i = 0; i < n; i++) {
-            subMatrix(matrix, temp, 0, i, n);
-            determinant += sign * matrix[0][i] * determinantOfMatrix(temp, n - 1);
-            sign = -sign;
-        }
-        return determinant;
+        for (int i = 0; i < mat2.length; i++) // mat2 is not a square matrix
+            if(mat2.length != mat2[i].length) return false;
+
+        return true; // everything is fine
     }
 
 
-    private void subMatrix(double mat[][], double temp[][], int p, int q, int n) {
-        int i = 0, j = 0;
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < n; col++) {
-                if (row != p && col != q) {
-                    temp[i][j++] = mat[row][col];
-                    if (j == n - 1) {
-                        j = 0;
-                        i++;
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    ////////////////////////
-    /*   OBJECT METHODS   */
-    ////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    /////////////////////////  OBJECT METHODS  /////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
 
     @Override
@@ -622,26 +661,32 @@ public class TMatN {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
         TMatN other = (TMatN) o;
+
         if (N != other.N)
             return false;
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if(!TMath.equalsd(other.mat[i][j], this.mat[i][j]))
                     return false;
             }
         }
+
         return true;
     }
-
 
 
     @Override
     public int hashCode() {
         int result = Objects.hash(N);
-        result = 31 * result + Arrays.hashCode(mat);
+        result = (31 * result) + Arrays.hashCode(mat);
         return result;
     }
 

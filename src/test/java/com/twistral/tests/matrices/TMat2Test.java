@@ -15,14 +15,13 @@
 
 package com.twistral.tests.matrices;
 
-import com.twistral.tephrium.core.vectors.TVec2;
 import com.twistral.tephrium.core.matrices.TMat2;
 import com.twistral.tephrium.core.functions.*;
 import org.apache.commons.math3.linear.FieldLUDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.util.BigReal;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,22 +36,22 @@ public class TMat2Test {
         TMat2 mat1 = new TMat2();
         TMat2 mat2 = new TMat2(1, -1, -5, 1);
         TMat2 mat3 = new TMat2(5.25d);
-        TMat2 mat4 = new TMat2(new TVec2(5, 6), new TVec2(7, 8));
+        TMat2 mat4 = new TMat2(5, 7, 6, 8);
         TMat2 mat5 = mat1.copy();
 
-        Assertions.assertEquals(mat1, mat5);
+        assertEquals(mat1, mat5);
 
         mat1.add(0d, -1d, -5d, 0d);
-        Assertions.assertEquals(mat1, mat2);
-        Assertions.assertEquals(mat1.subtract(-4d, -8d, -11d, -7d), mat4);
-        Assertions.assertEquals(mat3.scale(1d / 5.25d).subtract(0d, 1d, 1d, 0d), mat5);
+        assertEquals(mat1, mat2);
+        assertEquals(mat1.sub(-4d, -8d, -11d, -7d), mat4);
+        assertEquals(mat3.scale(1d / 5.25d).sub(0d, 1d, 1d, 0d), mat5);
 
-        Assertions.assertEquals(mat1.copy().add(new TMat2(13, 14, 15, 16)), mat1.copy().add(13, 14, 15, 16));
-        Assertions.assertEquals(mat1.copy().subtract(new TMat2(13, 14, 15, 16)), mat1.copy().subtract(13, 14, 15, 16));
+        assertEquals(mat1.copy().add(new TMat2(13, 14, 15, 16)), mat1.copy().add(13, 14, 15, 16));
+        assertEquals(mat1.copy().sub(new TMat2(13, 14, 15, 16)), mat1.copy().sub(13, 14, 15, 16));
 
         TMat2 t1 = new TMat2(15, 6, 7, 8);
         TMat2 t2 = new TMat2(6, 9, -4, 1);
-        Assertions.assertEquals(new TMat2(66, 141, 10, 71), t1.multiply(t2));
+        assertEquals(new TMat2(66, 141, 10, 71), t1.multiply(t2));
 
         Random random = new Random();
         for (int i = 0; i < 10000; i++) {
@@ -79,14 +78,14 @@ public class TMat2Test {
             tm1.multiply(tm2);
 
             TMat2 res = new TMat2(am1.getRow(0)[0],am1.getRow(0)[1], am1.getRow(1)[0], am1.getRow(1)[1]);
-            Assertions.assertEquals(res, tm1);
+            assertEquals(res, tm1);
         }
 
         mat1 = new TMat2(
                 45540, 45605,
                 5445, -1651
         );
-        Assertions.assertEquals(mat1.invert(), new TMat2(
+        assertEquals(mat1.invert(), new TMat2(
                 1651d / 323505765d, 9121d / 64701153d,
                 11d / 653547d, -92d / 653547d
         ));
@@ -102,7 +101,7 @@ public class TMat2Test {
             };
             TMat2 t = new TMat2(m00, m01, m10, m11);
             double res = new FieldLUDecomposition<>(MatrixUtils.createFieldMatrix(data)).getDeterminant().doubleValue();
-            Assertions.assertTrue(TMath.equalsd(t.determinant(), res));
+            assertTrue(TMath.equalsd(t.determinant(), res));
         }
 
 
@@ -116,11 +115,11 @@ public class TMat2Test {
         1 -1
         5 8
         */
-        Assertions.assertEquals(mat1.getCell(0, 0), 1);
-        Assertions.assertEquals(mat1.getCell(0, 1), -1);
-        Assertions.assertEquals(mat1.getCell(1, 0), 5);
-        Assertions.assertEquals(mat1.getCell(1, 1), 8);
-        Assertions.assertEquals(mat1.trace(), 9);
+        assertEquals(mat1.getCell(0, 0), 1);
+        assertEquals(mat1.getCell(0, 1), -1);
+        assertEquals(mat1.getCell(1, 0), 5);
+        assertEquals(mat1.getCell(1, 1), 8);
+        assertEquals(mat1.trace(), 9);
 
 
         mat1 = new TMat2(10, 20, 30, 40);
@@ -132,40 +131,39 @@ public class TMat2Test {
                 20, 10,
                 40, 30
         );
-        Assertions.assertEquals(mflipHorizontally, mat1.copy().flipHorizontally());
+        assertEquals(mflipHorizontally, mat1.copy().flipHorizontally());
         TMat2 mflipVertically = new TMat2(
                 30, 40,
                 10, 20
         );
-        Assertions.assertEquals(mflipVertically, mat1.copy().flipVertically());
+        assertEquals(mflipVertically, mat1.copy().flipVertically());
         TMat2 mrotate90DegAntiClockwise = new TMat2(
                 20, 40,
                 10, 30
         );
-        Assertions.assertEquals(mrotate90DegAntiClockwise, mat1.copy().rotate90DegAntiClockwise());
+        assertEquals(mrotate90DegAntiClockwise, mat1.copy().rotate90DegAntiClockwise());
         TMat2 mrotate90DegClockwise = new TMat2(
                 30, 10,
                 40, 20
         );
-        Assertions.assertEquals(mrotate90DegClockwise, mat1.copy().rotate90DegClockwise());
+        assertEquals(mrotate90DegClockwise, mat1.copy().rotate90DegClockwise());
         TMat2 mrotate180Deg = new TMat2(
                 40, 30,
                 20, 10
         );
-        Assertions.assertEquals(mrotate180Deg, mat1.copy().rotate180Deg());
+        assertEquals(mrotate180Deg, mat1.copy().rotate180Deg());
         TMat2 mtranspose = new TMat2(
                 10, 30,
                 20, 40
         );
-        Assertions.assertEquals(mtranspose, mat1.copy().transpose());
+        assertEquals(mtranspose, mat1.copy().transpose());
 
 
-        Assertions.assertTrue(new TMat2().isIdentityMatrix());
-        Assertions.assertTrue(new TMat2(9, 5, 5, 999).isSymmetrical());
-        Assertions.assertFalse(new TMat2(9, 5, 50, 999).isSymmetrical());
-        Assertions.assertFalse(new TMat2(9, 5, 50, 999).isSingular());
-        Assertions.assertTrue(new TMat2(5, 7,
-                                        10, 14).isSingular());
+        assertTrue(new TMat2().isIdentity());
+        assertTrue(new TMat2(9, 5, 5, 999).isSymmetrical());
+        assertFalse(new TMat2(9, 5, 50, 999).isSymmetrical());
+        assertFalse(new TMat2(9, 5, 50, 999).isSingular());
+        assertTrue(new TMat2(5, 7, 10, 14).isSingular());
 
 
 

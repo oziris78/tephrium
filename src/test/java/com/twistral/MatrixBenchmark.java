@@ -13,13 +13,15 @@
 // limitations under the License.
 
 
-package com.twistral.benchmarks;
+package com.twistral;
 
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.core.matrices.*;
 import com.twistral.tephrium.stats.DescStats;
 import org.joml.*;
 import org.junit.jupiter.api.Assertions;
+
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 import java.util.Random;
 
@@ -75,7 +77,7 @@ public class MatrixBenchmark {
             TMat4 tMat = new TMat4(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
             tMat.scale(5d);
             tMat.add(tMat);
-            tMat.subtract(new TMat4(1 ,5, 9 ,13, 2 ,6, 10 ,14, 3 ,7, 11 ,15, 4 ,8 ,12 ,16));
+            tMat.sub(new TMat4(1 ,5, 9 ,13, 2 ,6, 10 ,14, 3 ,7, 11 ,15, 4 ,8 ,12 ,16));
             tMat.multiply(tMat);
             tDet = tMat.determinant();
             if(!TMath.equalsd(tDet, 0d))
@@ -124,7 +126,7 @@ public class MatrixBenchmark {
             TMat3 tMat = new TMat3(m00, m01, m02, m10, m11, m12, m20, m21, m22);
             tMat.scale(5d);
             tMat.add(tMat);
-            tMat.subtract(new TMat3(1, 4, 7, 2, 5, 8, 3, 6, 9));
+            tMat.sub(new TMat3(1, 4, 7, 2, 5, 8, 3, 6, 9));
             tMat.multiply(tMat);
             tDet = tMat.determinant();
             if(!TMath.equalsd(tDet, 0d))
@@ -180,7 +182,7 @@ public class MatrixBenchmark {
             TMat2 tMat = new TMat2(m00, m01, m10, m11);
             tMat.scale(5d);
             tMat.add(tMat);
-            tMat.subtract(new TMat2(m11, m01, m10, m00));
+            tMat.sub(new TMat2(m11, m01, m10, m00));
             tMat.multiply(tMat);
             tDet = tMat.determinant();
             if(!TMath.equalsd(tDet, 0d))

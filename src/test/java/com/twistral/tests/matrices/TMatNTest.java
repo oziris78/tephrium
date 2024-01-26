@@ -21,7 +21,7 @@ import com.twistral.tephrium.core.matrices.TMat2;
 import com.twistral.tephrium.core.matrices.TMat3;
 import com.twistral.tephrium.core.matrices.TMat4;
 import com.twistral.tephrium.core.matrices.TMatN;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,12 +32,12 @@ public class TMatNTest {
     @DisplayName("tmanNTest")
     void tmanNTest() {
         // constructors
-        Assertions.assertEquals(new TMatN(4), new TMatN(new TMat4()));
-        Assertions.assertEquals(new TMatN(3), new TMatN(new TMat3()));
-        Assertions.assertEquals(new TMatN(2), new TMatN(new TMat2()));
-        Assertions.assertThrows(TephriumException.class, () -> { new TMatN(0);});
-        Assertions.assertThrows(TephriumException.class, () -> { new TMatN(-1);});
-        Assertions.assertThrows(TephriumException.class, () -> { new TMatN(-2);});
+        assertEquals(new TMatN(4), new TMatN(new TMat4()));
+        assertEquals(new TMatN(3), new TMatN(new TMat3()));
+        assertEquals(new TMatN(2), new TMatN(new TMat2()));
+        assertThrows(TephriumException.class, () -> { new TMatN(0);});
+        assertThrows(TephriumException.class, () -> { new TMatN(-1);});
+        assertThrows(TephriumException.class, () -> { new TMatN(-2);});
 
         TMatN mat1 = new TMatN(new double[][]{
                 { 1, 2, 3, 4 },
@@ -45,33 +45,29 @@ public class TMatNTest {
                 { 9, 10, 11, 12 },
                 { 13, 14, 15, 16 }
         });
-        TMatN mat2 = new TMatN(mat1);
         TMatN mat3 = mat1.copy();
-        Assertions.assertEquals(mat1, mat2);
-        Assertions.assertEquals(mat1, mat3);
-        Assertions.assertEquals(mat2, mat1);
-        Assertions.assertEquals(mat2, mat3);
-        Assertions.assertEquals(mat3, mat1);
-        Assertions.assertEquals(mat3, mat2);
+        assertEquals(mat1, mat3);
+        assertEquals(mat3, mat1);
 
         // getters and setters
-        mat1.set(new double[][]{
+        mat1 = new TMatN(new double[][]{
                 { 1, 2, 3, 4 },
                 { 5, 6, 7, 80 },
                 { 9, 10, 11, 12 },
                 { 13, 14, 15, 16 }
         });
-        Assertions.assertTrue(TMath.equalsd(mat1.getCell(0, 0), 1));
-        Assertions.assertTrue(TMath.equalsd(mat1.getCell(0, 1), 2));
-        Assertions.assertTrue(TMath.equalsd(mat1.getCell(2, 2), 11));
-        Assertions.assertTrue(TMath.equalsd(mat1.getCell(0, 200), Double.NaN));
-        Assertions.assertTrue(TMath.equalsd(mat1.setCell(0, 0, -20).getCell(0, 0), -20));
-        Assertions.assertTrue(TMath.equalsf(mat1.getN(), 4));
-        Assertions.assertTrue(TMath.equalsf(mat1.set(new double[][]{ {100, 20}, {3, 4} }).getN(), 2));
-        Assertions.assertTrue(TMath.equalsd(mat1.getCell(0, 0), 100));
+        assertTrue(TMath.equalsd(mat1.getCell(0, 0), 1));
+        assertTrue(TMath.equalsd(mat1.getCell(0, 1), 2));
+        assertTrue(TMath.equalsd(mat1.getCell(2, 2), 11));
+        assertTrue(TMath.equalsd(mat1.getCell(0, 200), Double.NaN));
+        assertTrue(TMath.equalsd(mat1.setCell(0, 0, -20).getCell(0, 0), -20));
+        assertTrue(TMath.equalsf(mat1.getN(), 4));
+        mat1 = new TMatN(new double[][]{ {100, 20}, {3, 4} });
+        assertTrue(TMath.equalsf(mat1.getN(), 2));
+        assertTrue(TMath.equalsd(mat1.getCell(0, 0), 100));
 
         // special value methods
-        mat1.set(new double[][]{
+        mat1 = new TMatN(new double[][]{
                 {10, 2, 5, 7, 8, 9},
                 {0, 7, 9, -9, 9, 9},
                 {0, 0, 1, 4, 7, 1},
@@ -79,11 +75,12 @@ public class TMatNTest {
                 {1, 7, 0, 9, 0, 1},
                 {1, 1, 1, 7, 8.5d, 9.5d}
         });
-        mat2 = mat1.copy();
-        Assertions.assertTrue(TMath.equalsd(mat1.determinant(), 929005.5d));
-        Assertions.assertTrue(TMath.equalsd(mat1.trace(), 34.5d));
-        Assertions.assertEquals(mat1, mat2);
-        mat1.set(new double[][]{
+        TMatN mat2 = mat1.copy();
+        assertTrue(TMath.equalsd(mat1.determinant(), 929005.5d));
+
+        assertTrue(TMath.equalsd(mat1.trace(), 34.50000000000000000000d));
+        assertEquals(mat1, mat2);
+        mat1 = new TMatN(new double[][]{
                 {0,2,5,7,8,4,1},
                 {0,7,1,-2,2,3,2},
                 {0,0,1,4,7,1,3},
@@ -93,9 +90,9 @@ public class TMatNTest {
                 {7,0,0,0,0,0,2}
         });
         mat2 = mat1.copy();
-        Assertions.assertTrue(TMath.equalsd(mat1.determinant(), 493174));
-        Assertions.assertTrue(TMath.equalsd(mat1.trace(), 20d));
-        Assertions.assertEquals(mat1, mat2);
+        assertTrue(TMath.equalsd(mat1.determinant(), 493174));
+        assertTrue(TMath.equalsd(mat1.trace(), 20d));
+        assertEquals(mat1, mat2);
 
         // basic methods
         mat1 = new TMatN(new double[][]{
@@ -105,7 +102,7 @@ public class TMatNTest {
                 {25, 26, 27, 28, 29},
                 {30, 31, 32, 33, 34}
         });
-        mat2.set(new double[][]{
+        mat2 = new TMatN(new double[][]{
                 {1, 0, -1, 1, -2},
                 {1, 0, -1, 1, -2},
                 {1, 0, -1, 1, -2},
@@ -121,29 +118,29 @@ public class TMatNTest {
                 {0, 0, -3, 0, 2}
         });
         mat1.add(mat2);
-        Assertions.assertEquals(mat1, new TMatN(new double[][]{
+        assertEquals(mat1, new TMatN(new double[][]{
                 {11, 11, 8, 14, 14},
                 {16, 16, 13, 19, 19},
                 {21, 21, 18, 24, 24},
                 {26, 26, 23, 29, 29},
                 {31, 31, 28, 34, 34}
         }));
-        mat1.subtract(new double[][]{
+        mat1.sub(new double[][]{
                 {0, 0, -3, 0, 2},
                 {0, 0, -3, 0, 2},
                 {0, 0, -3, 0, 2},
                 {0, 0, -3, 0, 2},
                 {0, 0, -3, 0, 2}
         });
-        mat1.subtract(mat2);
-        Assertions.assertEquals(mat3, mat1);
+        mat1.sub(mat2);
+        assertEquals(mat3, mat1);
         mat1.scale(0d);
         mat1.setCell(0, 0, 1);
         mat1.setCell(1, 1, 1);
         mat1.setCell(2, 2, 1);
         mat1.setCell(3, 3, 1);
         mat1.setCell(4, 4, 1);
-        Assertions.assertEquals(mat1, new TMatN(5));
+        assertEquals(mat1, new TMatN(5));
 
 
         mat1 = new TMatN(new double[][]{
@@ -153,7 +150,7 @@ public class TMatNTest {
                 {1, 0, 1, 1, 1},
                 {0, 2, 1, 1, 2}
         });
-        Assertions.assertEquals(mat1.copy().invert(), new TMatN(new double[][]{
+        assertEquals(mat1.copy().invert(), new TMatN(new double[][]{
                         {-3d/4d, 1d/2d, 1d, -1d/4d, -1d/2d},
                         {1d/2d, 0d, 0d, -1d/2d, 0d},
                         {-1d/4d, -1d/2d, 0d, 1d/4d, 1d/2d},
@@ -164,7 +161,7 @@ public class TMatNTest {
         mat1.multiply(mat1); // A =  A * A = A^2
         mat1.multiply(mat1); // A = A^2 * A^2 = A^4
         // mat1 = mat1^4
-        Assertions.assertEquals(mat1, new TMatN(new double[][]{
+        assertEquals(mat1, new TMatN(new double[][]{
                         {80, 200, 87, 150, 237},
                         {23, 67, 30, 51, 84},
                         {123, 300, 130, 224, 351},
@@ -172,21 +169,21 @@ public class TMatNTest {
                         {79, 200, 87, 150, 238}
                 })
         );
-        mat1.set(new double[][]{
+        mat1 = new TMatN(new double[][]{
                 {1, 2, 1, 1, 1},
                 {0, 1, -1, 1, 2},
                 {2, 2, 2, 1, 1},
                 {1, 0, 1, 1, 1},
                 {0, 2, 1, 1, 2}
         });
-        mat2.set(new double[][]{
+        mat2 = new TMatN(new double[][]{
                 {1, 2, 1, 1, 1},
                 {0, 1, -1, 1, 2},
                 {10, 10, 10, 1, 1},
                 {1, 0, 1, 1, 1},
                 {0, 2, 1, 1, 2}
         });
-        Assertions.assertEquals(mat1.multiply(mat2), new TMatN(new double[][]{
+        assertEquals(mat1.multiply(mat2), new TMatN(new double[][]{
                     {12, 16, 11, 6, 9},
                     {-9, -5, -8, 3, 6},
                     {23, 28, 22, 8, 11},
@@ -245,12 +242,12 @@ public class TMatNTest {
                 {13, 18, 23, 28, 33},
                 {14, 19, 24, 29, 34}
         });
-        Assertions.assertEquals(mat1.copy().transpose(), transpose1);
-        Assertions.assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
-        Assertions.assertEquals(mat1.copy().flipVertically(), flipVertically1);
-        Assertions.assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
-        Assertions.assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
-        Assertions.assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
+        assertEquals(mat1.copy().transpose(), transpose1);
+        assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
+        assertEquals(mat1.copy().flipVertically(), flipVertically1);
+        assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
+        assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
+        assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
 
         mat1 = new TMatN(new double[][]{
                 {10, 11, 12, 13, 14, 15},
@@ -308,46 +305,46 @@ public class TMatNTest {
                 {14, 20, 26, 32, 38, 44},
                 {15, 21, 27, 33, 39, 45}
         });
-        Assertions.assertEquals(mat1.copy().transpose(), transpose1);
-        Assertions.assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
-        Assertions.assertEquals(mat1.copy().flipVertically(), flipVertically1);
-        Assertions.assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
-        Assertions.assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
-        Assertions.assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
+        assertEquals(mat1.copy().transpose(), transpose1);
+        assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
+        assertEquals(mat1.copy().flipVertically(), flipVertically1);
+        assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
+        assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
+        assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
 
 
         // special matrix methods
-        mat1.set(new double[][]{
+        mat1 = new TMatN(new double[][]{
                 {10, 2, 2, 2},
                 {2, 94, 2, 2},
                 {2, 2, 165651, 2},
                 {2, 2, 2, 515050}
         });
-        Assertions.assertTrue(mat1.isSymmetrical());
+        assertTrue(mat1.isSymmetrical());
         mat1.setCell(0, 1, 50);
-        Assertions.assertFalse(mat1.isSymmetrical());
+        assertFalse(mat1.isSymmetrical());
 
         for (int i = 1; i < 200; i++)
-            Assertions.assertTrue(new TMatN(i).isIdentityMatrix());
-        Assertions.assertTrue(new TMatN(new TMat2()).isIdentityMatrix());
-        Assertions.assertTrue(new TMatN(new TMat3()).isIdentityMatrix());
-        Assertions.assertTrue(new TMatN(new TMat4()).isIdentityMatrix());
-        Assertions.assertFalse(new TMatN(new TMat2(1, 0, 0, 2)).isIdentityMatrix());
+            assertTrue(new TMatN(i).isIdentity());
+        assertTrue(new TMatN(new TMat2()).isIdentity());
+        assertTrue(new TMatN(new TMat3()).isIdentity());
+        assertTrue(new TMatN(new TMat4()).isIdentity());
+        assertFalse(new TMatN(new TMat2(1, 0, 0, 2)).isIdentity());
 
-        mat1.set(new double[][]{
+        mat1 = new TMatN(new double[][]{
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {9, 10, 11, 12},
                 {13, 14, 15, 16}
         });
-        Assertions.assertTrue(mat1.isSingular());
-        mat1.set(new double[][]{
+        assertTrue(mat1.isSingular());
+        mat1 = new TMatN(new double[][]{
                 {100, 2, 56413, 4},
                 {5, 600, 7, 68},
                 {9, 100, 11, 12},
                 {13, 14, 20015, 16}
         });
-        Assertions.assertFalse(mat1.isSingular());
+        assertFalse(mat1.isSingular());
 
 
     }

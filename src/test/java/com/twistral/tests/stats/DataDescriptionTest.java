@@ -20,7 +20,7 @@ import com.twistral.tephrium.stats.DataDescription;
 import com.twistral.tephrium.stats.DescStats;
 import com.twistral.tephrium.utils.TArrays;
 import com.twistral.tests.stats.exampledata.Person;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,41 +52,41 @@ public class DataDescriptionTest {
         DataDescription ageDesc = DescStats.getDataDesc(sortedWithAge);
 
         // TESTS
-        Assertions.assertTrue(TMath.equalsd(heightDesc.count, 26));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.min, 158));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.max, 203));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.range, 45));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.sum, 4571));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.mean, 175.80769230769));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.variance, 102.38609467456));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.stddev, 10.11860141889956));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.modeValue, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.modeCount, 4));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile1, 169.25));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile2, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile3, 180.5));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.median, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.interquartileRange, 11.25));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.bowleySkewCoef, -0.2));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.pearsonSkewCoef, -0.0570160887));
+        assertTrue(TMath.equalsd(heightDesc.count, 26));
+        assertTrue(TMath.equalsd(heightDesc.min, 158));
+        assertTrue(TMath.equalsd(heightDesc.max, 203));
+        assertTrue(TMath.equalsd(heightDesc.range, 45));
+        assertTrue(TMath.equalsd(heightDesc.sum, 4571));
+        assertTrue(TMath.equalsd(heightDesc.mean, 175.80769230769));
+        assertTrue(TMath.equalsd(heightDesc.variance, 102.38609467456));
+        assertTrue(TMath.equalsd(heightDesc.stddev, 10.11860141889956));
+        assertTrue(TMath.equalsd(heightDesc.modeValue, 176));
+        assertTrue(TMath.equalsd(heightDesc.modeCount, 4));
+        assertTrue(TMath.equalsd(heightDesc.quartile1, 169.25));
+        assertTrue(TMath.equalsd(heightDesc.quartile2, 176));
+        assertTrue(TMath.equalsd(heightDesc.quartile3, 180.5));
+        assertTrue(TMath.equalsd(heightDesc.median, 176));
+        assertTrue(TMath.equalsd(heightDesc.interquartileRange, 11.25));
+        assertTrue(TMath.equalsd(heightDesc.bowleySkewCoef, -0.2));
+        assertTrue(TMath.equalsd(heightDesc.pearsonSkewCoef, -0.0570160887));
 
-        Assertions.assertTrue(TMath.equalsd(ageDesc.count, 26));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.min, 12));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.max, 75));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.range, 63));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.sum, 766));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.mean, 29.461538461538));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.variance, 345.01775147929));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.stddev, 18.574653468619));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.modeValue, 18));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.modeCount, 7));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.quartile1, 18));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.quartile2, 20));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.quartile3, 38));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.median, 20));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.interquartileRange, 20));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.bowleySkewCoef, 0.8));
-        Assertions.assertTrue(TMath.equalsd(ageDesc.pearsonSkewCoef, 1.528137008));
+        assertTrue(TMath.equalsd(ageDesc.count, 26));
+        assertTrue(TMath.equalsd(ageDesc.min, 12));
+        assertTrue(TMath.equalsd(ageDesc.max, 75));
+        assertTrue(TMath.equalsd(ageDesc.range, 63));
+        assertTrue(TMath.equalsd(ageDesc.sum, 766));
+        assertTrue(TMath.equalsd(ageDesc.mean, 29.461538461538));
+        assertTrue(TMath.equalsd(ageDesc.variance, 345.01775147929));
+        assertTrue(TMath.equalsd(ageDesc.stddev, 18.574653468619));
+        assertTrue(TMath.equalsd(ageDesc.modeValue, 18));
+        assertTrue(TMath.equalsd(ageDesc.modeCount, 7));
+        assertTrue(TMath.equalsd(ageDesc.quartile1, 18));
+        assertTrue(TMath.equalsd(ageDesc.quartile2, 20));
+        assertTrue(TMath.equalsd(ageDesc.quartile3, 38));
+        assertTrue(TMath.equalsd(ageDesc.median, 20));
+        assertTrue(TMath.equalsd(ageDesc.interquartileRange, 20));
+        assertTrue(TMath.equalsd(ageDesc.bowleySkewCoef, 0.8));
+        assertTrue(TMath.equalsd(ageDesc.pearsonSkewCoef, 1.528137008));
     }
 
 
@@ -105,23 +105,23 @@ public class DataDescriptionTest {
         DataDescription heightDesc = DescStats.getDataDesc(population);
 
         // TESTS
-        Assertions.assertTrue(TMath.equalsd(heightDesc.count, 26));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.min, 158));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.max, 203));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.range, 45));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.sum, 4571));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.mean, 175.80769230769));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.variance, 102.38609467456));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.stddev, 10.11860141889956));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.modeValue, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.modeCount, 4));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile1, 169.25));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile2, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.quartile3, 180.5));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.median, 176));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.interquartileRange, 11.25));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.bowleySkewCoef, -0.2));
-        Assertions.assertTrue(TMath.equalsd(heightDesc.pearsonSkewCoef, -0.057016088));
+        assertTrue(TMath.equalsd(heightDesc.count, 26));
+        assertTrue(TMath.equalsd(heightDesc.min, 158));
+        assertTrue(TMath.equalsd(heightDesc.max, 203));
+        assertTrue(TMath.equalsd(heightDesc.range, 45));
+        assertTrue(TMath.equalsd(heightDesc.sum, 4571));
+        assertTrue(TMath.equalsd(heightDesc.mean, 175.80769230769));
+        assertTrue(TMath.equalsd(heightDesc.variance, 102.38609467456));
+        assertTrue(TMath.equalsd(heightDesc.stddev, 10.11860141889956));
+        assertTrue(TMath.equalsd(heightDesc.modeValue, 176));
+        assertTrue(TMath.equalsd(heightDesc.modeCount, 4));
+        assertTrue(TMath.equalsd(heightDesc.quartile1, 169.25));
+        assertTrue(TMath.equalsd(heightDesc.quartile2, 176));
+        assertTrue(TMath.equalsd(heightDesc.quartile3, 180.5));
+        assertTrue(TMath.equalsd(heightDesc.median, 176));
+        assertTrue(TMath.equalsd(heightDesc.interquartileRange, 11.25));
+        assertTrue(TMath.equalsd(heightDesc.bowleySkewCoef, -0.2));
+        assertTrue(TMath.equalsd(heightDesc.pearsonSkewCoef, -0.057016088));
 
     }
 
@@ -143,19 +143,19 @@ public class DataDescriptionTest {
 
         // TESTS
         count = DescStats.getCount(arr1);
-        Assertions.assertTrue(TMath.equalsd(count, 10));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getMax(arr1), 100));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getMin(arr1), -9));
+        assertTrue(TMath.equalsd(count, 10));
+        assertTrue(TMath.equalsd(DescStats.getMax(arr1), 100));
+        assertTrue(TMath.equalsd(DescStats.getMin(arr1), -9));
         sum = DescStats.getSum(arr1);
-        Assertions.assertTrue(TMath.equalsd(sum, 114));
+        assertTrue(TMath.equalsd(sum, 114));
         mean = DescStats.getMean(sum, count);
-        Assertions.assertTrue(TMath.equalsd(mean, 11.4));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getVariance(arr1, mean, false), 898.24));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getX(), Double.NaN));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getY(), Double.NaN));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 1), -2.25d));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 2), 2.5d));
-        Assertions.assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 3), 7.75d));
+        assertTrue(TMath.equalsd(mean, 11.4));
+        assertTrue(TMath.equalsd(DescStats.getVariance(arr1, mean, false), 898.24));
+        assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getX(), Double.NaN));
+        assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getY(), Double.NaN));
+        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 1), -2.25d));
+        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 2), 2.5d));
+        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 3), 7.75d));
     }
 
 
