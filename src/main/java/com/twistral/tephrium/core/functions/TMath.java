@@ -129,6 +129,12 @@ public class TMath {
             res += values[i];
         return res;
     }
+    public static long sum(long... values) {
+        long res = values[0];
+        for (int i = 1; i < values.length; i++)
+            res += values[i];
+        return res;
+    }
 
 
 

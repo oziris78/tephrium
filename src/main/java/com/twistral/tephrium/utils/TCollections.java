@@ -16,54 +16,49 @@
 package com.twistral.tephrium.utils;
 
 
-import com.twistral.tephrium.core.TephriumException;
-
 import java.util.*;
 
 
 
-/**
- * Tephrium's replacement class for {@link Collections} with additional functionality.
- */
 public final class TCollections {
 
-    /* No Constructor */
-    private TCollections(){}
+
+    // No Constructor
+    private TCollections() {}
 
 
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  COLLECTION CREATION  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
 
-    public static <T1, T2> HashMap<T1,T2> newHashMap(T1[] keys, T2[] values) {
-        HashMap<T1, T2> newMap = new HashMap<>();
-        try{
-            if(keys.length != values.length)
-                throw new TephriumException("Number of keys and values aren't equal");
-            for(int i=0; i<keys.length; i++) newMap.put( keys[i], values[i] );
-        }
-        catch (Exception e) { e.printStackTrace(); }
-        return newMap;
+
+    public static <T> List<T> newArrayList(int initialCapacity, T... entries) {
+        ArrayList<T> res = new ArrayList<>(initialCapacity);
+        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
+        return res;
     }
 
-
-    public static <T> ArrayList<T> newArrayList(T... entries) {
-        ArrayList<T> newArrList = new ArrayList<>();
-        for(int i=0; i<entries.length; i++) newArrList.add(entries[i]);
-        return newArrList;
+    public static <T> List<T> newArrayList(T... entries) {
+        return newArrayList(10*2, entries); // default 10 is too small imo
     }
 
+    // ------------------- //
 
-    public static <T> LinkedList<T> newLinkedList(T... entries) {
-        LinkedList<T> newLinkedList = new LinkedList<>();
-        for(int i=0; i<entries.length; i++) newLinkedList.add(entries[i]);
-        return newLinkedList;
+    public static <T> List<T> newLinkedList(T... entries) {
+        LinkedList<T> res = new LinkedList<>();
+        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
+        return res;
     }
 
+    // ------------------- //
 
-    public static <T> HashSet<T> newHashSet(T... entries) {
-        HashSet<T> newHashSet = new HashSet<>();
-        for(int i=0; i<entries.length; i++) newHashSet.add(entries[i]);
-        return newHashSet;
+    public static <T> Set<T> newHashSet(int initialCapacity, T... entries) {
+        HashSet<T> res = new HashSet<>(initialCapacity);
+        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
+        return res;
     }
 
+    public static <T> Set<T> newHashSet(T... entries) { return newHashSet(16, entries); }
 
 
 }

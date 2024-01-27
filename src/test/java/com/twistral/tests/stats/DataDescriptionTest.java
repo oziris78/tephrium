@@ -17,7 +17,6 @@ package com.twistral.tests.stats;
 
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.stats.DataDescription;
-import com.twistral.tephrium.utils.TArrays;
 import com.twistral.tests.stats.exampledata.Person;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
@@ -131,7 +130,7 @@ public class DataDescriptionTest {
     @Test
     @DisplayName("dataDescPrimitiveWithoutConversionTest")
     void dataDescPrimitiveWithoutConversionTest() {
-        double[] arr1 = TArrays.doubleArr(1, 2, 3, -2, -3, 5, 7, -9, 10, 100);
+        double[] arr1 = new double[]{1, 2, 3, -2, -3, 5, 7, -9, 10, 100};
         Arrays.sort(arr1);
 
         DataDescription desc = new DataDescription(arr1);

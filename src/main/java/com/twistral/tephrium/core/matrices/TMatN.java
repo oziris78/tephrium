@@ -18,7 +18,6 @@ package com.twistral.tephrium.core.matrices;
 
 import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.core.functions.TMath;
-import com.twistral.tephrium.utils.TArrays;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -373,7 +372,9 @@ public class TMatN {
             }
 
             // Swap rows
-            TArrays.swapIndices(index, col, pivot);
+            int temp = index[col];
+            index[col] = index[pivot];
+            index[pivot] = temp;
 
             // Gaussian elimination
             for (int row = col + 1; row < N; row++) {

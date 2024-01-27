@@ -84,7 +84,7 @@ public class FrequencyDistTable {
         this.relFreqs = new double[classCount];
         this.incCumFreqs = new double[classCount];
         this.incRelFreqs = new double[classCount];
-        this.freqs = TArrays.doubleFilledArr(classCount, 0d);
+        this.freqs = new double[classCount];
 
         final double min = TMath.min(population);
         final double max = TMath.max(population);
