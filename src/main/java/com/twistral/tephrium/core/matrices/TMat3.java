@@ -349,9 +349,9 @@ public class TMat3 {
     public TMat3 sin() { return applyFunctionElementWise(TMath::sin); }
     public TMat3 cos() { return applyFunctionElementWise(TMath::cos); }
     public TMat3 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat3 arcsin() { return applyFunctionElementWise(TMath::asin); }
-    public TMat3 arccos() { return applyFunctionElementWise(TMath::acos); }
-    public TMat3 arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMat3 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat3 arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat3 arctan() { return applyFunctionElementWise(TMath::arctan); }
     public TMat3 floor() { return applyFunctionElementWise(TMath::floor); }
     public TMat3 ceil() { return applyFunctionElementWise(TMath::ceil); }
     public TMat3 sqrt() { return applyFunctionElementWise(TMath::sqrt); }

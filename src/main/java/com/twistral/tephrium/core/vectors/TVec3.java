@@ -16,9 +16,7 @@
 package com.twistral.tephrium.core.vectors;
 
 
-import static com.twistral.tephrium.core.functions.TMath.acos;
-import static com.twistral.tephrium.core.functions.TMath.sqrt;
-import static com.twistral.tephrium.core.functions.TMath.equalsd;
+import com.twistral.tephrium.core.functions.TMath;
 import java.util.Objects;
 
 
@@ -235,7 +233,7 @@ public class TVec3 {
     // ---------------- //
 
     public static double length(double x, double y, double z) {
-        return sqrt(lengthSquared(x, y, z));
+        return TMath.sqrt(lengthSquared(x, y, z));
     }
 
     public static double length(TVec3 vec) {
@@ -249,7 +247,7 @@ public class TVec3 {
     // ---------------- //
 
     public static double angleBetween(TVec3 vec1, TVec3 vec2) {
-        return acos(dot(vec1, vec2) / (vec1.length() * vec2.length()));
+        return TMath.arccos(dot(vec1, vec2) / (vec1.length() * vec2.length()));
     }
 
 
@@ -264,7 +262,7 @@ public class TVec3 {
     }
 
     public static boolean isZeroVector(TVec3 vector) {
-        return equalsd(vector.x, 0d) && equalsd(vector.y, 0d) && equalsd(vector.z, 0d);
+        return TMath.equalsd(vector.x, 0d) && TMath.equalsd(vector.y, 0d) && TMath.equalsd(vector.z, 0d);
     }
 
 
@@ -273,13 +271,13 @@ public class TVec3 {
     }
 
     public static boolean isUnitVector(TVec3 vector) {
-        return equalsd(length(vector), 1d);
+        return TMath.equalsd(length(vector), 1d);
     }
 
 
     public static boolean areOrthogonal(TVec3 vec1, TVec3 vec2, TVec3 vec3){
-        return equalsd(vec1.dot(vec2), 0d) && equalsd(vec1.dot(vec3), 0d)
-                && equalsd(vec2.dot(vec3), 0d);
+        return TMath.equalsd(vec1.dot(vec2), 0d) && TMath.equalsd(vec1.dot(vec3), 0d)
+                && TMath.equalsd(vec2.dot(vec3), 0d);
     }
 
 
@@ -307,7 +305,7 @@ public class TVec3 {
             return false;
         }
         TVec3 other = (TVec3) o;
-        return equalsd(x, other.x) && equalsd(y, other.y) && equalsd(z, other.z);
+        return TMath.equalsd(x, other.x) && TMath.equalsd(y, other.y) && TMath.equalsd(z, other.z);
     }
 
     @Override

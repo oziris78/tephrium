@@ -16,10 +16,11 @@
 package com.twistral.tephrium.core.functions;
 
 
-
+import java.util.Arrays;
 
 /**
- * Tephrium's replacement class for {@link Math} with additional functionality.
+ * Tephrium's heart, containing a lot of alternatives to {@link Math} class' methods. <br>
+ * It also contains a lot of extra functionality.
  */
 public class TMath {
 
@@ -29,19 +30,14 @@ public class TMath {
 
     public static final double PI = 3.14159265358979323846d;
     public static final double PI_OVER_TWO = PI / 2d;
-
     public static final double E = 2.7182818284590452354d;
-
     public static final double GOLDEN_RATIO = 1.61803398874989484820d;
-
     public static final double SQRT2 = 1.4142135623730950488d;
     public static final double SQRT3 = 1.732050807568877293527d;
     public static final double SQRT5 = 2.23606797749978969640d;
 
-
     // No constructor
     private TMath(){}
-
 
 
     /////////////////////////////////////////////////////////////////////
@@ -65,12 +61,24 @@ public class TMath {
             if(values[i] < res) res = values[i];
         return res;
     }
+    public static int min(int... values) {
+        int res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] < res) res = values[i];
+        return res;
+    }
+    public static long min(long... values) {
+        long res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] < res) res = values[i];
+        return res;
+    }
 
 
     public static long max(long a, long b) { return (a >= b) ? a : b; }
     public static int max(int a, int b) { return (a >= b) ? a : b; }
-    public static double max(double a, double b) { return Math.max(a, b); }
-    public static float max(float a, float b) { return Math.max(a, b); }
+    public static double max(double a, double b) { return (a != a) ? a : ( (a >= b) ? a : b ); }
+    public static float max(float a, float b) { return (a != a) ? a : ( (a >= b) ? a : b ); }
     public static float max(float... values) {
         float res = values[0];
         for (int i = 1; i < values.length; i++)
@@ -83,12 +91,24 @@ public class TMath {
             if(values[i] > res) res = values[i];
         return res;
     }
+    public static int max(int... values) {
+        int res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] > res) res = values[i];
+        return res;
+    }
+    public static long max(long... values) {
+        long res = values[0];
+        for (int i = 1; i < values.length; i++)
+            if(values[i] > res) res = values[i];
+        return res;
+    }
 
 
     public static double abs(double x) { return (x < 0.0) ? -x : (x == 0.0) ? 0.0 : x; }
-    public static int abs(int x) { return Math.abs(x); }
-    public static long abs(long x) { return Math.abs(x); }
-    public static float abs(float x) { return Math.abs(x); }
+    public static int abs(int x) { return (x < 0) ? -x : x; }
+    public static long abs(long x) { return (x < 0) ? -x : x; }
+    public static float abs(float x) { return (x <= 0.0f) ? 0.0f - x : x; }
 
 
     public static double sum(double... values) {
@@ -191,7 +211,7 @@ public class TMath {
 
 
     /**
-     * This method is A lot faster than using <code>(int) Math.floor(x)</code>
+     * This method is a lot faster than using <code>(int) Math.floor(x)</code>
      * @param x any double value
      * @return floor(x) as int
      */
@@ -253,9 +273,9 @@ public class TMath {
     public static double sin(double x) { return Math.sin(x); }
     public static double tan(double x) { return Math.tan(x); }
 
-    public static double acos(double x) { return Math.acos(x); }
-    public static double asin(double x) { return Math.asin(x); }
-    public static double atan(double x) { return Math.atan(x); }
+    public static double arccos(double x) { return Math.acos(x); }
+    public static double arcsin(double x) { return Math.asin(x); }
+    public static double arctan(double x) { return Math.atan(x); }
 
 
     /////////////////////////////////////////////////////////////////////////

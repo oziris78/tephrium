@@ -248,9 +248,9 @@ public class TMat2 {
     public TMat2 sin() { return applyFunctionElementWise(TMath::sin); }
     public TMat2 cos() { return applyFunctionElementWise(TMath::cos); }
     public TMat2 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat2 arcsin() { return applyFunctionElementWise(TMath::asin); }
-    public TMat2 arccos() { return applyFunctionElementWise(TMath::acos); }
-    public TMat2 arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMat2 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat2 arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat2 arctan() { return applyFunctionElementWise(TMath::arctan); }
     public TMat2 floor() { return applyFunctionElementWise(TMath::floor); }
     public TMat2 ceil() { return applyFunctionElementWise(TMath::ceil); }
     public TMat2 sqrt() { return applyFunctionElementWise(TMath::sqrt); }

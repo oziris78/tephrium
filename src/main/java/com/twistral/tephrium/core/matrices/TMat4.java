@@ -409,9 +409,9 @@ public class TMat4 {
     public TMat4 sin() { return applyFunctionElementWise(TMath::sin); }
     public TMat4 cos() { return applyFunctionElementWise(TMath::cos); }
     public TMat4 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat4 arcsin() { return applyFunctionElementWise(TMath::asin); }
-    public TMat4 arccos() { return applyFunctionElementWise(TMath::acos); }
-    public TMat4 arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMat4 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat4 arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat4 arctan() { return applyFunctionElementWise(TMath::arctan); }
     public TMat4 floor() { return applyFunctionElementWise(TMath::floor); }
     public TMat4 ceil() { return applyFunctionElementWise(TMath::ceil); }
     public TMat4 sqrt() { return applyFunctionElementWise(TMath::sqrt); }

@@ -428,9 +428,9 @@ public class TMatN {
     public TMatN sin() { return applyFunctionElementWise(TMath::sin); }
     public TMatN cos() { return applyFunctionElementWise(TMath::cos); }
     public TMatN tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMatN arcsin() { return applyFunctionElementWise(TMath::asin); }
-    public TMatN arccos() { return applyFunctionElementWise(TMath::acos); }
-    public TMatN arctan() { return applyFunctionElementWise(TMath::atan); }
+    public TMatN arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMatN arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMatN arctan() { return applyFunctionElementWise(TMath::arctan); }
     public TMatN floor() { return applyFunctionElementWise(TMath::floor); }
     public TMatN ceil() { return applyFunctionElementWise(TMath::ceil); }
     public TMatN sqrt() { return applyFunctionElementWise(TMath::sqrt); }

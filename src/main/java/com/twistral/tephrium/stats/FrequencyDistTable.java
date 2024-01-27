@@ -17,83 +17,54 @@ package com.twistral.tephrium.stats;
 
 
 import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.utils.TArrays;
-import java.util.*;
 
-import static com.twistral.tephrium.core.functions.TMath.*;
+import java.util.*;
 
 
 public class FrequencyDistTable {
 
-    //////////////
-    /*  FIELDS  */
-    //////////////
-
-    private FrequencyClass[] table;
     private final int classCount;
+    private double[] cLefts; // inclusive
+    private double[] cRights; // exclusive
+    private double[] midpoints;
+    private double[] freqs;
+    private double[] relFreqs;
+    private double[] incCumFreqs; // increasing cumulative distribution's frequency
+    private double[] incRelFreqs; // increasing relative distribution's frequency
+
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTRUCTORS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
 
-    ///////////////////////
-    /*  FREQUENCY CLASS  */
-    ///////////////////////
-
-    public static class FrequencyClass {
-        public final double cLeft, cRight, midpoint, freq, relFreq, incCumFreq, incRelFreq;
-
-        FrequencyClass(double cl, double cr, double mid, double f, double rf, double icf, double irf) {
-            this.cLeft = cl;
-            this.cRight = cr;
-            this.midpoint = mid;
-            this.freq = f;
-            this.relFreq = rf;
-            this.incCumFreq = icf;
-            this.incRelFreq = irf;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            FrequencyClass t = (FrequencyClass) o;
-            return equalsd(t.cLeft, cLeft) && equalsd(t.cRight, cRight) && equalsd(t.midpoint, midpoint) &&
-                    equalsd(t.freq, freq) && equalsd(t.relFreq, relFreq) && equalsd(t.incCumFreq, incCumFreq) &&
-                    equalsd(t.incRelFreq, incRelFreq);
-        }
-
-    }
-
-
-    ////////////////////
-    /*  CONSTRUCTORS  */
-    ////////////////////
-
-
-    // KNOWN FREQUENCIES TO FREQTABLE
     public FrequencyDistTable(double[] frequencies, double min, double classInterval){
-        // error checking & references
-        this.classCount = frequencies.length;
-        if(classCount <= 0) throw new TephriumException("classCount has to be greater than zero.");
+        if(frequencies.length <= 0) {
+            throw new TephriumException("Invalid classCount value (must be >0): %d", frequencies.length);
+        }
 
-        // create table
-        table = new FrequencyClass[classCount];
+        classCount = frequencies.length;
+        cLefts = new double[classCount];
+        cRights = new double[classCount];
+        midpoints = new double[classCount];
+        relFreqs = new double[classCount];
+        incCumFreqs = new double[classCount];
+        incRelFreqs = new double[classCount];
+        freqs = new double[classCount];
 
-        double totalFreqs = 0;
-        for (int i = 0; i < classCount; i++)
-            totalFreqs += frequencies[i];
+        double totalFreqs = TMath.sum(frequencies);
+        System.arraycopy(frequencies, 0, freqs, 0, classCount);
 
-        for (int i = 0; i < table.length; i++){
-            double cLeft = min + i * classInterval;
-            double cRight = min + (i+1) * classInterval;
-            double midpoint = (cLeft + cRight) / 2d;
-            // freq
-            double freq = frequencies[i];
-            double relFreq = freq / totalFreqs;
-            double incCumFreq = freq + (i == 0 ? 0 : table[i-1].incCumFreq);
-            double incRelFreq = relFreq + (i == 0 ? 0 : table[i-1].incRelFreq);
-            table[i] = new FrequencyClass(cLeft, cRight, midpoint, freq, relFreq, incCumFreq, incRelFreq);
+        for (int i = 0; i < classCount; i++) {
+            cLefts[i] = min + i * classInterval;
+            midpoints[i] = cLefts[i] + classInterval / 2d;
+            cRights[i] = cLefts[i] + classInterval;
+            relFreqs[i] = freqs[i] / totalFreqs;
+            incCumFreqs[i] = freqs[i] + (i == 0 ? 0 : incCumFreqs[i-1]);
+            incRelFreqs[i] = relFreqs[i] + (i == 0 ? 0 : incRelFreqs[i-1]);
         }
     }
-
 
 
     /**
@@ -102,144 +73,55 @@ public class FrequencyDistTable {
      * @param classCount an integer specifying how many rows this frequency distribution table will have
      */
     public FrequencyDistTable(double[] population, int classCount) {
-        // error checking & references
-        if(classCount <= 0) throw new TephriumException("classCount has to be greater than zero.");
+        if(classCount <= 0) {
+            throw new TephriumException("Invalid classCount value (must be >0): %d", classCount);
+        }
+
         this.classCount = classCount;
+        this.cLefts = new double[classCount];
+        this.cRights = new double[classCount];
+        this.midpoints = new double[classCount];
+        this.relFreqs = new double[classCount];
+        this.incCumFreqs = new double[classCount];
+        this.incRelFreqs = new double[classCount];
+        this.freqs = TArrays.doubleFilledArr(classCount, 0d);
 
-        // prepare min, max, range without
-        double min = TArrays.getMin(population);
-        double max = TArrays.getMax(population);
-        double range = DescStats.getRange(min, max);
-        double classInterval = Math.ceil(range / classCount);
+        final double min = TMath.min(population);
+        final double max = TMath.max(population);
+        final double classInterval = TMath.ceil((max - min) / classCount);
 
-        // create table
-        table = new FrequencyClass[classCount];
-        for (int i = 0; i < table.length; i++){
-            double cLeft = min + i * classInterval;
-            double cRight = min + (i+1) * classInterval;
-            double midpoint = (cLeft + cRight) / 2d;
-            // freq
-            double freq = 0d;
-            for (int j = 0; j < population.length; j++) {
-                double number = population[j];
-                if(cLeft <= number && number < cRight) // cl <= val < cr
-                    freq++;
+        for (int i = 0; i < classCount; i++) {
+            cLefts[i] = min + i * classInterval;
+            midpoints[i] = cLefts[i] + classInterval / 2d;
+            cRights[i] = cLefts[i] + classInterval;
+            for (int j = 0; j < population.length; j++) { // cl <= val < cr
+                if(cLefts[i] <= population[j] && population[j] < cRights[i])
+                    freqs[i] += 1;
             }
-            double relFreq = freq / population.length;
-            double incCumFreq = freq + (i == 0 ? 0 : table[i-1].incCumFreq);
-            double incRelFreq = relFreq + (i == 0 ? 0 : table[i-1].incRelFreq);
-            table[i] = new FrequencyClass(cLeft, cRight, midpoint, freq, relFreq, incCumFreq, incRelFreq);
+            relFreqs[i] = freqs[i] / population.length;
+            incCumFreqs[i] = freqs[i] + (i == 0 ? 0 : incCumFreqs[i-1]);
+            incRelFreqs[i] = relFreqs[i] + (i == 0 ? 0 : incRelFreqs[i-1]);
         }
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////  METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////
 
 
-    ///////////////
-    /*  METHODS  */
-    ///////////////
+    public double getIntervalLeft(int row) { return cLefts[row]; }
+    public double getIntervalRight(int row) { return cRights[row]; }
+    public double getMidpoint(int row) { return midpoints[row]; }
+    public double getFrequency(int row) { return freqs[row]; }
+    public double getRelativeFreq(int row) { return relFreqs[row]; }
+    public int getRowCount() { return classCount; }
+    public double getIncCumFreq(int row) { return incCumFreqs[row]; }
+    public double getIncRelFreq(int row) { return incRelFreqs[row]; }
 
 
-    /**
-     * Returns the sum of all frequencies (from every row)
-     * @return the sum of all frequencies (n value in stats)
-     */
-    public double getTotalFrequency(){
-        double totalFreqs = 0;
-        final int size = this.getRowCount();
-        for (int i = 0; i < size; i++)
-            totalFreqs += this.getFrequency(i);
-        return totalFreqs;
-    }
-
-
-    /**
-     * Returns all frequencies as an array starting from the first class to
-     * the last class like this: {f1, f2, f3, ...}
-     * @return all frequencies as an array
-     */
-    public double[] getFrequenciesAsArray(){
-        double[] arr = new double[this.getRowCount()];
-        for (int i = 0; i < this.getRowCount(); i++) {
-            arr[i] = this.getFrequency(i);
-        }
-        return arr;
-    }
-
-
-    public int getRowCount(){
-        return table.length;
-    }
-
-
-    public FrequencyClass getTableRow(int index) {
-        return table[index];
-    }
-
-
-    /**
-     * @param row row index
-     * @return the left side of this row's interval (inclusive)
-     */
-    public double getIntervalLeft(int row){
-        return table[row].cLeft;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the right side of this row's interval (exclusive)
-     */
-    public double getIntervalRight(int row){
-        return table[row].cRight;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the midpoint of this row
-     */
-    public double getMidpoint(int row){
-        return table[row].midpoint;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the frequency of this row
-     */
-    public double getFrequency(int row){
-        return table[row].freq;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the relative frequency of this row
-     */
-    public double getRelativeFreq(int row){
-        return table[row].relFreq;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the increasing cumulative distribution's frequency of this row
-     */
-    public double getIncCumFreq(int row){
-        return table[row].incCumFreq;
-    }
-
-
-    /**
-     * @param row row index
-     * @return the increasing relative distribution's frequency of this row
-     */
-    public double getIncRelFreq(int row){
-        return table[row].incRelFreq;
-    }
-
-
-    //////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJECT METHODS  /////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
 
     @Override
@@ -251,8 +133,8 @@ public class FrequencyDistTable {
         int lastIndex = classCount-1;
         for (int i = 0; i < classCount; i++) {
             sb.append(String.format("[%.3f, %.3f)%s%.3f%s%.3f%s%.3f%s%.3f%s%.3f",
-                    getIntervalLeft(i), getIntervalRight(i), tab, getMidpoint(i), tab, getFrequency(i), tab, getRelativeFreq(i), tab,
-                    getIncCumFreq(i), tab, getIncRelFreq(i)));
+                    getIntervalLeft(i), getIntervalRight(i), tab, getMidpoint(i), tab, getFrequency(i),
+                    tab, getRelativeFreq(i), tab, getIncCumFreq(i), tab, getIncRelFreq(i)));
             if(i != lastIndex) sb.append("\n");
         }
 
@@ -268,16 +150,26 @@ public class FrequencyDistTable {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        FrequencyDistTable that = (FrequencyDistTable) o;
-        return (classCount == that.classCount) && Arrays.equals(table, that.table);
+        FrequencyDistTable other = (FrequencyDistTable) o;
+        return (classCount == other.classCount) && Arrays.equals(cLefts, other.cLefts) &&
+            Arrays.equals(cRights, other.cRights) && Arrays.equals(midpoints, other.midpoints) &&
+            Arrays.equals(freqs, other.freqs) && Arrays.equals(relFreqs, other.relFreqs) &&
+            Arrays.equals(incCumFreqs, other.incCumFreqs) && Arrays.equals(incRelFreqs, other.incRelFreqs);
     }
 
 
     @Override
     public int hashCode() {
         int result = Objects.hash(classCount);
-        result = (31 * result) + Arrays.hashCode(table);
+        result = (31 * result) + Arrays.hashCode(cLefts);
+        result = (31 * result) + Arrays.hashCode(cRights);
+        result = (31 * result) + Arrays.hashCode(midpoints);
+        result = (31 * result) + Arrays.hashCode(freqs);
+        result = (31 * result) + Arrays.hashCode(relFreqs);
+        result = (31 * result) + Arrays.hashCode(incCumFreqs);
+        result = (31 * result) + Arrays.hashCode(incRelFreqs);
         return result;
     }
+
 
 }
