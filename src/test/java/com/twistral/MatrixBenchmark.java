@@ -17,11 +17,10 @@ package com.twistral;
 
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.core.matrices.*;
-import com.twistral.tephrium.stats.DescStats;
+import com.twistral.tephrium.stats.DataDescription;
 import org.joml.*;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 import java.util.Random;
 
@@ -89,10 +88,10 @@ public class MatrixBenchmark {
         Arrays.sort(jomlTimes);
         Arrays.sort(tephriumTimes);
         System.out.println("Tephrium:");
-        System.out.println(DescStats.getDataDesc(tephriumTimes));
+        System.out.println(new DataDescription(tephriumTimes));
         System.out.println();
         System.out.println("JOML:");
-        System.out.println(DescStats.getDataDesc(jomlTimes));
+        System.out.println(new DataDescription(jomlTimes));
     }
 
 
@@ -144,10 +143,10 @@ public class MatrixBenchmark {
         Arrays.sort(jomlTimes);
         Arrays.sort(tephriumTimes);
         System.out.println("Tephrium:");
-        System.out.println(DescStats.getDataDesc(tephriumTimes));
+        System.out.println(new DataDescription(tephriumTimes));
         System.out.println();
         System.out.println("JOML:");
-        System.out.println(DescStats.getDataDesc(jomlTimes));
+        System.out.println(new DataDescription(jomlTimes));
     }
 
 
@@ -200,10 +199,10 @@ public class MatrixBenchmark {
         Arrays.sort(jomlTimes);
         Arrays.sort(tephriumTimes);
         System.out.println("Tephrium:");
-        System.out.println(DescStats.getDataDesc(tephriumTimes));
+        System.out.println(new DataDescription(tephriumTimes));
         System.out.println();
         System.out.println("JOML:");
-        System.out.println(DescStats.getDataDesc(jomlTimes));
+        System.out.println(new DataDescription(jomlTimes));
     }
 
 

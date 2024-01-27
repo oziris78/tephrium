@@ -15,39 +15,18 @@
 
 package com.twistral.tephrium.stats;
 
-
+import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.core.functions.TMath;
+
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
-import static com.twistral.tephrium.core.functions.TMath.*;
 
-
-/**
- * A class containing all descriptive statistics measures inside it.
- */
 public class DataDescription {
 
-    // values without javadocs (self-explanatory variable names)
-    public final double count, mean, sum, interquartileRange, sampleVariance,
-            variance, sampleStddev, modeValue, modeCount;
-
-    /** The value that divides the whole data set into 2 equal parts, also it's equal to {@link #quartile2}. */
-    public final double median;
-
-    /** Quartiles are calculated with exclusive percentages. <br> Same as QUARTILE.EXC(arr, i) in Excel. */
-    public final double quartile1, quartile2, quartile3;
-
-    /** Maximum value */
-    public final double min;
-
-    /** Minimum value */
-    public final double max;
-
-    /** Specifies (maxValue - minValue) value. */
-    public final double range;
-
-    /** Standard deviation */
-    public final double stddev;
+    public final double count, mean, sum, interquartileRange, sampleVariance, variance, sampleStddev,
+            modeValue, modeCount, median, quartile1, quartile2, quartile3, min, max, range, stddev;
 
 
     /** A value in range [-1,1] to estimate the skewness of this data set. <br>
@@ -58,46 +37,89 @@ public class DataDescription {
     public final double pearsonSkewCoef, bowleySkewCoef;
 
 
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CONSTRUCTORS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
-    DataDescription(double variance, double sampleVariance, double mean,
-                    double sum, double interquartileRange, double count,
-                    double quartile1, double modeValue, double modeCount, double median,
-                    double quartile2, double quartile3, double min, double max,
-                    double range, double stddev, double pearsonSkewCoef, double bowleySkewCoef)
-    {
-        this.interquartileRange = interquartileRange;
-        this.pearsonSkewCoef = pearsonSkewCoef;
-        this.bowleySkewCoef = bowleySkewCoef;
-        this.sampleVariance = sampleVariance;
+
+    public DataDescription(double[] sortedData) {
+        if (sortedData.length <= 3)
+            throw new TephriumException("The size of your data array must be greater than 3.");
+
+        this.count = sortedData.length;
+        this.min = sortedData[0];
+        this.max = sortedData[sortedData.length - 1];
+        this.range = max - min;
+        this.sum = TMath.sum(sortedData);
+        this.mean = sum / count;
+
+        double vsum = Arrays.stream(sortedData).map(val -> TMath.square(val - mean)).sum();
+        this.variance = vsum / sortedData.length;
+        this.stddev = TMath.sqrt(variance);
+        this.sampleVariance = vsum / sortedData.length - 1;
         this.sampleStddev = TMath.sqrt(sampleVariance);
-        this.quartile1 = quartile1;
-        this.quartile2 = quartile2;
-        this.quartile3 = quartile3;
-        this.variance = variance;
-        this.median = median;
-        this.stddev = stddev;
-        this.range = range;
-        this.count = count;
-        this.mean = mean;
-        this.modeValue = modeValue;
-        this.modeCount = modeCount;
-        this.sum = sum;
-        this.min = min;
-        this.max = max;
+
+        {
+            HashMap<Double, Integer> frequencyMap = new HashMap<>();
+            double maxModeFrequency = 1d, tempMode = 0d;
+            boolean hasMode = false;
+
+            for (double dbl : sortedData) {
+                if (!frequencyMap.containsKey(dbl)) {
+                    frequencyMap.put(dbl, 1);
+                    continue;
+                }
+
+                int current = frequencyMap.get(dbl) + 1;
+                frequencyMap.put(dbl, current);
+
+                if (current > maxModeFrequency) {
+                    maxModeFrequency = current;
+                    tempMode = dbl;
+                    hasMode = true;
+                }
+            }
+            this.modeValue = hasMode ? tempMode : Double.NaN;
+            this.modeCount = hasMode ? frequencyMap.get(this.modeValue) : Double.NaN;
+        }
+
+        this.quartile1 = getQuartile(sortedData, 1);
+        this.quartile2 = getQuartile(sortedData, 2);
+        this.quartile3 = getQuartile(sortedData, 3);
+        this.median = quartile2;
+        this.pearsonSkewCoef = 3 * (mean - median) / stddev;
+        this.interquartileRange = quartile3 - quartile1;
+        this.bowleySkewCoef = (quartile3 + quartile1 - 2 * quartile2) / (quartile3 - quartile1);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  HELPER FUNCTIONS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+
+
+    private static double getQuartile(double[] sortedData, int nthQuartile) {
+        double quartileIndex = (sortedData.length + 1d) * nthQuartile / 4d;
+        int lowIndex = TMath.floorFast(quartileIndex);
+        double lowValue = sortedData[lowIndex - 1];
+        return lowValue + (sortedData[lowIndex] - lowValue) * (quartileIndex % 1);
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJECT METHODS  /////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
 
     @Override
     public String toString() {
-        return "DataDescription{" + "modeValue=" + modeValue + ", modeCount=" + modeCount +
-                ", count=" + count + ", mean=" + mean + ", sum=" + sum +
+        return "DataDescription{" + "count=" + count + ", mean=" + mean + ", sum=" + sum +
                 ", interquartileRange=" + interquartileRange + ", sampleVariance=" + sampleVariance +
-                ", variance=" + variance + ", sampleStddev=" + sampleStddev + ", median=" + median +
-                ", quartile1=" + quartile1 + ", quartile2=" + quartile2 + ", quartile3=" + quartile3 +
-                ", min=" + min + ", max=" + max + ", range=" + range + ", stddev=" + stddev +
-                ", pearsonSkewCoef=" + pearsonSkewCoef + ", bowleySkewCoef=" + bowleySkewCoef + '}';
+                ", variance=" + variance + ", sampleStddev=" + sampleStddev + ", modeValue=" + modeValue +
+                ", modeCount=" + modeCount + ", median=" + median + ", quartile1=" + quartile1 +
+                ", quartile2=" + quartile2 + ", quartile3=" + quartile3 + ", min=" + min + ", max=" + max +
+                ", range=" + range + ", stddev=" + stddev + ", pearsonSkewCoef=" + pearsonSkewCoef +
+                ", bowleySkewCoef=" + bowleySkewCoef + '}';
     }
 
 
@@ -109,23 +131,25 @@ public class DataDescription {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        DataDescription that = (DataDescription) o;
-        return  equalsd(that.modeValue, modeValue) && equalsd(that.modeCount, modeCount) && equalsd(that.count, count) &&
-                equalsd(that.mean, mean) && equalsd(that.sum, sum) && equalsd(that.interquartileRange, interquartileRange) &&
-                equalsd(that.sampleVariance, sampleVariance) && equalsd(that.variance, variance) &&
-                equalsd(that.sampleStddev, sampleStddev) && equalsd(that.median, median) && equalsd(that.quartile1, quartile1) &&
-                equalsd(that.quartile2, quartile2) && equalsd(that.quartile3, quartile3) && equalsd(that.min, min) &&
-                equalsd(that.max, max) && equalsd(that.range, range) && equalsd(that.stddev, stddev) &&
-                equalsd(that.pearsonSkewCoef, pearsonSkewCoef) && equalsd(that.bowleySkewCoef, bowleySkewCoef);
+        DataDescription other = (DataDescription) o;
+        return TMath.equalsd(other.count, count) && TMath.equalsd(other.mean, mean) &&
+                TMath.equalsd(other.sum, sum) && TMath.equalsd(other.interquartileRange, interquartileRange) &&
+                TMath.equalsd(other.sampleVariance, sampleVariance) && TMath.equalsd(other.variance, variance) &&
+                TMath.equalsd(other.sampleStddev, sampleStddev) && TMath.equalsd(other.modeValue, modeValue) &&
+                TMath.equalsd(other.modeCount, modeCount) && TMath.equalsd(other.median, median) &&
+                TMath.equalsd(other.quartile1, quartile1) && TMath.equalsd(other.quartile2, quartile2) &&
+                TMath.equalsd(other.quartile3, quartile3) && TMath.equalsd(other.min, min) &&
+                TMath.equalsd(other.max, max) && TMath.equalsd(other.range, range) &&
+                TMath.equalsd(other.stddev, stddev) && TMath.equalsd(other.pearsonSkewCoef, pearsonSkewCoef) &&
+                TMath.equalsd(other.bowleySkewCoef, bowleySkewCoef);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(modeValue, modeCount, count, mean, sum,
-                interquartileRange, sampleVariance, variance, sampleStddev,
-                median, quartile1, quartile2, quartile3, min, max, range,
-                stddev, pearsonSkewCoef, bowleySkewCoef);
+        return Objects.hash(count, mean, sum, interquartileRange, sampleVariance, variance,
+                sampleStddev, modeValue, modeCount, median, quartile1, quartile2, quartile3,
+                min, max, range, stddev, pearsonSkewCoef, bowleySkewCoef);
     }
 
 

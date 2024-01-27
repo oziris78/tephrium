@@ -17,7 +17,6 @@ package com.twistral.tests.stats;
 
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.stats.DataDescription;
-import com.twistral.tephrium.stats.DescStats;
 import com.twistral.tephrium.utils.TArrays;
 import com.twistral.tests.stats.exampledata.Person;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,9 +46,8 @@ public class DataDescriptionTest {
         Arrays.sort(sortedWithAge);
 
         // get data sets and desc
-        DataDescription heightDesc = DescStats.getDataDesc(sortedWithHeight);
-
-        DataDescription ageDesc = DescStats.getDataDesc(sortedWithAge);
+        DataDescription heightDesc = new DataDescription(sortedWithHeight);
+        DataDescription ageDesc = new DataDescription(sortedWithAge);
 
         // TESTS
         assertTrue(TMath.equalsd(heightDesc.count, 26));
@@ -102,7 +100,7 @@ public class DataDescriptionTest {
                 177, 178, 170, 180, 170, 180, 190, 173, 192, 167, 203, 171
         };
         Arrays.sort(population);
-        DataDescription heightDesc = DescStats.getDataDesc(population);
+        DataDescription heightDesc = new DataDescription(population);
 
         // TESTS
         assertTrue(TMath.equalsd(heightDesc.count, 26));
@@ -136,26 +134,21 @@ public class DataDescriptionTest {
         double[] arr1 = TArrays.doubleArr(1, 2, 3, -2, -3, 5, 7, -9, 10, 100);
         Arrays.sort(arr1);
 
-        // you need to sort it for some values
-        Arrays.sort(arr1);
-
-        double sum, count, mean;
+        DataDescription desc = new DataDescription(arr1);
 
         // TESTS
-        count = DescStats.getCount(arr1);
-        assertTrue(TMath.equalsd(count, 10));
-        assertTrue(TMath.equalsd(DescStats.getMax(arr1), 100));
-        assertTrue(TMath.equalsd(DescStats.getMin(arr1), -9));
-        sum = DescStats.getSum(arr1);
-        assertTrue(TMath.equalsd(sum, 114));
-        mean = DescStats.getMean(sum, count);
-        assertTrue(TMath.equalsd(mean, 11.4));
-        assertTrue(TMath.equalsd(DescStats.getVariance(arr1, mean, false), 898.24));
-        assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getX(), Double.NaN));
-        assertTrue(TMath.equalsd(DescStats.getModeAndModeCount(arr1).getY(), Double.NaN));
-        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 1), -2.25d));
-        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 2), 2.5d));
-        assertTrue(TMath.equalsd(DescStats.getQuartile(arr1, 3), 7.75d));
+
+        assertTrue(TMath.equalsd(desc.count, 10));
+        assertTrue(TMath.equalsd(desc.max, 100));
+        assertTrue(TMath.equalsd(desc.min, -9));
+        assertTrue(TMath.equalsd(desc.sum, 114));
+        assertTrue(TMath.equalsd(desc.mean, 11.4));
+        assertTrue(TMath.equalsd(desc.variance, 898.24));
+        assertTrue(TMath.equalsd(desc.modeValue, Double.NaN));
+        assertTrue(TMath.equalsd(desc.modeCount, Double.NaN));
+        assertTrue(TMath.equalsd(desc.quartile1, -2.25d));
+        assertTrue(TMath.equalsd(desc.quartile2, 2.5d));
+        assertTrue(TMath.equalsd(desc.quartile3, 7.75d));
     }
 
 
