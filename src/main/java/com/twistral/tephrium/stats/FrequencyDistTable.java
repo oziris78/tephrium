@@ -18,7 +18,6 @@ package com.twistral.tephrium.stats;
 
 import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.core.functions.TMath;
-import com.twistral.tephrium.utils.TArrays;
 
 import java.util.*;
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.utils;
+package com.twistral.tephrium.collects;
 
 
 import java.util.*;
