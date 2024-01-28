@@ -22,7 +22,7 @@ import java.util.Objects;
 
 
 /**
- * A fast and mutable 2D double vector class. Most methods return the vector instance for method chaining purposes.
+ * A fast and mutable 3D double vector class. Most methods return the vector instance for method chaining purposes.
  */
 public class TVec3 {
 
@@ -56,7 +56,7 @@ public class TVec3 {
     ///////////////////////////////////////////////////////////////////////////////
 
 
-    public TVec3 set(double x, double y, double z){
+    public TVec3 set(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -64,13 +64,13 @@ public class TVec3 {
     }
 
 
-    public TVec3 setX(double x){
+    public TVec3 setX(double x) {
         this.x = x;
         return this;
     }
 
 
-    public TVec3 setY(double y){
+    public TVec3 setY(double y) {
         this.y = y;
         return this;
     }
@@ -82,17 +82,12 @@ public class TVec3 {
 
     // ---------------- //
 
-
     public double getX() {
         return x;
     }
-
-
     public double getY() {
         return y;
     }
-
-
     public double getZ() {
         return z;
     }
@@ -167,12 +162,9 @@ public class TVec3 {
      * @return this vector for method chaining purposes
      */
     public TVec3 unit(){
-        if(!this.isZeroVector()) {
-            double len = this.length();
-            this.x /= len;
-            this.y /= len;
-            this.z /= len;
-        }
+        if(!this.isZeroVector())
+            scale(1d / this.length());
+
         return this;
     }
 

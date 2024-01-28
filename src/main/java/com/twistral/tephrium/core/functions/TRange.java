@@ -25,10 +25,7 @@ import java.util.Objects;
  */
 public class TRange {
 
-    public static final TRange REEL_NUMBERS = new TRange(-Double.MAX_VALUE, Double.MAX_VALUE);
-
     public static final TRange ZERO_TO_ONE = new TRange(0d, 1d);
-
     public static final TRange MONE_TO_ONE = new TRange(-1d, 1d);
 
 
