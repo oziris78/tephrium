@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.collects;
+package com.twistral.tephrium.collections;
 
 
 
