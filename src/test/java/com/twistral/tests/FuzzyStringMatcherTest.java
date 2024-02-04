@@ -25,7 +25,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class FuzzyStringMatcherTest {
 
@@ -48,6 +51,25 @@ public class FuzzyStringMatcherTest {
         assertEquals(fsm.levenshteinDistance(null, "null"), Integer.MAX_VALUE);
     }
 
+
+    @Test
+    @DisplayName("closestWords")
+    void closestWords() {
+        FuzzyStringMatcher fsm = new FuzzyStringMatcher();
+
+        String[] wordList = new String[] {"banana", "baba", "orange", "range", "angel",
+                "gelatin", "blue", "horrified", "distance" };
+
+        assertEquals(fsm.getClosestWords(wordList, "barana")[0], "banana");
+        assertEquals(fsm.getClosestWords(wordList, "oranj")[0], "orange");
+        assertEquals(fsm.getClosestWords(wordList, "angele")[0], "angel");
+        assertEquals(fsm.getClosestWords(wordList, "lablue")[0], "blue");
+        assertEquals(fsm.getClosestWords(wordList, "kistanse")[0], "distance");
+        assertEquals(fsm.getClosestWords(wordList, "terrified")[0], "horrified");
+    }
+
+
+
     @Test
     @DisplayName("apacheVsTephriumBenchmark")
     void apacheVsTephriumBenchmark() {
@@ -58,10 +80,10 @@ public class FuzzyStringMatcherTest {
         String[] randomWords = new String[250_000];
         for (int i = 0; i < randomWords.length; i++) {
             randomWords[i] = random.ints(48, 123)
-                .filter(num -> (num<58 || num>64) && (num<91 || num>96))
-                .limit(3 + random.nextInt(100))
-                .mapToObj(c -> (char)c).collect(StringBuffer::new, StringBuffer::append, StringBuffer::append)
-                .toString();
+                    .filter(num -> (num<58 || num>64) && (num<91 || num>96))
+                    .limit(3 + random.nextInt(100))
+                    .mapToObj(c -> (char)c).collect(StringBuffer::new, StringBuffer::append, StringBuffer::append)
+                    .toString();
         }
 
         double[] timeTephrium = new double[randomWords.length-1];
@@ -108,21 +130,23 @@ public class FuzzyStringMatcherTest {
         System.out.println("Variance: " + dsAp.variance + " ns");
         System.out.println();
 
+        BiFunction<Double, Double, String> getWinner = (ap, tep) -> {
+            if(ap == tep) return "They are the same";
+            if(ap < tep) return "Apache is better!";
+            return "Tephrium is better!";
+        };
+
         System.out.printf("Results for %d words:\n", randomWords.length);
-        System.out.println("Min: " + getWinner(dsAp.min, dsTe.min));
-        System.out.println("Max: " + getWinner(dsAp.max, dsTe.max));
-        System.out.println("Mean: " + getWinner(dsAp.mean, dsTe.mean));
-        System.out.println("Median: " + getWinner(dsAp.median, dsTe.median));
-        System.out.println("Variance: " + getWinner(dsAp.variance, dsTe.variance));
+        System.out.println("Min: " + getWinner.apply(dsAp.min, dsTe.min));
+        System.out.println("Max: " + getWinner.apply(dsAp.max, dsTe.max));
+        System.out.println("Mean: " + getWinner.apply(dsAp.mean, dsTe.mean));
+        System.out.println("Median: " + getWinner.apply(dsAp.median, dsTe.median));
+        System.out.println("Variance: " + getWinner.apply(dsAp.variance, dsTe.variance));
         System.out.println();
 
     }
 
-    private String getWinner(double ap, double tep) {
-        if(ap == tep) return "They are the same";
-        if(ap < tep) return "Apache is better!";
-        return "Tephrium is better!";
-    }
+
 
 
 }
