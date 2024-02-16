@@ -17,7 +17,7 @@ package com.twistral.tests.stats;
 
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.stats.DataDescription;
-import com.twistral.tests.stats.exampledata.Person;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

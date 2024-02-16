@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tests.matrices;
+package com.twistral.tests;
 
 import com.twistral.tephrium.core.TephriumException;
 import com.twistral.tephrium.core.functions.*;

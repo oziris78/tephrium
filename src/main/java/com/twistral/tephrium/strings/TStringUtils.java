@@ -37,6 +37,28 @@ public class TStringUtils {
 
 
     /**
+     * A naive and potentially slow (~O(2 * {@code str} * {@code count})) implementation of String.repeat()
+     * from future Java versions. (Tephrium is specifically written in SE8 for compatibility)
+     * @param str any string
+     * @param count an integer specifying how many times the string will be repeated
+     * @return {@code str} repeated {@code count} times
+     */
+    public static String repeatedStringNaive(String str, int count) {
+        final int strLen = str.length();
+        final int repLen = strLen * count;
+        char[] rep = new char[repLen];
+
+        int repIndex = 0, strIndex = 0;
+        while(repIndex < repLen) {
+            rep[repIndex++] = str.charAt(strIndex++);
+            strIndex %= strLen;
+        }
+
+        return new String(rep);
+    }
+
+
+    /**
      * Converts an integer in base 10 to another base and returns it as a string. <br>
      * This method is basically the inverse of {@link Integer#parseInt(String, int)} method. <br>
      * The {@link String#valueOf(int)} can convert integers in base 10 to string but it cant convert

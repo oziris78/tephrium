@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tests.stats.exampledata;
+package com.twistral.tests.stats;
 
 
 public class Person {

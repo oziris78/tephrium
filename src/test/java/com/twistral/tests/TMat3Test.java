@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tests.matrices;
+package com.twistral.tests;
 
 import com.twistral.tephrium.core.vectors.TVec3;
 import com.twistral.tephrium.core.matrices.TMat3;
