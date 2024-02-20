@@ -17,23 +17,38 @@ package com.twistral.tephrium.strings;
 
 
 import com.twistral.tephrium.core.functions.TMath;
+import com.twistral.tephrium.prng.SplitMix64Random;
+import com.twistral.tephrium.prng.TRandomGenerator;
 
 import java.util.Locale;
 
 
-
 public class TStringUtils {
 
-    public static final String ENGLISH_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // Character Sets (CSs)
+    public static final String CS_ASCII_LOWER = "abcdefghijklmnopqrstuvwxyz";
+    public static final String CS_ASCII_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String CS_ASCII_ALL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    public static final String CS_VOWELS_LOWER = "aeiou";
+    public static final String CS_VOWELS_UPPER = "AEIOU";
+    public static final String CS_VOWELS_ALL = "aeiouAEIOU";
+    public static final String CS_CONSONANTS_LOWER = "bcdfghjklmnpqrstvwxyz";
+    public static final String CS_CONSONANTS_UPPER = "BCDFGHJKLMNPQRSTVWXYZ";
+    public static final String CS_CONSONANTS_ALL = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
+    public static final String CS_BINARY = "01";
+    public static final String CS_OCTAL = "01234567";
+    public static final String CS_DECIMAL = "0123456789";
+    public static final String CS_HEXADECIMAL = "0123456789ABCDEF";
+    public static final String CS_WHITESPACE = " \t\n\r\f";
 
 
     // No constructor
     private TStringUtils(){}
 
 
-    /////////////////////////////////////////////////////////////////////
-    /////////////////////////////  METHODS  /////////////////////////////
-    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  GENERAL METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
 
 
     /**
@@ -82,31 +97,29 @@ public class TStringUtils {
             rem = num - newBase * divided;
             sb.append((0 <= rem && rem <= 9) ? rem : ((char) (65 + rem - 10)));
         }
+
         return sb.reverse().toString();
     }
 
 
-    //////////////////////////////////////////////////////////////////////////
-    /////////////////////////////  CRYPTOGRAPHY  /////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CODEC METHODS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
 
     public static String caesarCipher(String text, int shift) {
-        if(shift <= 0) {
-            while (shift < 0) {
-                shift += 26;
-            }
-        }
-
+        while (shift < 0) shift += 26;
         if(shift == 0) return text;
 
         String code = text.toUpperCase(Locale.ROOT);
         final int codeLen = code.length();
         StringBuilder sb = new StringBuilder();
+        String curLetter;
+        int index;
 
         for(int i = 0; i < codeLen; i++){
-            String curLetter = String.valueOf(code.charAt(i));
-            int index = ENGLISH_ALPHABET.indexOf(curLetter);
+            curLetter = String.valueOf(code.charAt(i));
+            index = CS_ASCII_UPPER.indexOf(curLetter);
 
             if(index == -1) {
                 sb.append(Character.isLetter(curLetter.charAt(0)) ? " " : curLetter);
@@ -117,13 +130,39 @@ public class TStringUtils {
             index = (index < 0) ? (index + 26) % 26 : index % 26;
 
             sb.append(Character.isUpperCase(text.charAt(i)) ?
-                    Character.toUpperCase(ENGLISH_ALPHABET.charAt(index)) :
-                    Character.toLowerCase(ENGLISH_ALPHABET.charAt(index))
+                    Character.toUpperCase(CS_ASCII_UPPER.charAt(index)) :
+                    Character.toLowerCase(CS_ASCII_UPPER.charAt(index))
             );
         }
 
         return sb.toString();
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CHAR CHECKING METHODS  /////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isVowel(char c) { return CS_VOWELS_ALL.indexOf(c) != -1; }
+    public static boolean isVowelLower(char c) { return CS_VOWELS_LOWER.indexOf(c) != -1; }
+    public static boolean isVowelUpper(char c) { return CS_VOWELS_UPPER.indexOf(c) != -1; }
+
+    public static boolean isConsonant(char c) { return CS_CONSONANTS_ALL.indexOf(c) != -1; }
+    public static boolean isConsonantLower(char c) { return CS_CONSONANTS_LOWER.indexOf(c) != -1; }
+    public static boolean isConsonantUpper(char c) { return CS_CONSONANTS_UPPER.indexOf(c) != -1; }
+
+    public static boolean isAscii(char c) { return CS_ASCII_ALL.indexOf(c) != -1; }
+    public static boolean isAsciiLower(char c) { return CS_ASCII_LOWER.indexOf(c) != -1; }
+    public static boolean isAsciiUpper(char c) { return CS_ASCII_UPPER.indexOf(c) != -1; }
+
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CHAR METHODS  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
+    public static char getRandCharFrom(String text, TRandomGenerator random) {
+        return text.charAt(random.nextInt(0, text.length()));
+    }
+
 
 
 }

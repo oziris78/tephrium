@@ -45,7 +45,7 @@ public class FuzzyStringMatcher {
     }
 
     public FuzzyStringMatcher() {
-        this(125); // 1 KB in total
+        this(125); // 125*2*4 bytes = 1000 bytes = 1 KB in total
     }
 
 

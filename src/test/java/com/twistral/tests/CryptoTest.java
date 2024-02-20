@@ -15,6 +15,7 @@
 
 package com.twistral.tests;
 
+import com.sun.javafx.binding.StringConstant;
 import com.twistral.tephrium.strings.TStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +36,7 @@ public class CryptoTest {
             // Get random text
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < 20; j++) {
-                char randChar = TStringUtils.ENGLISH_ALPHABET.charAt( (int) (Math.random() * 26) );
+                char randChar = TStringUtils.CS_ASCII_UPPER.charAt( (int) (Math.random() * 26) );
                 sb.append(randChar);
             }
             String text = sb.toString();
