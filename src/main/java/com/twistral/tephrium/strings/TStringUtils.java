@@ -20,7 +20,7 @@ import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 
-import java.util.Locale;
+import java.util.function.Function;
 
 
 public class TStringUtils {
@@ -41,14 +41,36 @@ public class TStringUtils {
     public static final String CS_HEXADECIMAL = "0123456789ABCDEF";
     public static final String CS_WHITESPACE = " \t\n\r\f";
 
+    // Private fields
+    private static final TRandomGenerator RAND_SHUFFLE = new SplitMix64Random();
 
     // No constructor
-    private TStringUtils(){}
+    private TStringUtils() {}
 
 
-    /////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////  GENERAL METHODS  /////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////  STRING UTILITIES  ////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    public static String shuffleString(String str, TRandomGenerator random) {
+        if(str == null) return "";
+        if(str.length() <= 1) return str;
+
+        final int size = str.length();
+        char[] arr = str.toCharArray();
+
+        for(int i = size; i > 1; i--) {
+            int x = random.nextInt(0, i);
+            char temp = arr[i-1];
+            arr[i-1] = arr[x];
+            arr[x] = temp;
+        }
+
+        return new String(arr);
+    }
+
+    public static String shuffleString(String str) { return shuffleString(str, RAND_SHUFFLE); }
 
 
     /**
@@ -107,41 +129,96 @@ public class TStringUtils {
     ///////////////////////////////////////////////////////////////////////////
 
 
-    public static String caesarCipher(String text, int shift) {
-        while (shift < 0) shift += 26;
-        if(shift == 0) return text;
+    /**
+     * This function returns a consowel-shifted version of the given string. <br>
+     * The "Consowel Shifting Algorithm" is my (Oğuzhan Topaloğlu) original idea. <br>
+     * It is equivelant to basically doing two different Caesar shifts on both vowels and consonants. <br>
+     * Here's an example: for the string "hia" and shift=1, we will get the following:
+     * the first consonant after h is j ("bcdfghjklmnpqrstvwxyz"), the first vowel after i is o ("aeiou"),
+     * and the first vowel after a is e, so the result will be "joe".
+     * @param str any string
+     * @param shift any integer (if its not in range [0,26) it will be mapped to it)
+     * @return consowel-shifted version of the given string
+     */
+    public static String consowelShiftCodec(String str, int shift) {
+        char[] arr = str.toCharArray();
+        final int size = arr.length;
 
-        String code = text.toUpperCase(Locale.ROOT);
-        final int codeLen = code.length();
-        StringBuilder sb = new StringBuilder();
-        String curLetter;
-        int index;
+        for (int i = 0; i < size; i++) {
+            int cnsi = CS_CONSONANTS_ALL.indexOf(arr[i]);
+            int vowi = CS_VOWELS_ALL.indexOf(arr[i]);
 
-        for(int i = 0; i < codeLen; i++){
-            curLetter = String.valueOf(code.charAt(i));
-            index = CS_ASCII_UPPER.indexOf(curLetter);
+            if(cnsi == -1 && vowi == -1) continue; // not a letter
 
-            if(index == -1) {
-                sb.append(Character.isLetter(curLetter.charAt(0)) ? " " : curLetter);
-                continue;
-            }
+            String alphabet = (cnsi != -1) ?
+                    (isConsonantLower(arr[i]) ? CS_CONSONANTS_LOWER : CS_CONSONANTS_UPPER) :
+                    (isVowelLower(arr[i]) ? CS_VOWELS_LOWER : CS_VOWELS_UPPER);
 
-            index = index + shift;
-            index = (index < 0) ? (index + 26) % 26 : index % 26;
+            final int alphabetLen = alphabet.length();
 
-            sb.append(Character.isUpperCase(text.charAt(i)) ?
-                    Character.toUpperCase(CS_ASCII_UPPER.charAt(index)) :
-                    Character.toLowerCase(CS_ASCII_UPPER.charAt(index))
-            );
+            int newIndex = (TMath.max(cnsi, vowi) + shift) % alphabetLen;
+            newIndex = (newIndex < 0) ? newIndex + alphabetLen : newIndex;
+            arr[i] = alphabet.charAt(newIndex);
         }
 
-        return sb.toString();
+        return new String(arr);
+    }
+
+
+    /**
+     * Basically runs the given index-mapping function on all characters and returns the resulting string. <br>
+     * Notice that caesar cipher is actually equivelant to {@code functionalCodec(str, x -> x + shift)}.
+     * @param str any string
+     * @param indexMapper any integer to integer function, please note that overflows are completely fine since
+     *                    this function maps it to an appropriate value aka an int in range [0, 26).
+     * @return the functionally coded string
+     */
+    public static String functionalCodec(String str, Function<Integer, Integer> indexMapper) {
+        char[] arr = str.toCharArray();
+        final int size = arr.length;
+
+        for (int i = 0; i < size; i++) {
+            int loweri = CS_ASCII_LOWER.indexOf(arr[i]);
+            int upperi = CS_ASCII_UPPER.indexOf(arr[i]);
+
+            if(loweri == -1 && upperi == -1) continue; // not a letter
+
+            String alphabet = (loweri != -1) ? CS_ASCII_LOWER : CS_ASCII_UPPER;
+            final int alphabetLen = alphabet.length();
+            // I used max() because one of them is -1 and other is [0,26) so the valid one is always the max
+            int newIndex = indexMapper.apply(TMath.max(loweri, upperi)) % alphabetLen;
+            newIndex = (newIndex < 0) ? newIndex + alphabetLen : newIndex;
+            arr[i] = alphabet.charAt(newIndex);
+        }
+
+        return new String(arr);
+    }
+
+
+    public static String caesarCipher(String str, int shift) {
+        return functionalCodec(str, x -> x + shift);
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  CHAR UTILITIES  /////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    public static char getRandCharFrom(String text, TRandomGenerator random) {
+        return text.charAt(random.nextInt(0, text.length()));
+    }
+
+
+    public static char swapCharCase(char c) {
+        return Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c);
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////  CHAR CHECKING METHODS  /////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////
+
 
     public static boolean isVowel(char c) { return CS_VOWELS_ALL.indexOf(c) != -1; }
     public static boolean isVowelLower(char c) { return CS_VOWELS_LOWER.indexOf(c) != -1; }
@@ -155,14 +232,6 @@ public class TStringUtils {
     public static boolean isAsciiLower(char c) { return CS_ASCII_LOWER.indexOf(c) != -1; }
     public static boolean isAsciiUpper(char c) { return CS_ASCII_UPPER.indexOf(c) != -1; }
 
-    //////////////////////////////////////////////////////////////////////////
-    /////////////////////////////  CHAR METHODS  /////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-
-    public static char getRandCharFrom(String text, TRandomGenerator random) {
-        return text.charAt(random.nextInt(0, text.length()));
-    }
-
-
 
 }
+

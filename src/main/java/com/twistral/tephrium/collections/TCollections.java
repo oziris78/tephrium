@@ -16,49 +16,53 @@
 package com.twistral.tephrium.collections;
 
 
+import com.twistral.tephrium.prng.SplitMix64Random;
+import com.twistral.tephrium.prng.TRandomGenerator;
+
 import java.util.*;
 
 
-
 public final class TCollections {
-
 
     // No Constructor
     private TCollections() {}
 
 
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////  COLLECTION CREATION  /////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
+    private static final TRandomGenerator RAND_SHUFFLE = new SplitMix64Random();
+
+    public static void shuffle(List<?> list, TRandomGenerator random) {
+        // Same as Collections.shuffle but works with TRandomGenerator
+        final int size = list.size();
+        final List l = list;
+        int x;
+
+        if(size < 5 || list instanceof RandomAccess) {
+            for (int i = size; i > 1; i--) {
+                x = random.nextInt(0, i);
+                l.set(x, l.set(i-1, l.get(x)));
+            }
+            return;
+        }
 
 
-    public static <T> List<T> newArrayList(int initialCapacity, T... entries) {
-        ArrayList<T> res = new ArrayList<>(initialCapacity);
-        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
-        return res;
+        for(int i = size; i > 1; i--) {
+            x = random.nextInt(0, i);
+            l.set(x, l.set(i-1, l.get(x)));
+        }
+
+        final Object[] arr = list.toArray();
+        final int arrLen = arr.length;
+        ListIterator it = list.listIterator();
+        for(int i = 0; i < arrLen; i++) {
+            it.next();
+            it.set(arr[i]);
+        }
+
     }
 
-    public static <T> List<T> newArrayList(T... entries) {
-        return newArrayList(10*2, entries); // default 10 is too small imo
+    public static void shuffle(List<?> list) {
+        shuffle(list, RAND_SHUFFLE);
     }
-
-    // ------------------- //
-
-    public static <T> List<T> newLinkedList(T... entries) {
-        LinkedList<T> res = new LinkedList<>();
-        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
-        return res;
-    }
-
-    // ------------------- //
-
-    public static <T> Set<T> newHashSet(int initialCapacity, T... entries) {
-        HashSet<T> res = new HashSet<>(initialCapacity);
-        for (int i = 0; i < entries.length; i++) res.add(entries[i]);
-        return res;
-    }
-
-    public static <T> Set<T> newHashSet(T... entries) { return newHashSet(16, entries); }
 
 
 }
