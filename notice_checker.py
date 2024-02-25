@@ -58,7 +58,7 @@ SKIP_FILES = [
 
 # Files with the following extensions will be skipped by this script
 SKIP_FILE_EXTENSIONS = [
-    ".png", ".jpg", ".jpeg", ".mp3", ".wav", ".mp4"
+    ".png", ".jpg", ".jpeg", ".mp3", ".wav", ".mp4", ".csv"
 ]
  
 # Directories with the following paths (relative to the PROJECT_ROOT_PATH) will be skipped

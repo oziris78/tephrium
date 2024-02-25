@@ -17,7 +17,7 @@ package com.twistral.tephrium.core;
 
 
 
-public final class TephriumException extends RuntimeException {
+public class TephriumException extends RuntimeException {
 
     public TephriumException(String message) {
         super(message);
@@ -25,6 +25,13 @@ public final class TephriumException extends RuntimeException {
 
     public TephriumException(String format, Object... args) {
         super(String.format(format, args));
+    }
+
+
+    public static class UnreachableException extends TephriumException {
+        public UnreachableException() {
+            super("This line should have been UNREACHABLE!");
+        }
     }
 
 
