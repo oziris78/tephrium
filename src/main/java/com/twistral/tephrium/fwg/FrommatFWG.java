@@ -93,7 +93,7 @@ public class FrommatFWG {
      *     in the format string by the {@code @} symbol
      * @return a random string that corresponds with the given format
      */
-    public String getFakeWord(String format, String... customAlphabets) {
+    public String generateFakeWord(String format, String... customAlphabets) {
         List<String> steps = parseOrGetFromCache(format, customAlphabets);
         int length = steps.size();
         char[] result = new char[length];

@@ -23,6 +23,7 @@ import com.twistral.tephrium.strings.TStringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.twistral.tephrium.core.TephriumException.UnreachableException;
 import static com.twistral.tephrium.strings.TStringUtils.CS_ASCII_LOWER;
@@ -32,7 +33,7 @@ import static com.twistral.tephrium.fwg.EnglishCorpusData.*;
 
 public class EnglishCorpus {
 
-    private static final String[][] ws = new String[][] {
+    static final String[][] ws = new String[][] {
             CP_A.W, CP_B.W, CP_C.W, CP_D.W, CP_E.W, CP_F.W, CP_G.W, CP_H.W, CP_I.W,
             CP_J.W, CP_K.W, CP_L.W, CP_M.W, CP_N.W, CP_O.W, CP_P.W, CP_Q.W, CP_R.W,
             CP_S.W, CP_T.W, CP_U.W, CP_V.W, CP_W.W, CP_X.W, CP_Y.W, CP_Z.W
@@ -61,6 +62,10 @@ public class EnglishCorpus {
         }
         throw new UnreachableException();
     }
+
+
+
+
 
 }
 

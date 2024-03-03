@@ -45,16 +45,16 @@ public class CombineFWG {
     /////////////////////////////////////////////////////////////////////
 
 
-    public List<String> getFakeWords(int wordCount) {
+    public List<String> generateFakeWords(int wordCount) {
         String[] arr = new String[wordCount];
         for (int i = 0; i < wordCount; i++) {
             arr[i] = EnglishCorpus.randomWord(random);
         }
-        return getFakeWords(arr);
+        return generateFakeWords(arr);
     }
 
 
-    public List<String> getFakeWords(String... words) {
+    public List<String> generateFakeWords(String... words) {
         generated.clear();
 
         final int wordsLen = words.length;

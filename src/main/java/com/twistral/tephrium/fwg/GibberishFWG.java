@@ -52,7 +52,7 @@ public class GibberishFWG {
      *                             set this parameter to 0f or simply use {@link #getRandomString(int)}.
      * @return a random and weird looking string of {@code length} length.
      */
-    public String getFakeWord(int length, float uppercaseProbability) {
+    public String generateFakeWord(int length, float uppercaseProbability) {
         if(length <= 0) return "";
         uppercaseProbability = TMath.clamp(uppercaseProbability, 0f, 1f);
 
@@ -67,7 +67,7 @@ public class GibberishFWG {
     }
 
 
-    public String getFakeWord(int length) {
+    public String generateFakeWord(int length) {
         if(length <= 0) return "";
 
         char[] arr = new char[length];

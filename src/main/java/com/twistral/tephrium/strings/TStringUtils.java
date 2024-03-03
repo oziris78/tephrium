@@ -41,6 +41,9 @@ public class TStringUtils {
     public static final String CS_HEXADECIMAL = "0123456789ABCDEF";
     public static final String CS_WHITESPACE = " \t\n\r\f";
 
+    // Other constants
+    public static final char CNULL = '\u0000';
+
     // Private fields
     private static final TRandomGenerator RAND_SHUFFLE = new SplitMix64Random();
 
