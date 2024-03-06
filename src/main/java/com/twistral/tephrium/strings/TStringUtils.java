@@ -16,10 +16,14 @@
 package com.twistral.tephrium.strings;
 
 
+import com.twistral.tephrium.collections.TCollections;
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Function;
 
 
@@ -234,6 +238,61 @@ public class TStringUtils {
     public static boolean isAscii(char c) { return CS_ASCII_ALL.indexOf(c) != -1; }
     public static boolean isAsciiLower(char c) { return CS_ASCII_LOWER.indexOf(c) != -1; }
     public static boolean isAsciiUpper(char c) { return CS_ASCII_UPPER.indexOf(c) != -1; }
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  SPECIAL STRINGS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+
+
+    private static final HashMap<Character, String> mapCharToMorse = TCollections.newHashMap (
+        new Character[] {
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r',
+            's','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0',
+            ' '
+        },
+        ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-",
+        ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-",
+        ".--", "-..-", "-.--", "--..", ".----", "..---", "...--", "....-", ".....",
+        "-....", "--...", "---..", "----.", "-----", "/"
+    );
+
+
+    public static String convertToMorse(String str) {
+        final int strLen = str.length();
+        str = str.toLowerCase();
+        StringBuilder sb = new StringBuilder(strLen * 5);
+
+        for(int i = 0; i < strLen; i++) {
+            sb.append(mapCharToMorse.getOrDefault(str.charAt(i), "?"));
+            sb.append(' ');
+        }
+
+        return sb.toString();
+    }
+
+
+    /**
+     * Compares two version strings that are separated by a dot, for example "1.0.2" and "1.0.3".
+     * @param v1 any version string in form "MAJOR.MINOR.PATCH"
+     * @param v2 any version string in form "MAJOR.MINOR.PATCH"
+     * @return 0 if they are the same version, negative value if v1 is an older version that v2, positive
+     *         value if v2 is an older version that v1
+     */
+    public static int compareVersionStrings(String v1, String v2) {
+        final String[] parts1 = v1.split("\\.");
+        final String[] parts2 = v2.split("\\.");
+        final int len1 = parts1.length;
+        final int len2 = parts2.length;
+        final int minLen = TMath.min(len1, len2);
+
+        for (int i = 0; i < minLen; i++) {
+            int comparison = Integer.compare(Integer.parseInt(parts1[i]), Integer.parseInt(parts2[i]));
+            if (comparison != 0) return comparison;
+        }
+
+        return Integer.compare(len1, len2);
+    }
 
 
 }

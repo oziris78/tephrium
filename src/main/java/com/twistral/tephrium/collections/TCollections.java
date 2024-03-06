@@ -65,4 +65,14 @@ public final class TCollections {
     }
 
 
+    public static <T,K> HashMap<T, K> newHashMap(T[] ts, K... ks) {
+        if(ts.length != ks.length) return null;
+
+        final int elemCount = ts.length;
+        HashMap<T, K> map = new HashMap<>(elemCount);
+        for (int i = 0; i < elemCount; i++)
+            map.put(ts[i], ks[i]);
+        return map;
+    }
+
 }

@@ -19,6 +19,7 @@ import com.twistral.tephrium.stats.DataDescription;
 import com.twistral.tephrium.strings.FuzzyStringMatcher;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.twistral.tephrium.strings.TStringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +33,17 @@ import java.util.function.Function;
 
 public class FuzzyStringMatcherTest {
 
+    @Test
+    @DisplayName("Test Name")
+    void testName() {
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.3"), -1);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.4"), -1);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.10"), -1);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.1000"), -1);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.2"), 0);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0.1"), 1);
+        assertEquals(TStringUtils.compareVersionStrings("1.0.2", "1.0"), 1);
+    }
 
     @Test
     @DisplayName("levenFunc")
