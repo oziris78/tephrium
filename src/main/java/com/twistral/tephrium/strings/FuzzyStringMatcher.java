@@ -18,6 +18,7 @@ package com.twistral.tephrium.strings;
 
 import com.twistral.tephrium.core.functions.TMath;
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Stream;
 
 
@@ -148,7 +149,7 @@ public class FuzzyStringMatcher {
         words.forEach(s -> {
             int dist = levenshteinDistance(input, s);
             if(dist <= maxAllowedDistance)
-                listOfEntries.add(new AbstractMap.SimpleEntry<>(s, dist));
+                listOfEntries.add(new SimpleEntry<>(s, dist));
         });
         Collections.sort(listOfEntries, (e1, e2) -> e1.getValue() - e2.getValue());
 
@@ -160,25 +161,6 @@ public class FuzzyStringMatcher {
         return closestWords;
     }
 
-    /**  @see #getClosestWords(Stream, String, int, int) for information  */
-    public String[] getClosestWords(String[] words, String input, int maxWordCount, int maxAllowedDistance) {
-        return getClosestWords(Arrays.stream(words), input, maxWordCount, maxAllowedDistance);
-    }
-
-    /**  @see #getClosestWords(Stream, String, int, int) for information  */
-    public String[] getClosestWords(Collection<String> words, String input, int maxWordCount, int maxAllowedDistance) {
-        return getClosestWords(words.stream(), input, maxWordCount, maxAllowedDistance);
-    }
-
-    /**  @see #getClosestWords(Stream, String, int, int) for information  */
-    public String[] getClosestWords(String[] words, String input, int maxWordCount) {
-        return getClosestWords(Arrays.stream(words), input, maxWordCount, Integer.MAX_VALUE);
-    }
-
-    /**  @see #getClosestWords(Stream, String, int, int) for information  */
-    public String[] getClosestWords(Collection<String> words, String input, int maxWordCount) {
-        return getClosestWords(words.stream(), input, maxWordCount, Integer.MAX_VALUE);
-    }
 
     /**  @see #getClosestWords(Stream, String, int, int) for information  */
     public String[] getClosestWords(String[] words, String input) {

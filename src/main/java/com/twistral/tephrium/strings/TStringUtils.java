@@ -20,9 +20,6 @@ import com.twistral.tephrium.collections.TCollections;
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
-
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -265,7 +262,7 @@ public class TStringUtils {
 
         for(int i = 0; i < strLen; i++) {
             sb.append(mapCharToMorse.getOrDefault(str.charAt(i), "?"));
-            sb.append(' ');
+            if(i+1 != strLen) sb.append(' ');
         }
 
         return sb.toString();

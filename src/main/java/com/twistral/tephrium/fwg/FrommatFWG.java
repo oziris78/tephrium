@@ -17,6 +17,7 @@ package com.twistral.tephrium.fwg;
 
 
 import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.pairs.ObjPair;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 
@@ -37,17 +38,17 @@ import static com.twistral.tephrium.strings.TStringUtils.*;
 public class FrommatFWG {
 
     private final TRandomGenerator random;
-    private final HashMap<String, List<String>> cachedFormats; // { formatStr : alphabetForRandChar }
 
-    public static final int INITIAL_CACHE_CAP = 128;
+    // { formatStrAndCustAlph : alphabetForRandChar }
+    private final HashMap<ObjPair<String, String[]>, List<String>> cachedFormats;
 
-    public FrommatFWG(TRandomGenerator random, int initialCacheCapacity) {
+    public FrommatFWG(TRandomGenerator random) {
         this.random = random;
-        this.cachedFormats = new HashMap<>(initialCacheCapacity);
+        this.cachedFormats = new HashMap<>(128);
     }
 
     public FrommatFWG() {
-        this(new SplitMix64Random(), INITIAL_CACHE_CAP);
+        this(new SplitMix64Random());
     }
 
 
@@ -109,8 +110,9 @@ public class FrommatFWG {
 
 
     private List<String> parseOrGetFromCache(String format, String... customAlphabets) {
-        if(cachedFormats.containsKey(format)) {
-            return cachedFormats.get(format);
+        final ObjPair<String, String[]> key = new ObjPair<>(format, customAlphabets);
+        if(cachedFormats.containsKey(key)) {
+            return cachedFormats.get(key);
         }
 
         List<String> steps = new LinkedList<>();
@@ -130,6 +132,7 @@ public class FrommatFWG {
                 } break;
                 case ']': {
                     if(!inParen) panic("you forgot to open a parenthesis");
+                    inParen = false;
 
                     final String pc = parenText.toString();
                     parenText.setLength(0);
@@ -162,7 +165,6 @@ public class FrommatFWG {
                     }
                     else panic("invalid parenthesis content: " + pc);
 
-                    inParen = false;
                     i++;
                 } break;
                 case '!': {
@@ -179,7 +181,7 @@ public class FrommatFWG {
             }
         }
 
-        cachedFormats.put(format, steps);
+        cachedFormats.put(key, steps);
         return steps;
     }
 
@@ -189,4 +191,33 @@ public class FrommatFWG {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJ METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {
+        return "FrommatFWG{" + "random=" + random + ", cachedFormats=" + cachedFormats + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        FrommatFWG that = (FrommatFWG) o;
+        return Objects.equals(random, that.random) && Objects.equals(cachedFormats, that.cachedFormats);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(random, cachedFormats);
+    }
+
+
 }
+

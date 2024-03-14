@@ -24,7 +24,9 @@ import java.util.SplittableRandom;
 public class JavaSplittableRandom implements TRandomGenerator {
 
     private final SplittableRandom random;
+
     public JavaSplittableRandom(final SplittableRandom random) { this.random = random; }
+    public JavaSplittableRandom() { this.random = new SplittableRandom(); }
 
     /////////////////////////////////////////////////////////////////////
     /////////////////////////////  METHODS  /////////////////////////////

@@ -32,6 +32,10 @@ public class TephriumException extends RuntimeException {
         public UnreachableException() {
             super("This line should have been UNREACHABLE!");
         }
+        public UnreachableException(String... extraLines) {
+            super("This line should have been UNREACHABLE!\n"
+                    + String.join("\n", extraLines));
+        }
     }
 
 

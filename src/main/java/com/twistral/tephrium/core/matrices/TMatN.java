@@ -83,7 +83,7 @@ public class TMatN {
      * @param N matrix's size
      * @param fillValue any double value
      */
-    public TMatN(int N, double fillValue){
+    public TMatN(int N, double fillValue) {
         if(N <= 0) throw new TephriumException("Invalid matrix size: N=%d", N);
 
         this.N = N;

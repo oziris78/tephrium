@@ -33,6 +33,10 @@ import static com.twistral.tephrium.fwg.EnglishCorpusData.*;
 
 public class EnglishCorpus {
 
+    // No constructor
+    private EnglishCorpus() {}
+
+
     static final String[][] ws = new String[][] {
             CP_A.W, CP_B.W, CP_C.W, CP_D.W, CP_E.W, CP_F.W, CP_G.W, CP_H.W, CP_I.W,
             CP_J.W, CP_K.W, CP_L.W, CP_M.W, CP_N.W, CP_O.W, CP_P.W, CP_Q.W, CP_R.W,
@@ -62,10 +66,6 @@ public class EnglishCorpus {
         }
         throw new UnreachableException();
     }
-
-
-
-
 
 }
 

@@ -268,8 +268,9 @@ public class TVec3 {
 
 
     public static boolean areOrthogonal(TVec3 vec1, TVec3 vec2, TVec3 vec3){
-        return TMath.equalsd(vec1.dot(vec2), 0d) && TMath.equalsd(vec1.dot(vec3), 0d)
-                && TMath.equalsd(vec2.dot(vec3), 0d);
+        return TMath.equalsd(vec1.dot(vec2), 0d)
+            && TMath.equalsd(vec1.dot(vec3), 0d)
+            && TMath.equalsd(vec2.dot(vec3), 0d);
     }
 
 

@@ -260,12 +260,8 @@ public class TMat4 {
 
     // ----------------------- //
 
-    public TMat4 scale(double scale){
-        this.m00 *= scale; this.m01 *= scale; this.m02 *= scale; this.m03 *= scale;
-        this.m10 *= scale; this.m11 *= scale; this.m12 *= scale; this.m13 *= scale;
-        this.m20 *= scale; this.m21 *= scale; this.m22 *= scale; this.m23 *= scale;
-        this.m30 *= scale; this.m31 *= scale; this.m32 *= scale; this.m33 *= scale;
-        return this;
+    public TMat4 scale(double scale) {
+        return applyFunctionElementWise(x -> x * scale);
     }
 
     // ----------------------- //
@@ -345,7 +341,7 @@ public class TMat4 {
      * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMat4 divide(TMat4 mat){
+    public TMat4 divide(TMat4 mat) {
         return divide(
                 mat.m00, mat.m01, mat.m02, mat.m03,
                 mat.m10, mat.m11, mat.m12, mat.m13,
@@ -654,7 +650,7 @@ public class TMat4 {
      * Calculates the transpose of this matrix and assigns it to this matrix. <br>
      * @return this matrix for method chaining
      */
-    public TMat4 transpose(){
+    public TMat4 transpose() {
         double temp;
 
         temp = this.m01;

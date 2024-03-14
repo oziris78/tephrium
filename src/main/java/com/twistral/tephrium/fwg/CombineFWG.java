@@ -22,7 +22,7 @@ import com.twistral.tephrium.prng.TRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 
 
 public class CombineFWG {
@@ -86,6 +86,34 @@ public class CombineFWG {
         }
 
         return generated;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJ METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {
+        return "CombineFWG{" + "random=" + random + ", generated=" + generated + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        CombineFWG that = (CombineFWG) o;
+        return Objects.equals(random, that.random) && Objects.equals(generated, that.generated);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(random, generated);
     }
 
 

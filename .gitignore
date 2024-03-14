@@ -18,3 +18,4 @@ hs_err_pid*
 /build/
 .gradle
 /scripts/EnglishCorpusData/words_pos.csv
+.hprof

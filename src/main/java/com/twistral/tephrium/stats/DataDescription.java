@@ -28,6 +28,7 @@ public class DataDescription {
     public final double count, mean, sum, interquartileRange, sampleVariance, variance, sampleStddev,
             modeValue, modeCount, median, quartile1, quartile2, quartile3, min, max, range, stddev;
 
+    public final String dataName;
 
     /** A value in range [-1,1] to estimate the skewness of this data set. <br>
      * skewness > 0 means it's skewed to right. <br>
@@ -42,7 +43,7 @@ public class DataDescription {
     //////////////////////////////////////////////////////////////////////////
 
 
-    public DataDescription(double[] sortedData) {
+    public DataDescription(double[] sortedData, String dataName) {
         if (sortedData.length <= 3)
             throw new TephriumException("The size of your data array must be greater than 3.");
 
@@ -90,6 +91,12 @@ public class DataDescription {
         this.pearsonSkewCoef = 3 * (mean - median) / stddev;
         this.interquartileRange = quartile3 - quartile1;
         this.bowleySkewCoef = (quartile3 + quartile1 - 2 * quartile2) / (quartile3 - quartile1);
+        this.dataName = (dataName != null) ? dataName : "Unnamed";
+    }
+
+
+    public DataDescription(double[] sortedData) {
+        this(sortedData, "Unnamed");
     }
 
 
@@ -114,12 +121,13 @@ public class DataDescription {
     @Override
     public String toString() {
         return "DataDescription{" + "count=" + count + ", mean=" + mean + ", sum=" + sum +
-                ", interquartileRange=" + interquartileRange + ", sampleVariance=" + sampleVariance +
-                ", variance=" + variance + ", sampleStddev=" + sampleStddev + ", modeValue=" + modeValue +
-                ", modeCount=" + modeCount + ", median=" + median + ", quartile1=" + quartile1 +
-                ", quartile2=" + quartile2 + ", quartile3=" + quartile3 + ", min=" + min + ", max=" + max +
-                ", range=" + range + ", stddev=" + stddev + ", pearsonSkewCoef=" + pearsonSkewCoef +
-                ", bowleySkewCoef=" + bowleySkewCoef + '}';
+            ", interquartileRange=" + interquartileRange + ", sampleVariance=" + sampleVariance +
+            ", variance=" + variance + ", sampleStddev=" + sampleStddev + ", modeValue=" +
+            modeValue + ", modeCount=" + modeCount + ", median=" + median + ", quartile1=" +
+            quartile1 + ", quartile2=" + quartile2 + ", quartile3=" + quartile3 + ", min=" +
+            min + ", max=" + max + ", range=" + range + ", stddev=" + stddev + ", dataName='" +
+            dataName + '\'' + ", pearsonSkewCoef=" + pearsonSkewCoef + ", bowleySkewCoef=" +
+            bowleySkewCoef + '}';
     }
 
 
@@ -141,15 +149,15 @@ public class DataDescription {
                 TMath.equalsd(other.quartile3, quartile3) && TMath.equalsd(other.min, min) &&
                 TMath.equalsd(other.max, max) && TMath.equalsd(other.range, range) &&
                 TMath.equalsd(other.stddev, stddev) && TMath.equalsd(other.pearsonSkewCoef, pearsonSkewCoef) &&
-                TMath.equalsd(other.bowleySkewCoef, bowleySkewCoef);
+                TMath.equalsd(other.bowleySkewCoef, bowleySkewCoef) && dataName.equals(other.dataName);
     }
 
 
     @Override
     public int hashCode() {
         return Objects.hash(count, mean, sum, interquartileRange, sampleVariance, variance,
-                sampleStddev, modeValue, modeCount, median, quartile1, quartile2, quartile3,
-                min, max, range, stddev, pearsonSkewCoef, bowleySkewCoef);
+            sampleStddev, modeValue, modeCount, median, quartile1, quartile2, quartile3,
+            min, max, range, stddev, dataName, pearsonSkewCoef, bowleySkewCoef);
     }
 
 

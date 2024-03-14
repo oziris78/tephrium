@@ -16,7 +16,6 @@
 package com.twistral.tephrium.core.functions;
 
 
-import java.util.Arrays;
 
 /**
  * Tephrium's heart, containing a lot of alternatives to {@link Math} class' methods. <br>
@@ -40,9 +39,9 @@ public class TMath {
     private TMath(){}
 
 
-    /////////////////////////////////////////////////////////////////////
-    //////////////////////////  MIN, MAX, ABS  //////////////////////////
-    /////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////////  VERY BASIC MATH  //////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
 
     public static long min(long a, long b) { return (a <= b) ? a : b; }
@@ -135,6 +134,7 @@ public class TMath {
             res += values[i];
         return res;
     }
+
 
     public static long clamp(long value, long min, long max) {
         if(value < min) return min;

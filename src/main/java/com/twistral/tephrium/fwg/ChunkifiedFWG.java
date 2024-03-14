@@ -37,7 +37,7 @@ public class ChunkifiedFWG {
     private static final int LETTER_COUNT = CS_ASCII_LOWER.length();
     private static final int LETTER_COUNT_2 = LETTER_COUNT * LETTER_COUNT;
     private static final int LETTER_COUNT_3 = LETTER_COUNT_2 * LETTER_COUNT;
-    private static final int DEF_REWIND_LIMIT = 200;
+    public static final int DEF_REWIND_LIMIT = 200;
 
     // Instance variables
     private final TRandomGenerator random;
@@ -68,23 +68,12 @@ public class ChunkifiedFWG {
 
 
     /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
-    public ChunkifiedFWG(int[] frequencies, int rewindLimit) {
-        this(frequencies, new SplitMix64Random(), rewindLimit);
-    }
-
-
-    /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
-    public ChunkifiedFWG(int[] frequencies, TRandomGenerator random) {
-        this(frequencies, random, DEF_REWIND_LIMIT);
-    }
-
-
-    /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
     public ChunkifiedFWG(int[] frequencies) {
         this(frequencies, new SplitMix64Random(), DEF_REWIND_LIMIT);
     }
 
 
+    /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
     public ChunkifiedFWG() {
         this(freqFromCorpus(), new SplitMix64Random(), DEF_REWIND_LIMIT);
     }
@@ -153,10 +142,10 @@ public class ChunkifiedFWG {
 
     private static void fillFrequencyArray(int[] frequencies, Stream<String> stream) {
         stream.forEach(word -> {
-            final int iterCount = word.length() - 3;
-            if(iterCount < 0) return; // Word must be longer than 3 letters
+            if(word.length() < 3) return; // Word must be longer than 3 letters
 
-            word = word.toLowerCase();
+            word = word.toLowerCase().trim();
+            int iterCount = word.length() - 3;
 
             for (int i = 0; i <= iterCount; i++) {
                 int ci = CS_ASCII_LOWER.indexOf(word.charAt(i+0));
@@ -293,6 +282,39 @@ public class ChunkifiedFWG {
 
     public int getRewindLimit() { return rewindLimit; }
     public TRandomGenerator getRandom() { return random; }
+
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJ METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {
+        return "ChunkifiedFWG{" + "random=" + random + ", frequencies=" + Arrays.toString(frequencies) +
+            ", rewindLimit=" + rewindLimit + ", cret1=" + cret1 + ", cret2=" + cret2 + ", cret3=" + cret3 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        ChunkifiedFWG that = (ChunkifiedFWG) o;
+        return (rewindLimit == that.rewindLimit) && (cret1 == that.cret1) &&
+            (cret2 == that.cret2) && (cret3 == that.cret3) &&
+            Objects.equals(random, that.random) && Arrays.equals(frequencies, that.frequencies);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(random, rewindLimit, cret1, cret2, cret3);
+        result = (31 * result) + Arrays.hashCode(frequencies);
+        return result;
+    }
 
 
 }

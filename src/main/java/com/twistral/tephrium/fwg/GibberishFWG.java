@@ -20,6 +20,8 @@ import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 
+import java.util.Objects;
+
 import static com.twistral.tephrium.strings.TStringUtils.*;
 
 
@@ -59,7 +61,7 @@ public class GibberishFWG {
         char[] arr = new char[length];
 
         for (int i = 0; i < length; i++) {
-            final String alphabet = (random.nextFloat() <= uppercaseProbability) ? CS_ASCII_UPPER : CS_ASCII_LOWER;
+            final String alphabet = (random.nextFloat() < uppercaseProbability) ? CS_ASCII_UPPER : CS_ASCII_LOWER;
             arr[i] = getRandCharFrom(alphabet, random);
         }
 
@@ -75,6 +77,36 @@ public class GibberishFWG {
             arr[i] = getRandCharFrom(CS_ASCII_ALL, random);
 
         return new String(arr);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////  OBJ METHODS  /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {
+        return "GibberishFWG{" + "random=" + random + '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+        GibberishFWG that = (GibberishFWG) o;
+        return Objects.equals(random, that.random);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(random);
     }
 
 

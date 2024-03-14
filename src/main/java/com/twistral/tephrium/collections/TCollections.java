@@ -67,12 +67,34 @@ public final class TCollections {
 
     public static <T,K> HashMap<T, K> newHashMap(T[] ts, K... ks) {
         if(ts.length != ks.length) return null;
-
         final int elemCount = ts.length;
         HashMap<T, K> map = new HashMap<>(elemCount);
-        for (int i = 0; i < elemCount; i++)
-            map.put(ts[i], ks[i]);
+        for (int i = 0; i < elemCount; i++) map.put(ts[i], ks[i]);
         return map;
+    }
+
+
+    public static <T> ArrayList<T> newArrayList(T... elements) {
+        final int elementsLen = elements.length;
+        ArrayList<T> list = new ArrayList<>(elementsLen);
+        for (int i = 0; i < elementsLen; i++) list.add(elements[i]);
+        return list;
+    }
+
+
+    public static <T> LinkedList<T> newLinkedList(T... elements) {
+        final int elementsLen = elements.length;
+        LinkedList<T> list = new LinkedList<>();
+        for (int i = 0; i < elementsLen; i++) list.add(elements[i]);
+        return list;
+    }
+
+
+    public static <T> HashSet<T> newHashSet(T... elements) {
+        final int elementsLen = elements.length;
+        HashSet<T> set = new HashSet<>(elementsLen);
+        for (int i = 0; i < elementsLen; i++) set.add(elements[i]);
+        return set;
     }
 
 }
