@@ -21,6 +21,8 @@ import com.twistral.tephrium.core.TephriumException.UnreachableException;
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
+import com.twistral.tephrium.strings.TStringUtils;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -217,7 +219,7 @@ public class ChunkifiedFWG {
 
     /** @see #generateFakeWord(int, char) */
     public String generateFakeWord(int length) {
-        return generateFakeWord(length, CNULL);
+        return generateFakeWord(length, getRandCharFrom(CS_ASCII_LOWER, random));
     }
 
 
@@ -237,7 +239,7 @@ public class ChunkifiedFWG {
         while(i < LETTER_COUNT) {
             while(j < LETTER_COUNT) {
                 for (int k = 0; k < LETTER_COUNT; k++) {
-                    final int index = (i * LETTER_COUNT * LETTER_COUNT) + (j * LETTER_COUNT) + k;
+                    final int index = (i * LETTER_COUNT_2) + (j * LETTER_COUNT) + k;
                     final int freq = frequencies[index];
                     if(freq > 0) {
                         totalFreq += freq;
