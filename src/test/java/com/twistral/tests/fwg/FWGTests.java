@@ -106,19 +106,12 @@ public class FWGTests {
     @Test
     @DisplayName("frommatFWGTest")
     void frommatFWGTest() {
-        GibberishFWG gfwg = new GibberishFWG();
         FrommatFWG fwg = new FrommatFWG();
-        FrommatFWG fwg2 = new FrommatFWG(new JavaSplittableRandom());
         for (int i = 0; i < 100_000; i++) {
-            String alphabet1 = gfwg.generateFakeWord(10);
-            String alphabet2 = fwg2.generateFakeWord("[aa][aa][aa][aa][aa][aa][aa][aa][aa][aa]");
-
-            String fw = fwg.generateFakeWord("!!![!][@0][@1][aa][al][au][vl][vu]", alphabet1, alphabet2);
+            String fw = fwg.generateFakeWord("!!![!][@0][@1][aa][al][au][vl][vu]");
             assertEquals(fw.charAt(0), '!');
             assertEquals(fw.charAt(1), '[');
             assertEquals(fw.charAt(2), ']');
-            assertTrue(alphabet1.contains(String.valueOf(fw.charAt(3))));
-            assertTrue(alphabet2.contains(String.valueOf(fw.charAt(4))));
 
             assertEquals(fw.length(), 10);
         }

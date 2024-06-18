@@ -17,11 +17,10 @@
 package com.twistral.tephrium.fwg;
 
 
-import com.twistral.tephrium.core.TephriumException.UnreachableException;
+import static com.twistral.tephrium.core.TephriumException.*;
 import com.twistral.tephrium.core.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
-import com.twistral.tephrium.strings.TStringUtils;
 
 import java.util.*;
 import java.util.stream.*;
