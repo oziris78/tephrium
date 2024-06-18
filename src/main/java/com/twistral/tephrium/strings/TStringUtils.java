@@ -213,9 +213,6 @@ public class TStringUtils {
         return text.charAt(random.nextInt(0, text.length()));
     }
 
-    public static String getRandCharAsStrFrom(String text, TRandomGenerator random) {
-        return String.valueOf(getRandCharFrom(text, random));
-    }
 
     public static char swapCharCase(char c) {
         return Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c);

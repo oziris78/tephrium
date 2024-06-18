@@ -43,20 +43,20 @@ public class FrommatFWG {
         this.random = random;
 
         this.parser = new TFFNParser()
-            .defineDynamicAction("al", () -> getRandCharAsStrFrom(CS_ASCII_LOWER, this.random))
-            .defineDynamicAction("au", () -> getRandCharAsStrFrom(CS_ASCII_UPPER, this.random))
-            .defineDynamicAction("aa", () -> getRandCharAsStrFrom(CS_ASCII_ALL, this.random))
-            .defineDynamicAction("vl", () -> getRandCharAsStrFrom(CS_VOWELS_LOWER, this.random))
-            .defineDynamicAction("vu", () -> getRandCharAsStrFrom(CS_VOWELS_UPPER, this.random))
-            .defineDynamicAction("va", () -> getRandCharAsStrFrom(CS_VOWELS_ALL, this.random))
-            .defineDynamicAction("cl", () -> getRandCharAsStrFrom(CS_CONSONANTS_LOWER, this.random))
-            .defineDynamicAction("cu", () -> getRandCharAsStrFrom(CS_CONSONANTS_UPPER, this.random))
-            .defineDynamicAction("ca", () -> getRandCharAsStrFrom(CS_CONSONANTS_ALL, this.random))
-            .defineDynamicAction("#b", () -> getRandCharAsStrFrom(CS_BINARY, this.random))
-            .defineDynamicAction("#o", () -> getRandCharAsStrFrom(CS_OCTAL, this.random))
-            .defineDynamicAction("#d", () -> getRandCharAsStrFrom(CS_DECIMAL, this.random))
-            .defineDynamicAction("#x", () -> getRandCharAsStrFrom(CS_HEXADECIMAL, this.random))
-            .defineDynamicAction("wh", () -> getRandCharAsStrFrom(CS_WHITESPACE, this.random));
+            .defineDynamicAction("al", sb -> sb.append(getRandCharFrom(CS_ASCII_LOWER, this.random)))
+            .defineDynamicAction("au", sb -> sb.append(getRandCharFrom(CS_ASCII_UPPER, this.random)))
+            .defineDynamicAction("aa", sb -> sb.append(getRandCharFrom(CS_ASCII_ALL, this.random)))
+            .defineDynamicAction("vl", sb -> sb.append(getRandCharFrom(CS_VOWELS_LOWER, this.random)))
+            .defineDynamicAction("vu", sb -> sb.append(getRandCharFrom(CS_VOWELS_UPPER, this.random)))
+            .defineDynamicAction("va", sb -> sb.append(getRandCharFrom(CS_VOWELS_ALL, this.random)))
+            .defineDynamicAction("cl", sb -> sb.append(getRandCharFrom(CS_CONSONANTS_LOWER, this.random)))
+            .defineDynamicAction("cu", sb -> sb.append(getRandCharFrom(CS_CONSONANTS_UPPER, this.random)))
+            .defineDynamicAction("ca", sb -> sb.append(getRandCharFrom(CS_CONSONANTS_ALL, this.random)))
+            .defineDynamicAction("#b", sb -> sb.append(getRandCharFrom(CS_BINARY, this.random)))
+            .defineDynamicAction("#o", sb -> sb.append(getRandCharFrom(CS_OCTAL, this.random)))
+            .defineDynamicAction("#d", sb -> sb.append(getRandCharFrom(CS_DECIMAL, this.random)))
+            .defineDynamicAction("#x", sb -> sb.append(getRandCharFrom(CS_HEXADECIMAL, this.random)))
+            .defineDynamicAction("wh", sb -> sb.append(getRandCharFrom(CS_WHITESPACE, this.random)));
     }
 
     public FrommatFWG() {

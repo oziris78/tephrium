@@ -108,12 +108,12 @@ public class FWGTests {
     void frommatFWGTest() {
         FrommatFWG fwg = new FrommatFWG();
         for (int i = 0; i < 100_000; i++) {
-            String fw = fwg.generateFakeWord("!!![!][@0][@1][aa][al][au][vl][vu]");
+            String fw = fwg.generateFakeWord("!!![!][aa][al][au][vl][vu]");
             assertEquals(fw.charAt(0), '!');
             assertEquals(fw.charAt(1), '[');
             assertEquals(fw.charAt(2), ']');
 
-            assertEquals(fw.length(), 10);
+            assertEquals(fw.length(), 8);
         }
     }
 
