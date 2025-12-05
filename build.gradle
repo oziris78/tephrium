@@ -8,7 +8,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group 'com.github.oziris78'
-version '1.1.1'
+version '1.1.2'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8 // java 8
@@ -58,7 +58,7 @@ if (JavaVersion.current().isJava8Compatible()) {
 if(JavaVersion.current().isJava9Compatible()) {
     allprojects {
         tasks.withType(JavaCompile) {
-            options.release.set(7)
+            options.release.set(8)
         }
     }
 }

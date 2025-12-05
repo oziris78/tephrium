@@ -33,7 +33,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.oziris78:tephrium:v1.0.0'
+    implementation 'com.github.oziris78:tephrium:v1.1.2'
 }
 ```
 

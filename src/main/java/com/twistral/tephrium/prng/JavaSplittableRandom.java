@@ -1,4 +1,4 @@
-// Copyright 2024 Oğuzhan Topaloğlu
+// Copyright 2024-2025 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,9 +28,9 @@ public class JavaSplittableRandom implements TRandomGenerator {
     public JavaSplittableRandom(final SplittableRandom random) { this.random = random; }
     public JavaSplittableRandom() { this.random = new SplittableRandom(); }
 
-    /////////////////////////////////////////////////////////////////////
-    /////////////////////////////  METHODS  /////////////////////////////
-    /////////////////////////////////////////////////////////////////////
+    /*/////////////////////////////////////////////////////////////////*/
+    /*///////////////////////////  METHODS  ///////////////////////////*/
+    /*/////////////////////////////////////////////////////////////////*/
 
     // -------------- WRAPPERS -------------- //
 
