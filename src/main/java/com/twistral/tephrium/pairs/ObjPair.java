@@ -20,41 +20,62 @@ package com.twistral.tephrium.pairs;
 import java.util.Objects;
 
 
-public class ObjPair<T, K> {
+/**
+ * A fast and mutable pair class holding two objects of any types.
+ *
+ * @param <A> type of the first object
+ * @param <B> type of the second object
+ */
+public class ObjPair<A, B> {
 
-    public final T first;
-    public final K second;
+    private A a;
+    private B b;
 
-    public ObjPair(T first, K second) {
-        this.first = first;
-        this.second = second;
+    public ObjPair(A a, B b) {
+        this.a = a;
+        this.b = b;
     }
 
-
-    @Override
-    public String toString() {
-        return String.format("(%s, %s)", first.toString(), second.toString());
+    public ObjPair() {
+        this(null, null);
     }
 
+    public ObjPair<A, B> setA(A a) {
+        this.a = a;
+        return this;
+    }
+
+    public ObjPair<A, B> setB(B b) {
+        this.b = b;
+        return this;
+    }
+
+    public ObjPair<A, B> setAB(A a, B b) {
+        this.a = a;
+        this.b = b;
+        return this;
+    }
+
+    public A getA() { return a; }
+    public B getB() { return b; }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if ((o == null) || (getClass() != o.getClass())) {
-            return false;
-        }
+        if (o == null || getClass() != o.getClass()) return false;
         ObjPair<?, ?> objPair = (ObjPair<?, ?>) o;
-        return Objects.equals(first, objPair.first) && Objects.equals(second, objPair.second);
+        return Objects.equals(a, objPair.a) && Objects.equals(b, objPair.b);
     }
-
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, second);
+        return Objects.hash(a, b);
     }
 
+    @Override
+    public String toString() {
+        return "ObjPair{" + "a=" + a + ", b=" + b + '}';
+    }
 
 }
+
 
