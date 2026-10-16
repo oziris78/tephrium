@@ -18,7 +18,6 @@
 package com.twistral.tephrium;
 
 
-import com.twistral.tephrium.math.TMath;
 import com.twistral.tephrium.fwg.GibberishFWG;
 import com.twistral.tephrium.stats.DataDescription;
 import java.util.Arrays;

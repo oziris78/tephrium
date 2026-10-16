@@ -17,7 +17,7 @@
 
 package com.twistral.tephrium.benchmarks;
 
-import com.twistral.tephrium.math.TMath;
+import com.twistral.tephrium.TMath;
 import com.twistral.tephrium.matrices.TMat2;
 import com.twistral.tephrium.matrices.TMat3;
 import com.twistral.tephrium.matrices.TMat4;

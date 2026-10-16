@@ -16,7 +16,7 @@
 package com.twistral.tephrium.strings;
 
 
-import com.twistral.tephrium.math.TMath;
+import com.twistral.tephrium.TMath;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Stream;

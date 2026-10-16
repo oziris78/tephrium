@@ -16,7 +16,7 @@
 package com.twistral.tephrium.vectors;
 
 
-import com.twistral.tephrium.math.TMath;
+import com.twistral.tephrium.TMath;
 
 import java.util.Objects;
 

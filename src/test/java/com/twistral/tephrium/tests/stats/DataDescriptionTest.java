@@ -15,7 +15,7 @@
 
 package com.twistral.tephrium.tests.stats;
 
-import com.twistral.tephrium.math.TMath;
+import com.twistral.tephrium.TMath;
 import com.twistral.tephrium.stats.DataDescription;
 import com.twistral.tephrium.TestUtils.*;
 

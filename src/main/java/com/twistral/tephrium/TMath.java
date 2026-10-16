@@ -13,8 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.math;
-
+package com.twistral.tephrium;
 
 
 /**
@@ -260,25 +259,19 @@ public class TMath {
     /*///////////////////////////////////////////////////////////////*/
 
     /**
-     * Takes oldValue from the range [oldA, oldB] and returns what it would represent if it was in range [newA, newB]
-     * @param oldRangeLeft start value of old interval (left value)
-     * @param oldRangeRight end value of old interval (right value)
-     * @param newRangeLeft start value of new interval (left value)
-     * @param newRangeRight end value of new interval (right value)
-     * @param oldValue any value from the old interval aka [oldRangeLeft, oldRangeRight]
-     * @return The new value of oldX in the new interval aka [newRangeLeft, newRangeRight]
+     * Takes value from the range [oldA, oldB] and returns what
+     * it would represent if it was in range [newA, newB].
+     * @param oldA start value of old interval (inclusive left value)
+     * @param oldB end value of old interval (inclusive right value)
+     * @param newA start value of new interval (inclusive left value)
+     * @param newB end value of new interval (inclusive right value)
+     * @param value any value from the old interval [oldA, oldB]
+     * @return The new value in the new interval [newA, newB]
      */
-    public static double mapRange(double oldRangeLeft, double oldRangeRight,
-                                  double newRangeLeft, double newRangeRight, double oldValue){
-        return newRangeLeft + ( (oldValue-oldRangeLeft) * (newRangeRight-newRangeLeft) ) / (oldRangeRight - oldRangeLeft);
+    public static double mapRange(double oldA, double oldB,
+                                  double newA, double newB, double value){
+        return newA + ( (value-oldA) * (newB-newA) ) / (oldB - oldA);
     }
-
-
-
-    public static double mapRange(TRange oldRange, TRange newRange, double oldValue){
-        return mapRange(oldRange.left, oldRange.right, newRange.left, newRange.right, oldValue);
-    }
-
 
 
     /**
@@ -287,7 +280,7 @@ public class TMath {
      * @return the value of oldX in [0,1] interval
      */
     public static double mapRange(double oldValue){
-        return mapRange(TRange.MONE_TO_ONE, TRange.ZERO_TO_ONE, oldValue);
+        return mapRange(-1d, 1d, 0d, 1d, oldValue);
     }
 
 

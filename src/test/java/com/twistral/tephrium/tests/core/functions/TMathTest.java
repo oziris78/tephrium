@@ -18,8 +18,7 @@
 package com.twistral.tephrium.tests.core.functions;
 
 
-import com.twistral.tephrium.math.TMath;
-import com.twistral.tephrium.math.TRange;
+import com.twistral.tephrium.TMath;
 import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -185,12 +184,9 @@ public class TMathTest {
         assertTrue(TMath.equalsd(0.0d, TMath.mapRange(-1.0d, 1.0d, 0.0d, 1.0d, -1.0d)));
         assertTrue(TMath.equalsd(1.0d, TMath.mapRange(-1.0d, 1.0d, 0.0d, 1.0d, 1.0d)));
 
-        TRange oldRange = new TRange(-10.0d, 10.0d);
-        TRange newRange = new TRange(0.0d, 100.0d);
-        assertTrue(TMath.equalsd(75.0d, TMath.mapRange(oldRange, newRange, 5.0d)));
-        assertTrue(TMath.equalsd(50.0d, TMath.mapRange(oldRange, newRange, 0.0d)));
-        assertTrue(TMath.equalsd(100.0d, TMath.mapRange(oldRange, newRange, 10.0d)));
-        assertTrue(TMath.equalsd(50d, TMath.mapRange(new TRange(-5.0d, 5.0d), new TRange(0.0d, 100.0d), 0.0d)));
+        assertTrue(TMath.equalsd(75.0d, TMath.mapRange(-10.0d, 10.0d, 0.0d, 100.0d, 5.0d)));
+        assertTrue(TMath.equalsd(50.0d, TMath.mapRange(-10.0d, 10.0d, 0.0d, 100.0d, 0.0d)));
+        assertTrue(TMath.equalsd(100.0d, TMath.mapRange(-10.0d, 10.0d, 0.0d, 100.0d, 10.0d)));
 
         assertTrue(TMath.equalsd(0.0d, TMath.mapRange(-1.0d)));
         assertTrue(TMath.equalsd(0.5d, TMath.mapRange(0.0d)));
