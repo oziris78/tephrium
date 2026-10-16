@@ -19,7 +19,7 @@ package com.twistral.tephrium.tests.collections;
 
 
 import com.twistral.tephrium.collections.TArrays;
-import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.math.TMath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

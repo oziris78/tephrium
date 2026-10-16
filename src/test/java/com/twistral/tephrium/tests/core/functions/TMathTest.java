@@ -18,8 +18,8 @@
 package com.twistral.tephrium.tests.core.functions;
 
 
-import com.twistral.tephrium.functions.TMath;
-import com.twistral.tephrium.functions.TRange;
+import com.twistral.tephrium.math.TMath;
+import com.twistral.tephrium.math.TRange;
 import org.apache.commons.math3.util.Precision;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

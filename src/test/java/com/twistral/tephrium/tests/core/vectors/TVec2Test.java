@@ -18,7 +18,7 @@
 package com.twistral.tephrium.tests.core.vectors;
 
 
-import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.math.TMath;
 import com.twistral.tephrium.vectors.TVec2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

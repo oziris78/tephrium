@@ -15,7 +15,7 @@
 
 package com.twistral.tephrium.tests.stats;
 
-import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.math.TMath;
 import com.twistral.tephrium.stats.*;
 import org.junit.jupiter.api.*;
 import java.util.*;

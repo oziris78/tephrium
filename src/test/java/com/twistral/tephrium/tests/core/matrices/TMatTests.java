@@ -16,7 +16,7 @@
 package com.twistral.tephrium.tests.core.matrices;
 
 import com.twistral.tephrium.TephriumException;
-import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.math.TMath;
 import com.twistral.tephrium.matrices.TMat2;
 import com.twistral.tephrium.matrices.TMat3;
 import com.twistral.tephrium.matrices.TMat4;

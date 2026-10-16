@@ -17,7 +17,7 @@ package com.twistral.tephrium.stats;
 
 
 import com.twistral.tephrium.TephriumException;
-import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.math.TMath;
 
 import java.util.*;
 
