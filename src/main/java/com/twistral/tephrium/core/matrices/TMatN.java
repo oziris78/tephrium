@@ -16,7 +16,7 @@
 package com.twistral.tephrium.core.matrices;
 
 
-import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.TephriumException;
 import com.twistral.tephrium.core.functions.TMath;
 
 import java.util.Arrays;

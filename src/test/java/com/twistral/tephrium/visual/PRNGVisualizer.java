@@ -16,7 +16,7 @@
 package com.twistral.tephrium.visual;
 
 
-import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.TephriumException;
 import com.twistral.tephrium.prng.JavaSplittableRandom;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;

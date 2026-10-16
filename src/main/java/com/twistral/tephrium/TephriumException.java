@@ -1,3 +1,4 @@
+
 // Copyright 2020-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,26 +14,25 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.core;
-
+package com.twistral.tephrium;
 
 
 public class TephriumException extends RuntimeException {
+
+    public TephriumException(Throwable cause, String message) {
+        super(message, cause);
+    }
+
+    public TephriumException(Throwable cause, String format, Object... args) {
+        this(cause, String.format(format, args));
+    }
 
     public TephriumException(String message) {
         super(message);
     }
 
     public TephriumException(String format, Object... args) {
-        super(String.format(format, args));
+        this(String.format(format, args));
     }
-
-
-    public static class UnreachableException extends TephriumException {
-        public UnreachableException() {
-            super("This line should have been UNREACHABLE!");
-        }
-    }
-
 
 }

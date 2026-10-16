@@ -16,16 +16,9 @@
 package com.twistral.tephrium.fwg;
 
 
-import com.twistral.tephrium.core.TephriumException;
-import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
-import com.twistral.tephrium.strings.TStringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-import com.twistral.tephrium.core.TephriumException.UnreachableException;
+import com.twistral.tephrium.TephriumException.UnreachableException;
 import static com.twistral.tephrium.strings.TStringUtils.CS_ASCII_LOWER;
 import static com.twistral.tephrium.fwg.EnglishCorpusData.*;
 

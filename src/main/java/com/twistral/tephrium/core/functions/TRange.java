@@ -15,7 +15,7 @@
 package com.twistral.tephrium.core.functions;
 
 
-import com.twistral.tephrium.core.TephriumException;
+import com.twistral.tephrium.TephriumException;
 import java.util.Objects;
 
 
