@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.twistral.tephrium.core.functions;
+package com.twistral.tephrium.functions;
 
 
 import com.twistral.tephrium.TephriumException;

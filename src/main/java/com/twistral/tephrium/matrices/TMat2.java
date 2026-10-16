@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.core.matrices;
+package com.twistral.tephrium.matrices;
 
 
-import com.twistral.tephrium.core.functions.TMath;
+import com.twistral.tephrium.functions.TMath;
 import java.util.Objects;
 import java.util.function.Function;
 

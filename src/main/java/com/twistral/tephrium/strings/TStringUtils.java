@@ -17,7 +17,7 @@ package com.twistral.tephrium.strings;
 
 
 import com.twistral.tephrium.collections.TCollections;
-import com.twistral.tephrium.core.functions.TMath;
+import com.twistral.tephrium.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 import java.util.HashMap;

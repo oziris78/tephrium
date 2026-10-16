@@ -17,8 +17,7 @@
 package com.twistral.tephrium.fwg;
 
 
-import static com.twistral.tephrium.TephriumException.*;
-import com.twistral.tephrium.core.functions.TMath;
+import com.twistral.tephrium.functions.TMath;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 

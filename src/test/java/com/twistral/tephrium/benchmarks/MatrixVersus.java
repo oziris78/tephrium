@@ -17,9 +17,11 @@
 
 package com.twistral.tephrium.benchmarks;
 
-import com.twistral.tephrium.core.functions.TMath;
+import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.matrices.TMat2;
+import com.twistral.tephrium.matrices.TMat3;
+import com.twistral.tephrium.matrices.TMat4;
 import com.twistral.tephrium.prng.SplitMix64Random;
-import com.twistral.tephrium.core.matrices.*;
 import org.joml.*;
 import org.junit.jupiter.api.*;
 

@@ -16,11 +16,11 @@
 package com.twistral.tephrium.tests.core.matrices;
 
 import com.twistral.tephrium.TephriumException;
-import com.twistral.tephrium.core.matrices.TMat2;
-import com.twistral.tephrium.core.functions.*;
-import com.twistral.tephrium.core.matrices.TMat3;
-import com.twistral.tephrium.core.matrices.TMat4;
-import com.twistral.tephrium.core.matrices.TMatN;
+import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.matrices.TMat2;
+import com.twistral.tephrium.matrices.TMat3;
+import com.twistral.tephrium.matrices.TMat4;
+import com.twistral.tephrium.matrices.TMatN;
 import org.apache.commons.math3.linear.FieldLUDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;

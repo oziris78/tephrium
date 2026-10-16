@@ -19,8 +19,8 @@ package com.twistral.tephrium.tests.core.functions;
 
 
 import com.twistral.tephrium.TephriumException;
-import com.twistral.tephrium.core.functions.TMath;
-import com.twistral.tephrium.core.functions.TRange;
+import com.twistral.tephrium.functions.TMath;
+import com.twistral.tephrium.functions.TRange;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

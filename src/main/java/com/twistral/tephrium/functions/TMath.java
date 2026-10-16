@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.twistral.tephrium.core.functions;
+package com.twistral.tephrium.functions;
 
 
 
