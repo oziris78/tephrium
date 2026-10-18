@@ -261,7 +261,7 @@ public class TVec2 {
     }
 
     public static boolean isZeroVector(TVec2 vector) {
-        return TMath.equalsd(vector.x, 0d) && TMath.equalsd(vector.y, 0d);
+        return TMath.equals(vector.x, 0d) && TMath.equals(vector.y, 0d);
     }
 
 
@@ -270,13 +270,13 @@ public class TVec2 {
     }
 
     public static boolean isUnitVector(TVec2 vector) {
-        return TMath.equalsd(length(vector), 1d);
+        return TMath.equals(length(vector), 1d);
     }
 
 
     public static boolean areOrthogonal(TVec2 vec1, TVec2 vec2, TVec2 vec3){
-        return TMath.equalsd(vec1.dot(vec2), 0d) && TMath.equalsd(vec1.dot(vec3), 0d)
-                && TMath.equalsd(vec2.dot(vec3), 0d);
+        return TMath.equals(vec1.dot(vec2), 0d) && TMath.equals(vec1.dot(vec3), 0d)
+                && TMath.equals(vec2.dot(vec3), 0d);
     }
 
 
@@ -304,7 +304,7 @@ public class TVec2 {
             return false;
         }
         TVec2 other = (TVec2) o;
-        return TMath.equalsd(other.x, x) && TMath.equalsd(other.y, y);
+        return TMath.equals(other.x, x) && TMath.equals(other.y, y);
     }
 
     @Override

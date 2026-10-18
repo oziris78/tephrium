@@ -359,7 +359,7 @@ public class TMat4 {
      */
     public TMat4 invert(){
         double det = this.determinant();
-        if(TMath.equalsd(det, 0d))
+        if(TMath.equals(det, 0d))
             return null;
 
         set( // definitely first try ;)
@@ -757,22 +757,22 @@ public class TMat4 {
 
 
     public boolean isSymmetrical(){
-        return TMath.equalsd(this.m01, this.m10) && TMath.equalsd(this.m02, this.m20) &&
-                TMath.equalsd(this.m21, this.m12) && TMath.equalsd(this.m30, this.m03) &&
-                TMath.equalsd(this.m23, this.m32) && TMath.equalsd(this.m13, this.m31);
+        return TMath.equals(this.m01, this.m10) && TMath.equals(this.m02, this.m20) &&
+                TMath.equals(this.m21, this.m12) && TMath.equals(this.m30, this.m03) &&
+                TMath.equals(this.m23, this.m32) && TMath.equals(this.m13, this.m31);
     }
 
 
     public boolean isSingular(){
-        return TMath.equalsd(this.determinant(), 0d);
+        return TMath.equals(this.determinant(), 0d);
     }
 
 
     public boolean isIdentity(){
-        return  TMath.equalsd(m00, 1d) && TMath.equalsd(m01, 0d) && TMath.equalsd(m02, 0d) && TMath.equalsd(m03, 0d) &&
-                TMath.equalsd(m10, 0d) && TMath.equalsd(m11, 1d) && TMath.equalsd(m12, 0d) && TMath.equalsd(m13, 0d) &&
-                TMath.equalsd(m20, 0d) && TMath.equalsd(m21, 0d) && TMath.equalsd(m22, 1d) && TMath.equalsd(m23, 0d) &&
-                TMath.equalsd(m30, 0d) && TMath.equalsd(m31, 0d) && TMath.equalsd(m32, 0d) && TMath.equalsd(m33, 1d);
+        return  TMath.equals(m00, 1d) && TMath.equals(m01, 0d) && TMath.equals(m02, 0d) && TMath.equals(m03, 0d) &&
+                TMath.equals(m10, 0d) && TMath.equals(m11, 1d) && TMath.equals(m12, 0d) && TMath.equals(m13, 0d) &&
+                TMath.equals(m20, 0d) && TMath.equals(m21, 0d) && TMath.equals(m22, 1d) && TMath.equals(m23, 0d) &&
+                TMath.equals(m30, 0d) && TMath.equals(m31, 0d) && TMath.equals(m32, 0d) && TMath.equals(m33, 1d);
     }
 
 
@@ -798,12 +798,12 @@ public class TMat4 {
             return false;
         }
         TMat4 other = (TMat4) o;
-        return TMath.equalsd(other.m00, m00) && TMath.equalsd(other.m01, m01) && TMath.equalsd(other.m02, m02) &&
-            TMath.equalsd(other.m03, m03) && TMath.equalsd(other.m10, m10) && TMath.equalsd(other.m11, m11) &&
-            TMath.equalsd(other.m12, m12) && TMath.equalsd(other.m13, m13) && TMath.equalsd(other.m20, m20) &&
-            TMath.equalsd(other.m21, m21) && TMath.equalsd(other.m22, m22) && TMath.equalsd(other.m23, m23) &&
-            TMath.equalsd(other.m30, m30) && TMath.equalsd(other.m31, m31) && TMath.equalsd(other.m32, m32) &&
-            TMath.equalsd(other.m33, m33);
+        return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) && TMath.equals(other.m02, m02) &&
+            TMath.equals(other.m03, m03) && TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11) &&
+            TMath.equals(other.m12, m12) && TMath.equals(other.m13, m13) && TMath.equals(other.m20, m20) &&
+            TMath.equals(other.m21, m21) && TMath.equals(other.m22, m22) && TMath.equals(other.m23, m23) &&
+            TMath.equals(other.m30, m30) && TMath.equals(other.m31, m31) && TMath.equals(other.m32, m32) &&
+            TMath.equals(other.m33, m33);
     }
 
 

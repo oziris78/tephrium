@@ -83,7 +83,7 @@ public class TestUtils {
 
 
     private static void benchResult(String valStr, DataDescription d1, double v1, DataDescription d2, double v2) {
-        if(!TMath.equalsd(v1, v2)) {
+        if(!TMath.equals(v1, v2)) {
             final boolean oneWins = (v1 < v2);
             double winningValue = oneWins ? v1 : v2;
             double losingValue = oneWins ? v2 : v1;

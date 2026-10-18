@@ -57,54 +57,54 @@ public class FreqDistTableTest {
         Arrays.sort(heights);
         FrequencyDistTable table = new FrequencyDistTable(heights, 6);
 
-        assertTrue(TMath.equalsd(table.getIntervalLeft(0), 158));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(1), 166));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(2), 174));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(3), 182));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(4), 190));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(5), 198));
+        assertTrue(TMath.equals(table.getIntervalLeft(0), 158));
+        assertTrue(TMath.equals(table.getIntervalLeft(1), 166));
+        assertTrue(TMath.equals(table.getIntervalLeft(2), 174));
+        assertTrue(TMath.equals(table.getIntervalLeft(3), 182));
+        assertTrue(TMath.equals(table.getIntervalLeft(4), 190));
+        assertTrue(TMath.equals(table.getIntervalLeft(5), 198));
 
-        assertTrue(TMath.equalsd(table.getIntervalRight(0), 166));
-        assertTrue(TMath.equalsd(table.getIntervalRight(1), 174));
-        assertTrue(TMath.equalsd(table.getIntervalRight(2), 182));
-        assertTrue(TMath.equalsd(table.getIntervalRight(3), 190));
-        assertTrue(TMath.equalsd(table.getIntervalRight(4), 198));
-        assertTrue(TMath.equalsd(table.getIntervalRight(5), 206));
+        assertTrue(TMath.equals(table.getIntervalRight(0), 166));
+        assertTrue(TMath.equals(table.getIntervalRight(1), 174));
+        assertTrue(TMath.equals(table.getIntervalRight(2), 182));
+        assertTrue(TMath.equals(table.getIntervalRight(3), 190));
+        assertTrue(TMath.equals(table.getIntervalRight(4), 198));
+        assertTrue(TMath.equals(table.getIntervalRight(5), 206));
 
-        assertTrue(TMath.equalsd(table.getMidpoint(0), 162));
-        assertTrue(TMath.equalsd(table.getMidpoint(1), 170));
-        assertTrue(TMath.equalsd(table.getMidpoint(2), 178));
-        assertTrue(TMath.equalsd(table.getMidpoint(3), 186));
-        assertTrue(TMath.equalsd(table.getMidpoint(4), 194));
-        assertTrue(TMath.equalsd(table.getMidpoint(5), 202));
+        assertTrue(TMath.equals(table.getMidpoint(0), 162));
+        assertTrue(TMath.equals(table.getMidpoint(1), 170));
+        assertTrue(TMath.equals(table.getMidpoint(2), 178));
+        assertTrue(TMath.equals(table.getMidpoint(3), 186));
+        assertTrue(TMath.equals(table.getMidpoint(4), 194));
+        assertTrue(TMath.equals(table.getMidpoint(5), 202));
 
-        assertTrue(TMath.equalsd(table.getFrequency(0), 4));
-        assertTrue(TMath.equalsd(table.getFrequency(1), 7));
-        assertTrue(TMath.equalsd(table.getFrequency(2), 9));
-        assertTrue(TMath.equalsd(table.getFrequency(3), 3));
-        assertTrue(TMath.equalsd(table.getFrequency(4), 2));
-        assertTrue(TMath.equalsd(table.getFrequency(5), 1));
+        assertTrue(TMath.equals(table.getFrequency(0), 4));
+        assertTrue(TMath.equals(table.getFrequency(1), 7));
+        assertTrue(TMath.equals(table.getFrequency(2), 9));
+        assertTrue(TMath.equals(table.getFrequency(3), 3));
+        assertTrue(TMath.equals(table.getFrequency(4), 2));
+        assertTrue(TMath.equals(table.getFrequency(5), 1));
 
-        assertTrue(TMath.equalsd(table.getRelativeFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(1), 0.269230769231));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(2), 0.346153846154));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(3), 0.115384615385));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(4), 0.0769230769231));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(5), 0.0384615384615));
+        assertTrue(TMath.equals(table.getRelativeFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(table.getRelativeFreq(1), 0.269230769231));
+        assertTrue(TMath.equals(table.getRelativeFreq(2), 0.346153846154));
+        assertTrue(TMath.equals(table.getRelativeFreq(3), 0.115384615385));
+        assertTrue(TMath.equals(table.getRelativeFreq(4), 0.0769230769231));
+        assertTrue(TMath.equals(table.getRelativeFreq(5), 0.0384615384615));
 
-        assertTrue(TMath.equalsd(table.getIncCumFreq(0), 4));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(1), 11));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(2), 20));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(3), 23));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(4), 25));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(5), 26));
+        assertTrue(TMath.equals(table.getIncCumFreq(0), 4));
+        assertTrue(TMath.equals(table.getIncCumFreq(1), 11));
+        assertTrue(TMath.equals(table.getIncCumFreq(2), 20));
+        assertTrue(TMath.equals(table.getIncCumFreq(3), 23));
+        assertTrue(TMath.equals(table.getIncCumFreq(4), 25));
+        assertTrue(TMath.equals(table.getIncCumFreq(5), 26));
 
-        assertTrue(TMath.equalsd(table.getIncRelFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(1), 0.423076923077));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(2), 0.769230769231));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(3), 0.884615384616));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(4), 0.961538461539));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(5), 1));
+        assertTrue(TMath.equals(table.getIncRelFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(table.getIncRelFreq(1), 0.423076923077));
+        assertTrue(TMath.equals(table.getIncRelFreq(2), 0.769230769231));
+        assertTrue(TMath.equals(table.getIncRelFreq(3), 0.884615384616));
+        assertTrue(TMath.equals(table.getIncRelFreq(4), 0.961538461539));
+        assertTrue(TMath.equals(table.getIncRelFreq(5), 1));
 
     }
 
@@ -116,102 +116,102 @@ public class FreqDistTableTest {
             160, 172, 162, 176, 180, 176, 182, 176, 176, 166, 158, 183, 165, 188,
             177, 178, 170, 180, 170, 180, 190, 173, 192, 167, 203, 171
         }, 6);
-        assertTrue(TMath.equalsd(table.getIntervalLeft(0), 158));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(1), 166));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(2), 174));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(3), 182));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(4), 190));
-        assertTrue(TMath.equalsd(table.getIntervalLeft(5), 198));
-        assertTrue(TMath.equalsd(table.getIntervalRight(0), 166));
-        assertTrue(TMath.equalsd(table.getIntervalRight(1), 174));
-        assertTrue(TMath.equalsd(table.getIntervalRight(2), 182));
-        assertTrue(TMath.equalsd(table.getIntervalRight(3), 190));
-        assertTrue(TMath.equalsd(table.getIntervalRight(4), 198));
-        assertTrue(TMath.equalsd(table.getIntervalRight(5), 206));
-        assertTrue(TMath.equalsd(table.getMidpoint(0), 162));
-        assertTrue(TMath.equalsd(table.getMidpoint(1), 170));
-        assertTrue(TMath.equalsd(table.getMidpoint(2), 178));
-        assertTrue(TMath.equalsd(table.getMidpoint(3), 186));
-        assertTrue(TMath.equalsd(table.getMidpoint(4), 194));
-        assertTrue(TMath.equalsd(table.getMidpoint(5), 202));
-        assertTrue(TMath.equalsd(table.getFrequency(0), 4));
-        assertTrue(TMath.equalsd(table.getFrequency(1), 7));
-        assertTrue(TMath.equalsd(table.getFrequency(2), 9));
-        assertTrue(TMath.equalsd(table.getFrequency(3), 3));
-        assertTrue(TMath.equalsd(table.getFrequency(4), 2));
-        assertTrue(TMath.equalsd(table.getFrequency(5), 1));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(1), 0.269230769231));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(2), 0.346153846154));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(3), 0.115384615385));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(4), 0.0769230769231));
-        assertTrue(TMath.equalsd(table.getRelativeFreq(5), 0.0384615384615));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(0), 4));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(1), 11));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(2), 20));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(3), 23));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(4), 25));
-        assertTrue(TMath.equalsd(table.getIncCumFreq(5), 26));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(1), 0.423076923077));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(2), 0.769230769231));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(3), 0.884615384616));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(4), 0.961538461539));
-        assertTrue(TMath.equalsd(table.getIncRelFreq(5), 1));
+        assertTrue(TMath.equals(table.getIntervalLeft(0), 158));
+        assertTrue(TMath.equals(table.getIntervalLeft(1), 166));
+        assertTrue(TMath.equals(table.getIntervalLeft(2), 174));
+        assertTrue(TMath.equals(table.getIntervalLeft(3), 182));
+        assertTrue(TMath.equals(table.getIntervalLeft(4), 190));
+        assertTrue(TMath.equals(table.getIntervalLeft(5), 198));
+        assertTrue(TMath.equals(table.getIntervalRight(0), 166));
+        assertTrue(TMath.equals(table.getIntervalRight(1), 174));
+        assertTrue(TMath.equals(table.getIntervalRight(2), 182));
+        assertTrue(TMath.equals(table.getIntervalRight(3), 190));
+        assertTrue(TMath.equals(table.getIntervalRight(4), 198));
+        assertTrue(TMath.equals(table.getIntervalRight(5), 206));
+        assertTrue(TMath.equals(table.getMidpoint(0), 162));
+        assertTrue(TMath.equals(table.getMidpoint(1), 170));
+        assertTrue(TMath.equals(table.getMidpoint(2), 178));
+        assertTrue(TMath.equals(table.getMidpoint(3), 186));
+        assertTrue(TMath.equals(table.getMidpoint(4), 194));
+        assertTrue(TMath.equals(table.getMidpoint(5), 202));
+        assertTrue(TMath.equals(table.getFrequency(0), 4));
+        assertTrue(TMath.equals(table.getFrequency(1), 7));
+        assertTrue(TMath.equals(table.getFrequency(2), 9));
+        assertTrue(TMath.equals(table.getFrequency(3), 3));
+        assertTrue(TMath.equals(table.getFrequency(4), 2));
+        assertTrue(TMath.equals(table.getFrequency(5), 1));
+        assertTrue(TMath.equals(table.getRelativeFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(table.getRelativeFreq(1), 0.269230769231));
+        assertTrue(TMath.equals(table.getRelativeFreq(2), 0.346153846154));
+        assertTrue(TMath.equals(table.getRelativeFreq(3), 0.115384615385));
+        assertTrue(TMath.equals(table.getRelativeFreq(4), 0.0769230769231));
+        assertTrue(TMath.equals(table.getRelativeFreq(5), 0.0384615384615));
+        assertTrue(TMath.equals(table.getIncCumFreq(0), 4));
+        assertTrue(TMath.equals(table.getIncCumFreq(1), 11));
+        assertTrue(TMath.equals(table.getIncCumFreq(2), 20));
+        assertTrue(TMath.equals(table.getIncCumFreq(3), 23));
+        assertTrue(TMath.equals(table.getIncCumFreq(4), 25));
+        assertTrue(TMath.equals(table.getIncCumFreq(5), 26));
+        assertTrue(TMath.equals(table.getIncRelFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(table.getIncRelFreq(1), 0.423076923077));
+        assertTrue(TMath.equals(table.getIncRelFreq(2), 0.769230769231));
+        assertTrue(TMath.equals(table.getIncRelFreq(3), 0.884615384616));
+        assertTrue(TMath.equals(table.getIncRelFreq(4), 0.961538461539));
+        assertTrue(TMath.equals(table.getIncRelFreq(5), 1));
 
         FrequencyDistTable freqDistTable2 = new FrequencyDistTable(new double[] {
             160, 172, 162, 176, 180, 176, 182, 176, 176, 166, 158, 183, 165, 188,
             177, 178, 170, 180, 170, 180, 190, 173, 192, 167, 203, 171
         }, 6);
 
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(0), 158));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(1), 166));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(2), 174));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(3), 182));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(4), 190));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalLeft(5), 198));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(0), 158));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(1), 166));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(2), 174));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(3), 182));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(4), 190));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalLeft(5), 198));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(0), 166));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(1), 174));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(2), 182));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(3), 190));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(4), 198));
-        assertTrue(TMath.equalsd(freqDistTable2.getIntervalRight(5), 206));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(0), 166));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(1), 174));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(2), 182));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(3), 190));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(4), 198));
+        assertTrue(TMath.equals(freqDistTable2.getIntervalRight(5), 206));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(0), 162));
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(1), 170));
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(2), 178));
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(3), 186));
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(4), 194));
-        assertTrue(TMath.equalsd(freqDistTable2.getMidpoint(5), 202));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(0), 162));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(1), 170));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(2), 178));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(3), 186));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(4), 194));
+        assertTrue(TMath.equals(freqDistTable2.getMidpoint(5), 202));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(0), 4));
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(1), 7));
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(2), 9));
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(3), 3));
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(4), 2));
-        assertTrue(TMath.equalsd(freqDistTable2.getFrequency(5), 1));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(0), 4));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(1), 7));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(2), 9));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(3), 3));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(4), 2));
+        assertTrue(TMath.equals(freqDistTable2.getFrequency(5), 1));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(1), 0.269230769231));
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(2), 0.346153846154));
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(3), 0.115384615385));
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(4), 0.0769230769231));
-        assertTrue(TMath.equalsd(freqDistTable2.getRelativeFreq(5), 0.0384615384615));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(1), 0.269230769231));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(2), 0.346153846154));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(3), 0.115384615385));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(4), 0.0769230769231));
+        assertTrue(TMath.equals(freqDistTable2.getRelativeFreq(5), 0.0384615384615));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(0), 4));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(1), 11));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(2), 20));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(3), 23));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(4), 25));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncCumFreq(5), 26));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(0), 4));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(1), 11));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(2), 20));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(3), 23));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(4), 25));
+        assertTrue(TMath.equals(freqDistTable2.getIncCumFreq(5), 26));
 
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(0), 0.153846153846));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(1), 0.423076923077));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(2), 0.769230769231));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(3), 0.884615384616));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(4), 0.961538461539));
-        assertTrue(TMath.equalsd(freqDistTable2.getIncRelFreq(5), 1));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(0), 0.153846153846));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(1), 0.423076923077));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(2), 0.769230769231));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(3), 0.884615384616));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(4), 0.961538461539));
+        assertTrue(TMath.equals(freqDistTable2.getIncRelFreq(5), 1));
     }
 
 

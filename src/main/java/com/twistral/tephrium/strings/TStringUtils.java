@@ -113,13 +113,13 @@ public class TStringUtils {
 
         StringBuilder sb = new StringBuilder();
         int num = numberInBase10;
-        int divided = TMath.floorFast(num / newBase);
+        int divided = TMath.floorToInt(num / newBase);
         int rem = num - newBase * divided;
 
         sb.append((0 <= rem && rem <= 9) ? rem : ((char) (65 + rem - 10)));
         while(divided != 0) {
             num = divided;
-            divided = TMath.floorFast(num / newBase);
+            divided = TMath.floorToInt(num / newBase);
             rem = num - newBase * divided;
             sb.append((0 <= rem && rem <= 9) ? rem : ((char) (65 + rem - 10)));
         }

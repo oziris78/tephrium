@@ -140,16 +140,16 @@ public class DataDescription {
             return false;
         }
         DataDescription other = (DataDescription) o;
-        return TMath.equalsd(other.count, count) && TMath.equalsd(other.mean, mean) &&
-                TMath.equalsd(other.sum, sum) && TMath.equalsd(other.interquartileRange, interquartileRange) &&
-                TMath.equalsd(other.sampleVariance, sampleVariance) && TMath.equalsd(other.variance, variance) &&
-                TMath.equalsd(other.sampleStddev, sampleStddev) && TMath.equalsd(other.modeValue, modeValue) &&
-                TMath.equalsd(other.modeCount, modeCount) && TMath.equalsd(other.median, median) &&
-                TMath.equalsd(other.quartile1, quartile1) && TMath.equalsd(other.quartile2, quartile2) &&
-                TMath.equalsd(other.quartile3, quartile3) && TMath.equalsd(other.min, min) &&
-                TMath.equalsd(other.max, max) && TMath.equalsd(other.range, range) &&
-                TMath.equalsd(other.stddev, stddev) && TMath.equalsd(other.pearsonSkewCoef, pearsonSkewCoef) &&
-                TMath.equalsd(other.bowleySkewCoef, bowleySkewCoef) && dataName.equals(other.dataName);
+        return TMath.equals(other.count, count) && TMath.equals(other.mean, mean) &&
+                TMath.equals(other.sum, sum) && TMath.equals(other.interquartileRange, interquartileRange) &&
+                TMath.equals(other.sampleVariance, sampleVariance) && TMath.equals(other.variance, variance) &&
+                TMath.equals(other.sampleStddev, sampleStddev) && TMath.equals(other.modeValue, modeValue) &&
+                TMath.equals(other.modeCount, modeCount) && TMath.equals(other.median, median) &&
+                TMath.equals(other.quartile1, quartile1) && TMath.equals(other.quartile2, quartile2) &&
+                TMath.equals(other.quartile3, quartile3) && TMath.equals(other.min, min) &&
+                TMath.equals(other.max, max) && TMath.equals(other.range, range) &&
+                TMath.equals(other.stddev, stddev) && TMath.equals(other.pearsonSkewCoef, pearsonSkewCoef) &&
+                TMath.equals(other.bowleySkewCoef, bowleySkewCoef) && dataName.equals(other.dataName);
     }
 
 

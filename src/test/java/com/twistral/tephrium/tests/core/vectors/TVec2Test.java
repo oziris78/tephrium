@@ -31,16 +31,16 @@ public class TVec2Test {
     @DisplayName("cnsAndCopyTest")
     void cnsAndCopyTest() {
         TVec2 vec1 = new TVec2(3.0, 4.0);
-        assertTrue(TMath.equalsd(3.0, vec1.getX()));
-        assertTrue(TMath.equalsd(4.0, vec1.getY()));
+        assertTrue(TMath.equals(3.0, vec1.getX()));
+        assertTrue(TMath.equals(4.0, vec1.getY()));
 
         TVec2 vec2 = new TVec2();
-        assertTrue(TMath.equalsd(0, vec2.getX()));
-        assertTrue(TMath.equalsd(0, vec2.getY()));
+        assertTrue(TMath.equals(0, vec2.getX()));
+        assertTrue(TMath.equals(0, vec2.getY()));
 
         TVec2 vec3 = vec1.copy();
-        assertTrue(TMath.equalsd(3.0, vec3.getX()));
-        assertTrue(TMath.equalsd(4.0, vec3.getY()));
+        assertTrue(TMath.equals(3.0, vec3.getX()));
+        assertTrue(TMath.equals(4.0, vec3.getY()));
     }
 
     @Test
@@ -48,11 +48,11 @@ public class TVec2Test {
     void setGetTests() {
         TVec2 vec = new TVec2();
         vec.setX(5.0).setY(10.5);
-        assertTrue(TMath.equalsd(5, vec.getX()));
-        assertTrue(TMath.equalsd(10.5, vec.getY()));
+        assertTrue(TMath.equals(5, vec.getX()));
+        assertTrue(TMath.equals(10.5, vec.getY()));
         vec.set(0.5, -5);
-        assertTrue(TMath.equalsd(0.5, vec.getX()));
-        assertTrue(TMath.equalsd(-5, vec.getY()));
+        assertTrue(TMath.equals(0.5, vec.getX()));
+        assertTrue(TMath.equals(-5, vec.getY()));
     }
 
     @Test
@@ -62,31 +62,31 @@ public class TVec2Test {
         TVec2 vec2 = new TVec2(1.0, 2.0);
 
         vec1.add(vec2);
-        assertTrue(TMath.equalsd(4, vec1.getX()));
-        assertTrue(TMath.equalsd(6, vec1.getY()));
+        assertTrue(TMath.equals(4, vec1.getX()));
+        assertTrue(TMath.equals(6, vec1.getY()));
 
         vec1.sub(vec2);
-        assertTrue(TMath.equalsd(3, vec1.getX()));
-        assertTrue(TMath.equalsd(4, vec1.getY()));
+        assertTrue(TMath.equals(3, vec1.getX()));
+        assertTrue(TMath.equals(4, vec1.getY()));
 
         vec1.scale(2.0);
-        assertTrue(TMath.equalsd(6, vec1.getX()));
-        assertTrue(TMath.equalsd(8, vec1.getY()));
+        assertTrue(TMath.equals(6, vec1.getX()));
+        assertTrue(TMath.equals(8, vec1.getY()));
 
         vec1.set(3.0, 4.0);
         vec1.scaleX(2.0);
-        assertTrue(TMath.equalsd(6.0, vec1.getX()));
-        assertTrue(TMath.equalsd(4.0, vec1.getY()));
+        assertTrue(TMath.equals(6.0, vec1.getX()));
+        assertTrue(TMath.equals(4.0, vec1.getY()));
 
         vec1.set(3.0, 4.0);
         vec1.scaleY(2.5);
-        assertTrue(TMath.equalsd(3.0, vec1.getX()));
-        assertTrue(TMath.equalsd(10.0, vec1.getY()));
+        assertTrue(TMath.equals(3.0, vec1.getX()));
+        assertTrue(TMath.equals(10.0, vec1.getY()));
 
         vec1.set(3.0, 4.0);
         vec1.unit();
-        assertTrue(TMath.equalsd(0.6, vec1.getX()));
-        assertTrue(TMath.equalsd(0.8, vec1.getY()));
+        assertTrue(TMath.equals(0.6, vec1.getX()));
+        assertTrue(TMath.equals(0.8, vec1.getY()));
     }
 
     @Test
@@ -96,23 +96,23 @@ public class TVec2Test {
 
         vec.set(1.5456, 2.345);
         vec.rotate90DegClockwise();
-        assertTrue(TMath.equalsd(2.345, vec.getX()));
-        assertTrue(TMath.equalsd(-1.5456, vec.getY()));
+        assertTrue(TMath.equals(2.345, vec.getX()));
+        assertTrue(TMath.equals(-1.5456, vec.getY()));
 
         vec.set(1.5456, 2.345);
         vec.rotate180DegClockwise();
-        assertTrue(TMath.equalsd(-1.5456, vec.getX()));
-        assertTrue(TMath.equalsd(-2.345, vec.getY()));
+        assertTrue(TMath.equals(-1.5456, vec.getX()));
+        assertTrue(TMath.equals(-2.345, vec.getY()));
 
         vec.set(1.5456, 2.345);
         vec.rotate90DegAntiClockwise();
-        assertTrue(TMath.equalsd(-2.345, vec.getX()));
-        assertTrue(TMath.equalsd(1.5456, vec.getY()));
+        assertTrue(TMath.equals(-2.345, vec.getX()));
+        assertTrue(TMath.equals(1.5456, vec.getY()));
 
         vec.set(1.5456, 2.345);
         vec.symmetricalVectorTo(new TVec2(1.5456, 2.345));
-        assertTrue(TMath.equalsd(1.5456, vec.getX()));
-        assertTrue(TMath.equalsd(2.345, vec.getY()));
+        assertTrue(TMath.equals(1.5456, vec.getX()));
+        assertTrue(TMath.equals(2.345, vec.getY()));
     }
 
     @Test
@@ -121,10 +121,10 @@ public class TVec2Test {
         TVec2 vec1 = new TVec2(3.0, 4.0);
         TVec2 vec2 = new TVec2(1.0, 2.0);
 
-        assertTrue(TMath.equalsd(11.0, TVec2.dot(vec1, vec2)));
-        assertTrue(TMath.equalsd(25.0, vec1.lengthSquared()));
-        assertTrue(TMath.equalsd(5.0, vec1.length()));
-        assertTrue(TMath.equalsd(0.17985349979247847, TVec2.angleBetween(vec1, vec2)));
+        assertTrue(TMath.equals(11.0, TVec2.dot(vec1, vec2)));
+        assertTrue(TMath.equals(25.0, vec1.lengthSquared()));
+        assertTrue(TMath.equals(5.0, vec1.length()));
+        assertTrue(TMath.equals(0.17985349979247847, TVec2.angleBetween(vec1, vec2)));
 
     }
 
@@ -166,7 +166,7 @@ public class TVec2Test {
         assertEquals(p1.length(), p2.length());
         assertEquals(p2.length(), 10);
         assertEquals(p3.length(), 0);
-        assertTrue(TMath.equalsd(p4.length(), 1d / TMath.SQRT2));
+        assertTrue(TMath.equals(p4.length(), 1d / TMath.SQRT2));
 
 
         assertEquals(p1.copy().rotate90DegClockwise().rotate90DegClockwise(), p1.copy().rotate180DegClockwise());
@@ -190,10 +190,10 @@ public class TVec2Test {
         assertEquals(v1, v1.copy());
         assertEquals(v1, v1);
 
-        assertTrue(TMath.equalsd(v1.getX(), 0d));
-        assertTrue(TMath.equalsd(v1.setX(10d).getX(), 10d));
-        assertTrue(TMath.equalsd(v1.setY(-10d).getY(), -10d));
-        assertTrue(TMath.equalsd(v1.set(0d, 0d).getY(), 0d));
+        assertTrue(TMath.equals(v1.getX(), 0d));
+        assertTrue(TMath.equals(v1.setX(10d).getX(), 10d));
+        assertTrue(TMath.equals(v1.setY(-10d).getY(), -10d));
+        assertTrue(TMath.equals(v1.set(0d, 0d).getY(), 0d));
 
         assertEquals(v1.add(v2), v2);
         assertEquals(v1.sub(v2), new TVec2());
@@ -206,10 +206,10 @@ public class TVec2Test {
 
         v1.set(10d, 20d);
         v2.set(-2d, 2d);
-        assertTrue(TMath.equalsd(v1.dot(v2), TVec2.dot(v2.getX(), v2.getY(), 10d, 20d)));
-        assertTrue(TMath.equalsd(v1.dot(v2), -20d + 40d));
-        assertTrue(TMath.equalsd(v1.lengthSquared(), 500d));
-        assertTrue(TMath.equalsd(v1.length(), TMath.sqrt(500d)));
+        assertTrue(TMath.equals(v1.dot(v2), TVec2.dot(v2.getX(), v2.getY(), 10d, 20d)));
+        assertTrue(TMath.equals(v1.dot(v2), -20d + 40d));
+        assertTrue(TMath.equals(v1.lengthSquared(), 500d));
+        assertTrue(TMath.equals(v1.length(), TMath.sqrt(500d)));
 
         v1.set(1d, 1d);
         assertEquals(v1.copy().rotate90DegClockwise(), new TVec2(1d, -1d));
@@ -228,7 +228,7 @@ public class TVec2Test {
         assertFalse(v1.isUnitVector());
 
 
-        assertTrue(TMath.equalsd(TVec2.angleBetween(new TVec2(1d, 1d), new TVec2(0d, 1d)),
+        assertTrue(TMath.equals(TVec2.angleBetween(new TVec2(1d, 1d), new TVec2(0d, 1d)),
                 TMath.PI_OVER_TWO / 2d));
     }
 

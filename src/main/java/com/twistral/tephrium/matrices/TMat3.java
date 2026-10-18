@@ -311,7 +311,7 @@ public class TMat3 {
      */
     public TMat3 invert(){
         double det = this.determinant();
-        if(TMath.equalsd(det, 0d))
+        if(TMath.equals(det, 0d))
             return null;
 
         this.set(
@@ -539,21 +539,21 @@ public class TMat3 {
 
 
     public boolean isSymmetrical(){
-        return TMath.equalsd(this.m01, this.m10) &&
-                TMath.equalsd(this.m02, this.m20) &&
-                TMath.equalsd(this.m21, this.m12);
+        return TMath.equals(this.m01, this.m10) &&
+                TMath.equals(this.m02, this.m20) &&
+                TMath.equals(this.m21, this.m12);
     }
 
 
     public boolean isSingular(){
-        return TMath.equalsd(this.determinant(), 0d);
+        return TMath.equals(this.determinant(), 0d);
     }
 
 
     public boolean isIdentity(){
-        return TMath.equalsd(this.m00, 1d) && TMath.equalsd(this.m01, 0d) && TMath.equalsd(this.m02, 0d) &&
-                TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d) && TMath.equalsd(this.m12, 0d) &&
-                TMath.equalsd(this.m20, 0d) && TMath.equalsd(this.m21, 0d) && TMath.equalsd(this.m22, 1d);
+        return TMath.equals(this.m00, 1d) && TMath.equals(this.m01, 0d) && TMath.equals(this.m02, 0d) &&
+                TMath.equals(this.m10, 0d) && TMath.equals(this.m11, 1d) && TMath.equals(this.m12, 0d) &&
+                TMath.equals(this.m20, 0d) && TMath.equals(this.m21, 0d) && TMath.equals(this.m22, 1d);
     }
 
 
@@ -578,9 +578,9 @@ public class TMat3 {
             return false;
         }
         TMat3 other = (TMat3) o;
-        return TMath.equalsd(other.m00, m00) && TMath.equalsd(other.m01, m01) && TMath.equalsd(other.m02, m02) &&
-            TMath.equalsd(other.m10, m10) && TMath.equalsd(other.m11, m11) && TMath.equalsd(other.m12, m12) &&
-            TMath.equalsd(other.m20, m20) && TMath.equalsd(other.m21, m21) && TMath.equalsd(other.m22, m22);
+        return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) && TMath.equals(other.m02, m02) &&
+            TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11) && TMath.equals(other.m12, m12) &&
+            TMath.equals(other.m20, m20) && TMath.equals(other.m21, m21) && TMath.equals(other.m22, m22);
     }
 
     @Override

@@ -220,7 +220,7 @@ public class TMat2 {
      */
     public TMat2 invert(){
         double det = this.determinant();
-        if(TMath.equalsd(det, 0d))
+        if(TMath.equals(det, 0d))
             return null;
 
         double temp = this.m00;
@@ -395,18 +395,18 @@ public class TMat2 {
 
 
     public boolean isSymmetrical() {
-        return TMath.equalsd(this.m01, this.m10);
+        return TMath.equals(this.m01, this.m10);
     }
 
 
     public boolean isSingular(){
-        return TMath.equalsd(this.determinant(), 0d);
+        return TMath.equals(this.determinant(), 0d);
     }
 
 
     public boolean isIdentity(){
-        return TMath.equalsd(this.m00, 1d) && TMath.equalsd(this.m01, 0d) &&
-                TMath.equalsd(this.m10, 0d) && TMath.equalsd(this.m11, 1d);
+        return TMath.equals(this.m00, 1d) && TMath.equals(this.m01, 0d) &&
+                TMath.equals(this.m10, 0d) && TMath.equals(this.m11, 1d);
     }
 
 
@@ -430,8 +430,8 @@ public class TMat2 {
             return false;
         }
         TMat2 other = (TMat2) o;
-        return TMath.equalsd(other.m00, m00) && TMath.equalsd(other.m01, m01) &&
-                TMath.equalsd(other.m10, m10) && TMath.equalsd(other.m11, m11);
+        return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) &&
+                TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11);
     }
 
 

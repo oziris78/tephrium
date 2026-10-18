@@ -46,8 +46,8 @@ public class TArraysTest {
             long[] arrl = TArrays.longFilledArray(ARR_SIZE, l);
             double[] arrd = TArrays.doubleFilledArray(ARR_SIZE, d);
 
-            for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equalsd(arrd[j], d));
-            for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equalsf(arrf[j], f));
+            for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equals(arrd[j], d));
+            for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equals(arrf[j], f));
             for (int j = 0; j < ARR_SIZE; j++) assertTrue(arri[j] == i);
             for (int j = 0; j < ARR_SIZE; j++) assertTrue(arrl[j] == l);
         }
@@ -57,8 +57,8 @@ public class TArraysTest {
         long[] arrl = TArrays.longFilledArray(ARR_SIZE, 0);
         double[] arrd = TArrays.doubleFilledArray(ARR_SIZE, 0);
 
-        for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equalsd(arrd[j], 0));
-        for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equalsf(arrf[j], 0));
+        for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equals(arrd[j], 0));
+        for (int j = 0; j < ARR_SIZE; j++) assertTrue(TMath.equals(arrf[j], 0));
         for (int j = 0; j < ARR_SIZE; j++) assertTrue(arri[j] == 0);
         for (int j = 0; j < ARR_SIZE; j++) assertTrue(arrl[j] == 0);
     }

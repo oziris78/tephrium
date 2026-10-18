@@ -45,7 +45,7 @@ public class MatrixVersus {
     }
 
     private static void afterFunction() {
-        Assertions.assertTrue(TMath.equalsd(det1, det2));
+        Assertions.assertTrue(TMath.equals(det1, det2));
     }
 
 
@@ -61,7 +61,7 @@ public class MatrixVersus {
                     TMat2 tMat = new TMat2(m00, m01, m10, m11);
                     tMat.scale(5d).add(tMat).sub(new TMat2(m11, m01, m10, m00)).multiply(tMat);
                     det1 = tMat.determinant();
-                    if(!TMath.equalsd(det1, 0d))
+                    if(!TMath.equals(det1, 0d))
                         tMat.invert();
                 },
                 "JOML Matrix2d",
@@ -69,7 +69,7 @@ public class MatrixVersus {
                     Matrix2d jMat = new Matrix2d(m00, m10, m01, m11);
                     jMat.scale(5d).add(jMat).sub(new Matrix2d(m11, m10, m01, m00)).mul(jMat);
                     det2 = jMat.determinant();
-                    if(!TMath.equalsd(det2, 0d))
+                    if(!TMath.equals(det2, 0d))
                         jMat.invert();
                 }
         );
@@ -88,7 +88,7 @@ public class MatrixVersus {
                     TMat3 tMat = new TMat3(m00, m01, m02, m10, m11, m12, m20, m21, m22);
                     tMat.scale(5d).add(tMat).sub(new TMat3(1, 4, 7, 2, 5, 8, 3, 6, 9)).multiply(tMat);
                     det1 = tMat.determinant();
-                    if(!TMath.equalsd(det1, 0d))
+                    if(!TMath.equals(det1, 0d))
                         tMat.invert();
                 },
                 "JOML Matrix3d",
@@ -96,7 +96,7 @@ public class MatrixVersus {
                     Matrix3d jMat = new Matrix3d(m00, m10, m20, m01, m11, m21, m02, m12, m22);
                     jMat.scale(5d).add(jMat).sub(new Matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9)).mul(jMat);
                     det2 = jMat.determinant();
-                    if(!TMath.equalsd(det2, 0d))
+                    if(!TMath.equals(det2, 0d))
                         jMat.invert();
                 }
         );
@@ -129,7 +129,7 @@ public class MatrixVersus {
                     ));
                     tMat.multiply(tMat);
                     det1 = tMat.determinant() / 1E10d;
-                    if(!TMath.equalsd(det1, 0d))
+                    if(!TMath.equals(det1, 0d))
                         tMat.invert();
                 },
                 "JOML Matrix4d",
@@ -157,7 +157,7 @@ public class MatrixVersus {
                     ));
                     jMat = jMat.mul(jMat);
                     det2 = jMat.determinant() / 1E10d;
-                    if(!TMath.equalsd(det2, 0d))
+                    if(!TMath.equals(det2, 0d))
                         jMat.invert();
                 }
         );
