@@ -19,26 +19,26 @@ package com.twistral.tephrium.tests.core.vectors;
 
 
 import com.twistral.tephrium.TMath;
-import com.twistral.tephrium.vectors.TVec2;
+import com.twistral.tephrium.vectors.TVec2d;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TVec2Test {
+public class TVec2DTest {
 
     @Test
     @DisplayName("cnsAndCopyTest")
     void cnsAndCopyTest() {
-        TVec2 vec1 = new TVec2(3.0, 4.0);
+        TVec2d vec1 = new TVec2d(3.0, 4.0);
         assertTrue(TMath.equals(3.0, vec1.getX()));
         assertTrue(TMath.equals(4.0, vec1.getY()));
 
-        TVec2 vec2 = new TVec2();
+        TVec2d vec2 = new TVec2d();
         assertTrue(TMath.equals(0, vec2.getX()));
         assertTrue(TMath.equals(0, vec2.getY()));
 
-        TVec2 vec3 = vec1.copy();
+        TVec2d vec3 = vec1.copy();
         assertTrue(TMath.equals(3.0, vec3.getX()));
         assertTrue(TMath.equals(4.0, vec3.getY()));
     }
@@ -46,7 +46,7 @@ public class TVec2Test {
     @Test
     @DisplayName("setGetTests")
     void setGetTests() {
-        TVec2 vec = new TVec2();
+        TVec2d vec = new TVec2d();
         vec.setX(5.0).setY(10.5);
         assertTrue(TMath.equals(5, vec.getX()));
         assertTrue(TMath.equals(10.5, vec.getY()));
@@ -58,8 +58,8 @@ public class TVec2Test {
     @Test
     @DisplayName("arithmeticOperationsTest")
     void arithmeticOperationsTest() {
-        TVec2 vec1 = new TVec2(3.0, 4.0);
-        TVec2 vec2 = new TVec2(1.0, 2.0);
+        TVec2d vec1 = new TVec2d(3.0, 4.0);
+        TVec2d vec2 = new TVec2d(1.0, 2.0);
 
         vec1.add(vec2);
         assertTrue(TMath.equals(4, vec1.getX()));
@@ -92,7 +92,7 @@ public class TVec2Test {
     @Test
     @DisplayName("geometricOperationsTest")
     void geometricOperationsTest() {
-        TVec2 vec = new TVec2();
+        TVec2d vec = new TVec2d();
 
         vec.set(1.5456, 2.345);
         vec.rotate90DegClockwise();
@@ -110,7 +110,7 @@ public class TVec2Test {
         assertTrue(TMath.equals(1.5456, vec.getY()));
 
         vec.set(1.5456, 2.345);
-        vec.symmetricalVectorTo(new TVec2(1.5456, 2.345));
+        vec.symmetricalVectorTo(new TVec2d(1.5456, 2.345));
         assertTrue(TMath.equals(1.5456, vec.getX()));
         assertTrue(TMath.equals(2.345, vec.getY()));
     }
@@ -118,42 +118,42 @@ public class TVec2Test {
     @Test
     @DisplayName("importantValueTest")
     void importantValueTest() {
-        TVec2 vec1 = new TVec2(3.0, 4.0);
-        TVec2 vec2 = new TVec2(1.0, 2.0);
+        TVec2d vec1 = new TVec2d(3.0, 4.0);
+        TVec2d vec2 = new TVec2d(1.0, 2.0);
 
-        assertTrue(TMath.equals(11.0, TVec2.dot(vec1, vec2)));
+        assertTrue(TMath.equals(11.0, TVec2d.dot(vec1, vec2)));
         assertTrue(TMath.equals(25.0, vec1.lengthSquared()));
         assertTrue(TMath.equals(5.0, vec1.length()));
-        assertTrue(TMath.equals(0.17985349979247847, TVec2.angleBetween(vec1, vec2)));
+        assertTrue(TMath.equals(0.17985349979247847, TVec2d.angleBetween(vec1, vec2)));
 
     }
 
     @Test
     @DisplayName("booleanFuncsTest")
     void booleanFuncsTest() {
-        TVec2 vec1 = new TVec2(0.0, 0.0);
-        TVec2 vec2 = new TVec2(0.0, 3.0);
-        TVec2 vec3 = new TVec2(4.0, 0.0);
+        TVec2d vec1 = new TVec2d(0.0, 0.0);
+        TVec2d vec2 = new TVec2d(0.0, 3.0);
+        TVec2d vec3 = new TVec2d(4.0, 0.0);
 
         assertTrue(vec1.isZeroVector());
         assertFalse(vec2.isZeroVector());
         assertFalse(vec1.isUnitVector());
         assertFalse(vec2.isUnitVector());
-        assertTrue(TVec2.areOrthogonal(vec1, vec2, vec3));
-        assertTrue(TVec2.areOrthogonal(vec1, vec1, vec1));
-        assertFalse(TVec2.areOrthonormal(vec1, vec2, vec3));
-        assertFalse(TVec2.areOrthonormal(vec1, vec1, vec1));
+        assertTrue(TVec2d.areOrthogonal(vec1, vec2, vec3));
+        assertTrue(TVec2d.areOrthogonal(vec1, vec1, vec1));
+        assertFalse(TVec2d.areOrthonormal(vec1, vec2, vec3));
+        assertFalse(TVec2d.areOrthonormal(vec1, vec1, vec1));
     }
 
     @Test
     @DisplayName("someOldTest2")
     void someOldTest2() {
 
-        TVec2 p1 = new TVec2(0, 10);
-        TVec2 p2 = new TVec2(0, -10);
-        TVec2 p3 = new TVec2(0, 0);
-        TVec2 p4 = new TVec2(0.5, -0.5);
-        TVec2 p5 = new TVec2(0.5, -0.5);
+        TVec2d p1 = new TVec2d(0, 10);
+        TVec2d p2 = new TVec2d(0, -10);
+        TVec2d p3 = new TVec2d(0, 0);
+        TVec2d p4 = new TVec2d(0.5, -0.5);
+        TVec2d p5 = new TVec2d(0.5, -0.5);
 
         assertNotEquals(p1, p2);
         assertNotEquals(p1, p3);
@@ -175,16 +175,16 @@ public class TVec2Test {
                 p1.copy().rotate90DegAntiClockwise());
 
 
-        assertEquals(p2.copy().symmetricalVectorTo(p1), new TVec2(0, 30));
-        assertEquals(p4.copy().scale(2d), new TVec2(1, -1));
+        assertEquals(p2.copy().symmetricalVectorTo(p1), new TVec2d(0, 30));
+        assertEquals(p4.copy().scale(2d), new TVec2d(1, -1));
     }
 
 
     @Test
     @DisplayName("someOldTest1")
     void someOldTest1() {
-        TVec2 v1 = new TVec2();
-        TVec2 v2 = new TVec2(1, 1);
+        TVec2d v1 = new TVec2d();
+        TVec2d v2 = new TVec2d(1, 1);
 
         assertNotEquals(v1, v2);
         assertEquals(v1, v1.copy());
@@ -196,26 +196,26 @@ public class TVec2Test {
         assertTrue(TMath.equals(v1.set(0d, 0d).getY(), 0d));
 
         assertEquals(v1.add(v2), v2);
-        assertEquals(v1.sub(v2), new TVec2());
+        assertEquals(v1.sub(v2), new TVec2d());
         assertEquals(v1.add(1d, 1d), v2);
-        assertEquals(v1.sub(1d, 1d), new TVec2());
-        assertEquals(v1.set(10d, 1d).scale(2d), new TVec2(20d, 2d));
-        assertEquals(v1.set(10d, 1d).scale(2d, 20d), new TVec2(20d, 20d));
-        assertEquals(v1.set(50d, 0d).unit(), new TVec2(1d, 0d));
-        assertEquals(v1.set(1d, 1d).unit(), new TVec2(1d / TMath.SQRT2, 1d / TMath.SQRT2));
+        assertEquals(v1.sub(1d, 1d), new TVec2d());
+        assertEquals(v1.set(10d, 1d).scale(2d), new TVec2d(20d, 2d));
+        assertEquals(v1.set(10d, 1d).scale(2d, 20d), new TVec2d(20d, 20d));
+        assertEquals(v1.set(50d, 0d).unit(), new TVec2d(1d, 0d));
+        assertEquals(v1.set(1d, 1d).unit(), new TVec2d(1d / TMath.SQRT2, 1d / TMath.SQRT2));
 
         v1.set(10d, 20d);
         v2.set(-2d, 2d);
-        assertTrue(TMath.equals(v1.dot(v2), TVec2.dot(v2.getX(), v2.getY(), 10d, 20d)));
+        assertTrue(TMath.equals(v1.dot(v2), TVec2d.dot(v2.getX(), v2.getY(), 10d, 20d)));
         assertTrue(TMath.equals(v1.dot(v2), -20d + 40d));
         assertTrue(TMath.equals(v1.lengthSquared(), 500d));
         assertTrue(TMath.equals(v1.length(), TMath.sqrt(500d)));
 
         v1.set(1d, 1d);
-        assertEquals(v1.copy().rotate90DegClockwise(), new TVec2(1d, -1d));
-        assertEquals(v1.copy().rotate180DegClockwise(), new TVec2(-1d, -1d));
-        assertEquals(v1.copy().rotate90DegAntiClockwise(), new TVec2(-1d, 1d));
-        assertEquals(v1.copy().symmetricalVectorTo(new TVec2()), new TVec2(-1d, -1d));
+        assertEquals(v1.copy().rotate90DegClockwise(), new TVec2d(1d, -1d));
+        assertEquals(v1.copy().rotate180DegClockwise(), new TVec2d(-1d, -1d));
+        assertEquals(v1.copy().rotate90DegAntiClockwise(), new TVec2d(-1d, 1d));
+        assertEquals(v1.copy().symmetricalVectorTo(new TVec2d()), new TVec2d(-1d, -1d));
 
         v1.set(0d, 0d);
         assertTrue(v1.isZeroVector());
@@ -228,7 +228,7 @@ public class TVec2Test {
         assertFalse(v1.isUnitVector());
 
 
-        assertTrue(TMath.equals(TVec2.angleBetween(new TVec2(1d, 1d), new TVec2(0d, 1d)),
+        assertTrue(TMath.equals(TVec2d.angleBetween(new TVec2d(1d, 1d), new TVec2d(0d, 1d)),
                 TMath.PI_OVER_TWO / 2d));
     }
 

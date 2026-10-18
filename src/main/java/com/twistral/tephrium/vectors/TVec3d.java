@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * A fast and mutable 3D double vector class. Most methods return the vector instance for method chaining purposes.
  */
-public class TVec3 {
+public class TVec3d {
 
     private double x, y, z;
 
@@ -33,7 +33,7 @@ public class TVec3 {
     /*///////////////////////////  CONSTRUCTORS  ///////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
-    public TVec3(double x, double y, double z) {
+    public TVec3d(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -41,13 +41,13 @@ public class TVec3 {
 
 
     /** Creates an origin vector. */
-    public TVec3(){
+    public TVec3d(){
         this(0d, 0d, 0d);
     }
 
 
-    public TVec3 copy(){
-        return new TVec3(this.x, this.y, this.z);
+    public TVec3d copy(){
+        return new TVec3d(this.x, this.y, this.z);
     }
 
 
@@ -56,7 +56,7 @@ public class TVec3 {
     /*///////////////////////////////////////////////////////////////////////////*/
 
 
-    public TVec3 set(double x, double y, double z) {
+    public TVec3d set(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -64,18 +64,18 @@ public class TVec3 {
     }
 
 
-    public TVec3 setX(double x) {
+    public TVec3d setX(double x) {
         this.x = x;
         return this;
     }
 
 
-    public TVec3 setY(double y) {
+    public TVec3d setY(double y) {
         this.y = y;
         return this;
     }
 
-    public TVec3 setZ(double z) {
+    public TVec3d setZ(double z) {
         this.z = z;
         return this;
     }
@@ -97,12 +97,12 @@ public class TVec3 {
     /*///////////////////////////////////////////////////////////////////////*/
 
 
-    public TVec3 add(TVec3 other){
+    public TVec3d add(TVec3d other){
         return add(other.x, other.y, other.z);
     }
 
 
-    public TVec3 add(double x, double y, double z){
+    public TVec3d add(double x, double y, double z){
         this.x += x;
         this.y += y;
         this.z += z;
@@ -111,12 +111,12 @@ public class TVec3 {
 
     // ---------------- //
 
-    public TVec3 sub(TVec3 other){
+    public TVec3d sub(TVec3d other){
         return sub(other.x, other.y, other.z);
     }
 
 
-    public TVec3 sub(double x, double y, double z){
+    public TVec3d sub(double x, double y, double z){
         this.x -= x;
         this.y -= y;
         this.z -= z;
@@ -125,29 +125,29 @@ public class TVec3 {
 
     // ---------------- //
 
-    public TVec3 scale(double scaleX, double scaleY, double scaleZ){
+    public TVec3d scale(double scaleX, double scaleY, double scaleZ){
         this.x *= scaleX;
         this.y *= scaleY;
         this.z *= scaleZ;
         return this;
     }
 
-    public TVec3 scale(double scaleXYZ){
+    public TVec3d scale(double scaleXYZ){
         return scale(scaleXYZ, scaleXYZ, scaleXYZ);
     }
 
 
-    public TVec3 scaleX(double scale){
+    public TVec3d scaleX(double scale){
         this.x *= scale;
         return this;
     }
 
-    public TVec3 scaleY(double scale){
+    public TVec3d scaleY(double scale){
         this.y *= scale;
         return this;
     }
 
-    public TVec3 scaleZ(double scale){
+    public TVec3d scaleZ(double scale){
         this.z *= scale;
         return this;
     }
@@ -161,7 +161,7 @@ public class TVec3 {
      * Unitizes this vector by scaling it by 1 / len(vec)
      * @return this vector for method chaining purposes
      */
-    public TVec3 unit(){
+    public TVec3d unit(){
         if(!this.isZeroVector())
             scale(1d / this.length());
 
@@ -170,7 +170,7 @@ public class TVec3 {
 
 
 
-    public static void cross(TVec3 output, double x1, double y1, double z1, double x2, double y2, double z2) {
+    public static void cross(TVec3d output, double x1, double y1, double z1, double x2, double y2, double z2) {
         output.set(
                 y1 * z2 - z1 * y2,
                 z1 * x2 - x1 * z2,
@@ -180,7 +180,7 @@ public class TVec3 {
 
 
 
-    public TVec3 cross(TVec3 other){
+    public TVec3d cross(TVec3d other){
         cross(this, this.x, this.y, this.z, other.x, other.y, other.z);
         return this;
     }
@@ -196,11 +196,11 @@ public class TVec3 {
         return x1 * x2 + y1 * y2 + z1 * z2;
     }
 
-    public static double dot(TVec3 v1, TVec3 v2) {
+    public static double dot(TVec3d v1, TVec3d v2) {
         return dot(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
     }
 
-    public double dot(TVec3 other) {
+    public double dot(TVec3d other) {
         return dot(this.x, this.y, this.z, other.x, other.y, other.z);
     }
 
@@ -214,7 +214,7 @@ public class TVec3 {
         return dot(x, y, z, x, y, z);
     }
 
-    public static double lengthSquared(TVec3 vec) {
+    public static double lengthSquared(TVec3d vec) {
         return lengthSquared(vec.x, vec.y, vec.z);
     }
 
@@ -228,7 +228,7 @@ public class TVec3 {
         return TMath.sqrt(lengthSquared(x, y, z));
     }
 
-    public static double length(TVec3 vec) {
+    public static double length(TVec3d vec) {
         return length(vec.x, vec.y, vec.z);
     }
 
@@ -238,7 +238,7 @@ public class TVec3 {
 
     // ---------------- //
 
-    public static double angleBetween(TVec3 vec1, TVec3 vec2) {
+    public static double angleBetween(TVec3d vec1, TVec3d vec2) {
         return TMath.arccos(dot(vec1, vec2) / (vec1.length() * vec2.length()));
     }
 
@@ -254,7 +254,7 @@ public class TVec3 {
         return isZeroVector(this);
     }
 
-    public static boolean isZeroVector(TVec3 vector) {
+    public static boolean isZeroVector(TVec3d vector) {
         return TMath.equals(vector.x, 0d) && TMath.equals(vector.y, 0d) && TMath.equals(vector.z, 0d);
     }
 
@@ -263,19 +263,19 @@ public class TVec3 {
         return isUnitVector(this);
     }
 
-    public static boolean isUnitVector(TVec3 vector) {
+    public static boolean isUnitVector(TVec3d vector) {
         return TMath.equals(length(vector), 1d);
     }
 
 
-    public static boolean areOrthogonal(TVec3 vec1, TVec3 vec2, TVec3 vec3){
+    public static boolean areOrthogonal(TVec3d vec1, TVec3d vec2, TVec3d vec3){
         return TMath.equals(vec1.dot(vec2), 0d)
             && TMath.equals(vec1.dot(vec3), 0d)
             && TMath.equals(vec2.dot(vec3), 0d);
     }
 
 
-    public static boolean areOrthonormal(TVec3 vec1, TVec3 vec2, TVec3 vec3) {
+    public static boolean areOrthonormal(TVec3d vec1, TVec3d vec2, TVec3d vec3) {
         return areOrthogonal(vec1, vec2, vec3) && vec1.isUnitVector() && vec2.isUnitVector() && vec3.isUnitVector();
     }
 
@@ -298,7 +298,7 @@ public class TVec3 {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        TVec3 other = (TVec3) o;
+        TVec3d other = (TVec3d) o;
         return TMath.equals(x, other.x) && TMath.equals(y, other.y) && TMath.equals(z, other.z);
     }
 
