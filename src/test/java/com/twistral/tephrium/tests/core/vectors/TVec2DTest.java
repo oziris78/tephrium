@@ -105,7 +105,7 @@ public class TVec2DTest {
         assertTrue(TMath.equals(-2.345, vec.getY()));
 
         vec.set(1.5456, 2.345);
-        vec.rotate90DegAntiClockwise();
+        vec.rotate90DegCounterClockwise();
         assertTrue(TMath.equals(-2.345, vec.getX()));
         assertTrue(TMath.equals(1.5456, vec.getY()));
 
@@ -172,7 +172,7 @@ public class TVec2DTest {
         assertEquals(p1.copy().rotate90DegClockwise().rotate90DegClockwise(), p1.copy().rotate180DegClockwise());
 
         assertEquals(p1.copy().rotate90DegClockwise().rotate90DegClockwise().rotate90DegClockwise(),
-                p1.copy().rotate90DegAntiClockwise());
+                p1.copy().rotate90DegCounterClockwise());
 
 
         assertEquals(p2.copy().symmetricalVectorTo(p1), new TVec2d(0, 30));
@@ -214,7 +214,7 @@ public class TVec2DTest {
         v1.set(1d, 1d);
         assertEquals(v1.copy().rotate90DegClockwise(), new TVec2d(1d, -1d));
         assertEquals(v1.copy().rotate180DegClockwise(), new TVec2d(-1d, -1d));
-        assertEquals(v1.copy().rotate90DegAntiClockwise(), new TVec2d(-1d, 1d));
+        assertEquals(v1.copy().rotate90DegCounterClockwise(), new TVec2d(-1d, 1d));
         assertEquals(v1.copy().symmetricalVectorTo(new TVec2d()), new TVec2d(-1d, -1d));
 
         v1.set(0d, 0d);
