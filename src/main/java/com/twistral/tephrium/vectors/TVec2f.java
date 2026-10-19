@@ -15,12 +15,12 @@
 // limitations under the License.
 
 
-
-
-
 package com.twistral.tephrium.vectors;
 
+
 import com.twistral.tephrium.TMath;
+
+import java.util.Objects;
 
 
 /**
@@ -65,19 +65,28 @@ public class TVec2f {
 
     // Addition
 
-    public TVec2f add(TVec2f other) {
-        this.x += other.x;
-        this.y += other.y;
-        return this;
-    }
-
     public TVec2f add(float x, float y) {
         this.x += x;
         this.y += y;
         return this;
     }
 
+    public TVec2f add(TVec2f other) {
+        this.x += other.x;
+        this.y += other.y;
+        return this;
+    }
+
+    public TVec2f addX(float x) { this.x += x; return this; }
+    public TVec2f addY(float y) { this.y += y; return this; }
+
     // Subtraction
+
+    public TVec2f sub(float x, float y) {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
 
     public TVec2f sub(TVec2f other) {
         this.x -= other.x;
@@ -85,11 +94,8 @@ public class TVec2f {
         return this;
     }
 
-    public TVec2f sub(float x, float y) {
-        this.x -= x;
-        this.y -= y;
-        return this;
-    }
+    public TVec2f subX(float x) { this.x -= x; return this; }
+    public TVec2f subY(float y) { this.y -= y; return this; }
 
     // Scaling / Multiplication
 
@@ -105,21 +111,8 @@ public class TVec2f {
         return this;
     }
 
-    public TVec2f scaleX(float scalarX) {
-        this.x *= scalarX;
-        return this;
-    }
-
-    public TVec2f scaleY(float scalarY) {
-        this.y *= scalarY;
-        return this;
-    }
-
-    public TVec2f scale(float scalarXY) {
-        this.x *= scalarXY;
-        this.y *= scalarXY;
-        return this;
-    }
+    public TVec2f scaleX(float scalarX) { this.x *= scalarX; return this; }
+    public TVec2f scaleY(float scalarY) { this.y *= scalarY; return this; }
 
     // Division
 
@@ -135,21 +128,8 @@ public class TVec2f {
         return this;
     }
 
-    public TVec2f divX(float divisorX) {
-        this.x /= divisorX;
-        return this;
-    }
-
-    public TVec2f divY(float divisorY) {
-        this.y /= divisorY;
-        return this;
-    }
-
-    public TVec2f div(float divisorXY) {
-        this.x /= divisorXY;
-        this.y /= divisorXY;
-        return this;
-    }
+    public TVec2f divX(float divisorX) { this.x /= divisorX; return this; }
+    public TVec2f divY(float divisorY) { this.y /= divisorY; return this; }
 
 
     /*/////////////////////////////////////////////////////////////////*/
@@ -162,17 +142,13 @@ public class TVec2f {
         return x1 * x2 + y1 * y2;
     }
 
-    public static float dot(TVec2f v1, TVec2f v2) {
-        return v1.x * v2.x + v1.y * v2.y;
-    }
-
-    public float dot(TVec2f other) {
-        return this.x * other.x + this.y * other.y;
-    }
+    public static float dot(TVec2f v1, TVec2f v2) { return dot(v1.x, v1.y, v2.x, v2.y); }
 
     public float dot(float otherX, float otherY) {
         return this.x * otherX + this.y * otherY;
     }
+
+    public float dot(TVec2f other) { return this.dot(other.x, other.y); }
 
     // Length Squared
 
@@ -180,12 +156,10 @@ public class TVec2f {
         return x * x + y * y;
     }
 
-    public static float lengthSquared(TVec2f vec) {
-        return vec.x * vec.x + vec.y * vec.y;
-    }
+    public static float lengthSquared(TVec2f vec) { return lengthSquared(vec.x, vec.y); }
 
     public float lengthSquared() {
-        return this.x * this.x + this.y * this.y;
+        return x * x + y * y;
     }
 
     // Length
@@ -194,12 +168,10 @@ public class TVec2f {
         return TMath.sqrt(x * x + y * y);
     }
 
-    public static float length(TVec2f vec) {
-        return TMath.sqrt(vec.x * vec.x + vec.y * vec.y);
-    }
+    public static float length(TVec2f vec) { return length(vec.x, vec.y); }
 
     public float length() {
-        return TMath.sqrt(this.x * this.x + this.y * this.y);
+        return TMath.sqrt(x * x + y * y);
     }
 
     // Distance Squared
@@ -216,70 +188,61 @@ public class TVec2f {
         return dx * dx + dy * dy;
     }
 
-    public float distanceSquared(TVec2f other) {
-        final float dx = other.x - this.x;
-        final float dy = other.y - this.y;
-        return dx * dx + dy * dy;
-    }
-
     public float distanceSquared(float otherX, float otherY) {
         final float dx = otherX - this.x;
         final float dy = otherY - this.y;
         return dx * dx + dy * dy;
     }
 
+    public float distanceSquared(TVec2f other) { return this.distanceSquared(other.x, other.y); }
+
     // Distance
 
     public static float distance(float x1, float y1, float x2, float y2) {
-        final float dx = x2 - x1;
-        final float dy = y2 - y1;
-        return TMath.sqrt(dx * dx + dy * dy);
+        return TMath.sqrt(distanceSquared(x1, y1, x2, y2));
     }
 
     public static float distance(TVec2f v1, TVec2f v2) {
-        final float dx = v2.x - v1.x;
-        final float dy = v2.y - v1.y;
-        return TMath.sqrt(dx * dx + dy * dy);
-    }
-
-    public float distance(TVec2f other) {
-        final float dx = other.x - this.x;
-        final float dy = other.y - this.y;
-        return TMath.sqrt(dx * dx + dy * dy);
+        return TMath.sqrt(distanceSquared(v1.x, v1.y, v2.x, v2.y));
     }
 
     public float distance(float otherX, float otherY) {
-        final float dx = otherX - this.x;
-        final float dy = otherY - this.y;
-        return TMath.sqrt(dx * dx + dy * dy);
+        return TMath.sqrt(distanceSquared(x, y, otherX, otherY));
     }
+
+    public float distance(TVec2f other) {
+        return TMath.sqrt(distanceSquared(x, y, other.x, other.y));
+    }
+
+
+    // Cross product
+
+    public static float cross(float x1, float y1, float x2, float y2) {
+        return x1 * y2 - y1 * x2;
+    }
+
+    public static float cross(TVec2f v1, TVec2f v2) { return cross(v1.x, v1.y, v2.x, v2.y); }
+
+    public float cross(float otherX, float otherY) {
+        return this.x * otherY - this.y * otherX;
+    }
+
+    public float cross(TVec2f other) { return this.cross(other.x, other.y); }
 
 
     /*///////////////////////////////////////////////////////////////*/
     /*/////////////////////  GETTERS & SETTERS  /////////////////////*/
     /*///////////////////////////////////////////////////////////////*/
 
-    // Getters
 
     public float getX() { return x; }
     public float getY() { return y; }
 
-    // Setters
+    public TVec2f setX(float x) { this.x = x; return this; }
+    public TVec2f setY(float y) { this.y = y; return this; }
 
     public TVec2f set(float x, float y) {
         this.x = x;
-        this.y = y;
-        return this;
-    }
-
-
-    public TVec2f setX(float x) {
-        this.x = x;
-        return this;
-    }
-
-
-    public TVec2f setY(float y) {
         this.y = y;
         return this;
     }
@@ -296,7 +259,7 @@ public class TVec2f {
      * @return this vector for method chaining
      */
     public TVec2f unit() {
-        final float lenSq = x * x + y * y;
+        final float lenSq = this.lengthSquared();
         // Ignore zero and already normalized vectors
         if (!TMath.equals(lenSq, 0f) && !TMath.equals(lenSq, 1f)) {
             final float len = TMath.sqrt(lenSq);
@@ -317,18 +280,12 @@ public class TVec2f {
     }
 
     public TVec2f rotateRad(float radians) {
-        final float cos = TMath.cos(radians);
-        final float sin = TMath.sin(radians);
-
-        final float nx = x * cos - y * sin;
-        final float ny = x * sin + y * cos;
-        this.x = nx;
-        this.y = ny;
-        return this;
+        return this.rotate(TMath.cos(radians), TMath.sin(radians));
     }
 
     public TVec2f rotateDeg(float degrees) {
-        return this.rotateRad(TMath.toRadians(degrees));
+        final float radians = TMath.toRadians(degrees);
+        return this.rotate(TMath.cos(radians), TMath.sin(radians));
     }
 
     public TVec2f rotateAround(TVec2f reference, float cos, float sin) {
@@ -398,55 +355,39 @@ public class TVec2f {
 
     // Zero vectors
 
-    public static boolean isZeroVector(TVec2f vector) {
-        return TMath.equals(vector.x, 0f) && TMath.equals(vector.y, 0f);
-    }
-
     public static boolean isZeroVector(float x, float y) {
         return TMath.equals(x, 0f) && TMath.equals(y, 0f);
     }
 
-    public boolean isZeroVector() {
-        return TMath.equals(this.x, 0f) && TMath.equals(this.y, 0f);
-    }
+    public static boolean isZeroVector(TVec2f vector) { return isZeroVector(vector.x, vector.y); }
+    public boolean isZeroVector() { return isZeroVector(this.x, this.y); }
 
     // Unit vectors
 
-    public static boolean isUnitVector(TVec2f vector) {
-        return TMath.equals(vector.x * vector.x + vector.y * vector.y, 1f);
-    }
-
     public static boolean isUnitVector(float x, float y) {
-        return TMath.equals(x * x + y * y, 1f);
+        return TMath.equals(lengthSquared(x, y), 1f);
     }
 
-    public boolean isUnitVector() {
-        return TMath.equals(this.x * this.x + this.y * this.y, 1f);
-    }
+    public static boolean isUnitVector(TVec2f vector) { return isUnitVector(vector.x, vector.y); }
+    public boolean isUnitVector() { return isUnitVector(this.x, this.y); }
 
     // Orthogonal vectors
 
-    public static boolean areOrthogonal(TVec2f v1, TVec2f v2) {
-        final float dot = v1.x * v2.x + v1.y * v2.y;
-        return TMath.equals(dot, 0f);
+    public static boolean areOrthogonal(float x1, float y1, float x2, float y2) {
+        return TMath.equals(dot(x1, y1, x2, y2), 0f);
     }
 
-    public boolean isOrthogonalTo(TVec2f vector) {
-        final float dot = this.x * vector.x + this.y * vector.y;
-        return TMath.equals(dot, 0f);
-    }
+    public static boolean areOrthogonal(TVec2f v1, TVec2f v2) { return areOrthogonal(v1.x, v1.y, v2.x, v2.y); }
+    public boolean isOrthogonalTo(TVec2f vector) { return areOrthogonal(this.x, this.y, vector.x, vector.y); }
 
     // Parallel vectors
 
-    public static boolean areParallel(TVec2f v1, TVec2f v2) {
-        final float crossProduct = v1.x * v2.y - v1.y * v2.x;
-        return TMath.equals(crossProduct, 0f);
+    public static boolean areParallel(float x1, float y1, float x2, float y2) {
+        return TMath.equals(cross(x1, y1, x2, y2), 0f);
     }
 
-    public boolean isParallelTo(TVec2f vector) {
-        final float crossProduct = this.x * vector.y - this.y * vector.x;
-        return TMath.equals(crossProduct, 0f);
-    }
+    public static boolean areParallel(TVec2f v1, TVec2f v2) { return areParallel(v1.x, v1.y, v2.x, v2.y); }
+    public boolean isParallelTo(TVec2f vector) {return areParallel(this.x, this.y, vector.x, vector.y); }
 
 
     /*//////////////////////////////////////////////////////////////////*/
