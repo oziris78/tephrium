@@ -107,7 +107,7 @@ public class DataDescription {
 
     private static double getQuartile(double[] sortedData, int nthQuartile) {
         double quartileIndex = (sortedData.length + 1d) * nthQuartile / 4d;
-        int lowIndex = TMath.floorFast(quartileIndex);
+        int lowIndex = TMath.floorToInt(quartileIndex);
         double lowValue = sortedData[lowIndex - 1];
         return lowValue + (sortedData[lowIndex] - lowValue) * (quartileIndex % 1);
     }
