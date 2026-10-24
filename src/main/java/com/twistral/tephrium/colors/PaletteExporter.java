@@ -1,3 +1,5 @@
+
+
 // Copyright 2024-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +19,10 @@ package com.twistral.tephrium.colors;
 
 
 import com.twistral.tephrium.strings.TStringUtils;
-import java.util.List;
-
 
 
 /**
- * Helps you to export your color palettes no matter what library you are using. <br>
+ * Utility class for exporting color palettes into GIMP, Aseprite and Paint.net color palette files. <br>
  * Just give your colors to this class' methods and get your palette contents as a string. <br>
  * After that, you can write that content string into a file depending on your platform.
  */
@@ -32,36 +32,33 @@ public class PaletteExporter {
     private PaletteExporter() {}
 
 
-    /*/////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  METHODS  ///////////////////////////*/
-    /*/////////////////////////////////////////////////////////////////*/
-
-
     /**
-     * Gives you the contents of a .gpl file as a string, you can write this string into
-     * a .gpl file and then use that file in GIMP, Aseprite etc.
-     * @param rgbColorValues a list of colors like so: {red1, green1, blue1, red2, ...}
+     * Generates the contents of a GPL file as a string. <br>
+     * You can write this string into a file and then use that file in GIMP or Aseprite.
+     *
+     * @param rgbColors a list of colors like so: {red1, green1, blue1, red2, green2, ...}
      * @return the contents of a .gpl file as a string
      */
-    public static String getFileContentForGIMP(List<Integer> rgbColorValues) {
-        final int colorCount = rgbColorValues.size() / 3;
+    public static String generateGPLFileContent(int... rgbColors) {
+        final int colorCount = rgbColors.length / 3;
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(colorCount * 40);
         sb.append("GIMP Palette\n");
         sb.append("#Palette Name: ?\n");
         sb.append("#Description: Exported from Tephrium.\n");
         sb.append(String.format("#Colors: %s \n", colorCount));
 
-        for(int i = 0; i < colorCount; i++) {
-            int r = rgbColorValues.get(i*3 + 0);
-            int g = rgbColorValues.get(i*3 + 1);
-            int b = rgbColorValues.get(i*3 + 2);
-            sb.append(String.format("%d\t%d\t%d\t%s", r, g, b,
-                    TStringUtils.parseIntAsString(r, 16) +
-                    TStringUtils.parseIntAsString(g, 16) +
-                    TStringUtils.parseIntAsString(b, 16) )
-            );
-            if(i+1 != colorCount) sb.append("\n");
+        for (int i = 0; i < colorCount; i++) {
+            final int r = rgbColors[i * 3 + 0];
+            final int g = rgbColors[i * 3 + 1];
+            final int b = rgbColors[i * 3 + 2];
+
+            final String rStr = TStringUtils.parseIntAsString(r, 16);
+            final String gStr = TStringUtils.parseIntAsString(g, 16);
+            final String bStr = TStringUtils.parseIntAsString(b, 16);
+
+            sb.append(String.format("%d\t%d\t%d\t%s%s%s", r, g, b, rStr, gStr, bStr));
+            if (i+1 != colorCount) sb.append("\n");
         }
 
         return sb.toString();
@@ -69,27 +66,31 @@ public class PaletteExporter {
 
 
     /**
-     * Gives you the contents of a .txt file as a string, you can write this string into
-     * a file and then use that file in paint.net etc.
-     * @param rgbaColorValues a list of colors like so: {red1, green1, blue1, alpha1, red2, ...}
+     * Generates the contents of a Paint.net TXT file as a string. <br>
+     * You can write this string into a file and then use that file in Paint.net.
+     *
+     * @param rgbaColors a list of colors like so: {red1, green1, blue1, alpha1, red2, ...}
      * @return the contents of a PDN palette .txt file as a string
      */
-    public static String getFileContentForPDN(List<Integer> rgbaColorValues){
-        StringBuilder sb = new StringBuilder("; paint.net Palette File\n");
+    public static String generatePDNFileContent(int... rgbaColors) {
+        final int colorCount = rgbaColors.length / 4;
 
-        int colorCount = rgbaColorValues.size() / 4;
-        for(int i = 0; i < colorCount; i++) {
-            int r = rgbaColorValues.get(i*4 + 0);
-            int g = rgbaColorValues.get(i*4 + 1);
-            int b = rgbaColorValues.get(i*4 + 2);
-            int a = rgbaColorValues.get(i*4 + 3);
-            sb.append(
-                    TStringUtils.parseIntAsString(a, 16) +
-                    TStringUtils.parseIntAsString(r, 16) +
-                    TStringUtils.parseIntAsString(g, 16) +
-                    TStringUtils.parseIntAsString(b, 16)
-            );
-            if(i+1 != colorCount) sb.append("\n");
+        StringBuilder sb = new StringBuilder(colorCount * 40);
+        sb.append("; paint.net Palette File\n");
+
+        for (int i = 0; i < colorCount; i++) {
+            final int r = rgbaColors[i * 4 + 0];
+            final int g = rgbaColors[i * 4 + 1];
+            final int b = rgbaColors[i * 4 + 2];
+            final int a = rgbaColors[i * 4 + 3];
+
+            final String aStr = TStringUtils.parseIntAsString(a, 16);
+            final String rStr = TStringUtils.parseIntAsString(r, 16);
+            final String gStr = TStringUtils.parseIntAsString(g, 16);
+            final String bStr = TStringUtils.parseIntAsString(b, 16);
+
+            sb.append(String.format("%s%s%s%s", aStr, rStr, gStr, bStr));
+            if (i+1 != colorCount) sb.append("\n");
         }
 
         return sb.toString();
@@ -97,3 +98,4 @@ public class PaletteExporter {
 
 
 }
+
