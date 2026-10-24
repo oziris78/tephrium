@@ -74,7 +74,7 @@ public class GibberishFWG {
 
         char[] arr = new char[length];
         for (int i = 0; i < length; i++)
-            arr[i] = getRandCharFrom(CS_ASCII_ALL, random);
+            arr[i] = getRandCharFrom(CS_ASCII, random);
 
         return new String(arr);
     }

@@ -1,3 +1,5 @@
+
+
 // Copyright 2020-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,53 +15,89 @@
 // limitations under the License.
 
 
+
 package com.twistral.tephrium.strings;
 
 
-import com.twistral.tephrium.collections.TCollections;
-import com.twistral.tephrium.TMath;
-import com.twistral.tephrium.prng.SplitMix64Random;
-import com.twistral.tephrium.prng.TRandomGenerator;
-import java.util.HashMap;
-import java.util.function.Function;
+import com.twistral.tephrium.*;
+import com.twistral.tephrium.prng.*;
+import java.util.*;
+import java.util.function.*;
 
 
-public class TStringUtils {
+public final class TStringUtils {
 
-    // Character Sets (CSs)
+    // Character sets
     public static final String CS_ASCII_LOWER = "abcdefghijklmnopqrstuvwxyz";
     public static final String CS_ASCII_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final String CS_ASCII_ALL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    public static final String CS_ASCII = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
     public static final String CS_VOWELS_LOWER = "aeiou";
     public static final String CS_VOWELS_UPPER = "AEIOU";
-    public static final String CS_VOWELS_ALL = "aeiouAEIOU";
+    public static final String CS_VOWELS = "aeiouAEIOU";
+
     public static final String CS_CONSONANTS_LOWER = "bcdfghjklmnpqrstvwxyz";
     public static final String CS_CONSONANTS_UPPER = "BCDFGHJKLMNPQRSTVWXYZ";
-    public static final String CS_CONSONANTS_ALL = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
+    public static final String CS_CONSONANTS = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
+
     public static final String CS_BINARY = "01";
     public static final String CS_OCTAL = "01234567";
     public static final String CS_DECIMAL = "0123456789";
     public static final String CS_HEXADECIMAL = "0123456789ABCDEF";
     public static final String CS_WHITESPACE = " \t\n\r\f";
 
-    // Other constants
-    public static final char CNULL = '\u0000';
-
     // Private fields
-    private static final TRandomGenerator RAND_SHUFFLE = new SplitMix64Random();
+    private static final TRandomGenerator DEF_RNG = new SplitMix64Random();
 
     // No constructor
     private TStringUtils() {}
 
 
-    /*////////////////////////////////////////////////////////////////////////*/
-    /*//////////////////////////  STRING UTILITIES  //////////////////////////*/
-    /*////////////////////////////////////////////////////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////*/
+    /*//////////////////////////  CHAR UTILITIES  //////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////*/
+
+
+    public static boolean isVowelLower(char c) { return c < 128 && IS_VOWEL_LOWER[c]; }
+    public static boolean isVowelUpper(char c) { return c < 128 && IS_VOWEL_UPPER[c]; }
+    public static boolean isVowel(char c) { return c < 128 && IS_VOWEL[c]; }
+
+    public static boolean isConsonantLower(char c) { return c < 128 && IS_CONSONANT_LOWER[c]; }
+    public static boolean isConsonantUpper(char c) { return c < 128 && IS_CONSONANT_UPPER[c]; }
+    public static boolean isConsonant(char c) { return c < 128 && IS_CONSONANT[c]; }
+
+    public static boolean isAsciiLower(char c) { return c < 128 && IS_ASCII_LOWER[c]; }
+    public static boolean isAsciiUpper(char c) { return c < 128 && IS_ASCII_UPPER[c]; }
+    public static boolean isAscii(char c) { return c < 128 && IS_ASCII[c]; }
+
+    public static boolean isBinary(char c) { return c < 128 && IS_BINARY[c]; }
+    public static boolean isOctal(char c) { return c < 128 && IS_OCTAL[c]; }
+    public static boolean isDecimal(char c) { return c < 128 && IS_DECIMAL[c]; }
+    public static boolean isHexadecimal(char c) { return c < 128 && IS_HEXADECIMAL[c]; }
+    public static boolean isWhitespace(char c) { return c < 128 && IS_WHITESPACE[c]; }
+
+
+    public static char getRandCharFrom(String text, TRandomGenerator random) {
+        return text.charAt(random.nextInt(0, text.length()));
+    }
+
+    public static char getRandCharFrom(String text) {
+        return getRandCharFrom(text, DEF_RNG);
+    }
+
+    public static char swapCase(char c) {
+        return Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c);
+    }
+
+
+    /*//////////////////////////////////////////////////////////////////////*/
+    /*/////////////////////////  STRING UTILITIES  /////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////*/
 
 
     public static String shuffleString(String str, TRandomGenerator random) {
-        if(str == null) return "";
-        if(str.length() <= 1) return str;
+        if (str == null) return "";
+        if (str.length() <= 1) return str;
 
         final int size = str.length();
         char[] arr = str.toCharArray();
@@ -74,26 +112,73 @@ public class TStringUtils {
         return new String(arr);
     }
 
-    public static String shuffleString(String str) { return shuffleString(str, RAND_SHUFFLE); }
+
+    public static String shuffleString(String str) {
+        return shuffleString(str, DEF_RNG);
+    }
 
 
     /**
-     * A naive and potentially slow (~O(2 * {@code str} * {@code count})) implementation of String.repeat()
-     * from future Java versions. (Tephrium is specifically written in SE8 for compatibility)
+     * Compares two version strings that are separated by dots, for example "1.0.2" and "1.0.3".
+     *
+     * @param v1 the first version string in form "MAJOR.MINOR.PATCH"
+     * @param v2 the second version string in form "MAJOR.MINOR.PATCH"
+     * @return 0 if they are the same version, a negative integer if v1 is older than v2,
+     *         or a positive integer if v1 is newer than v2
+     */
+    public static int compareVersionStrings(String v1, String v2) {
+        Objects.requireNonNull(v1, "the first version string cant be null");
+        Objects.requireNonNull(v2, "the second version string cant be null");
+
+        int i1 = 0, i2 = 0, num1 = 0, num2 = 0;
+        final int len1 = v1.length(), len2 = v2.length();
+
+        while (i1 < len1 || i2 < len2) {
+            num1 = 0;
+            while (i1 < len1) {
+                char c = v1.charAt(i1++);
+                if (c == '.') break;
+                if (c >= '0' && c <= '9') {
+                    num1 = num1 * 10 + (c - '0');
+                }
+            }
+
+            num2 = 0;
+            while (i2 < len2) {
+                char c = v2.charAt(i2++);
+                if (c == '.') break;
+                if (c >= '0' && c <= '9') {
+                    num2 = num2 * 10 + (c - '0');
+                }
+            }
+
+            if (num1 != num2) {
+                return (num1 < num2) ? -1 : 1;
+            }
+        }
+
+        return 0;
+    }
+
+
+    /**
+     * A slower implementation of String.repeat() from future Java versions.
+     * (Tephrium is specifically written in SE8 for compatibility)
+     *
      * @param str any string
      * @param count an integer specifying how many times the string will be repeated
-     * @return {@code str} repeated {@code count} times
+     * @return the given string repeated given number of times, or an empty string for invalid inputs
      */
     public static String repeatedStringNaive(String str, int count) {
+        if (str == null || count <= 0) return "";
+        if (count == 1) return str;
+
         final int strLen = str.length();
         final int repLen = strLen * count;
         char[] rep = new char[repLen];
 
-        int repIndex = 0, strIndex = 0;
-        while(repIndex < repLen) {
-            rep[repIndex++] = str.charAt(strIndex++);
-            strIndex %= strLen;
-        }
+        for (int i = 0; i < count; i++)
+            str.getChars(0, strLen, rep, i * strLen);
 
         return new String(rep);
     }
@@ -108,29 +193,26 @@ public class TStringUtils {
      * @param newBase any integer, specifying the base that number will be converted to
      * @return the input in the specified base as a string
      */
-    public static String parseNumberAsString(int numberInBase10, int newBase) {
+    public static String parseIntAsString(int numberInBase10, int newBase) {
         if(newBase == 10) return String.valueOf(numberInBase10);
 
         StringBuilder sb = new StringBuilder();
         int num = numberInBase10;
-        int divided = TMath.floorToInt(num / newBase);
-        int rem = num - newBase * divided;
 
-        sb.append((0 <= rem && rem <= 9) ? rem : ((char) (65 + rem - 10)));
-        while(divided != 0) {
+        do {
+            int divided = TMath.floorToInt((double) num / (double) newBase);
+            int rem = num - newBase * divided;
+            sb.append((0 <= rem && rem <= 9) ? (char) ('0' + rem) : (char) ('A' + rem - 10));
             num = divided;
-            divided = TMath.floorToInt(num / newBase);
-            rem = num - newBase * divided;
-            sb.append((0 <= rem && rem <= 9) ? rem : ((char) (65 + rem - 10)));
-        }
+        } while (num != 0);
 
         return sb.reverse().toString();
     }
 
 
-    /*///////////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  CODEC METHODS  ///////////////////////////*/
-    /*///////////////////////////////////////////////////////////////////////*/
+    /*////////////////////////////////////////////////////////////////////////*/
+    /*///////////////////////  CIPHER & CODEC METHODS  ///////////////////////*/
+    /*////////////////////////////////////////////////////////////////////////*/
 
 
     /**
@@ -144,13 +226,15 @@ public class TStringUtils {
      * @param shift any integer (if its not in range [0,26) it will be mapped to it)
      * @return consowel-shifted version of the given string
      */
-    public static String consowelShiftCodec(String str, int shift) {
+    public static String consowelShiftCipher(String str, int shift) {
+        if (str == null) return "";
+
         char[] arr = str.toCharArray();
         final int size = arr.length;
 
         for (int i = 0; i < size; i++) {
-            int cnsi = CS_CONSONANTS_ALL.indexOf(arr[i]);
-            int vowi = CS_VOWELS_ALL.indexOf(arr[i]);
+            int cnsi = CS_CONSONANTS.indexOf(arr[i]);
+            int vowi = CS_VOWELS.indexOf(arr[i]);
 
             if(cnsi == -1 && vowi == -1) continue; // not a letter
 
@@ -170,18 +254,20 @@ public class TStringUtils {
 
 
     /**
-     * Basically runs the given index-mapping function on all characters and returns the resulting string. <br>
-     * Notice that caesar cipher is actually equivelant to {@code functionalCodec(str, x -> x + shift)}.
+     * Basically runs the given index-mapping function on all characters and returns the
+     * resulting string. <br> Notice that caesar cipher is actually equivelant to
+     * {@code functionalCodec(str, x -> x + shift)}.
+     *
      * @param str any string
-     * @param indexMapper any integer to integer function, please note that overflows are completely fine since
-     *                    this function maps it to an appropriate value aka an int in range [0, 26).
-     * @return the functionally coded string
+     * @param indexMapper any integer to integer function, please note that overflows
+     *                    are completely fine since this function maps it to an appropriate
+     *                    value aka an int in range [0, 26).
+     * @return the functionally transformed/processed string
      */
     public static String functionalCodec(String str, Function<Integer, Integer> indexMapper) {
         char[] arr = str.toCharArray();
-        final int size = arr.length;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0, arrLen = arr.length; i < arrLen; i++) {
             int loweri = CS_ASCII_LOWER.indexOf(arr[i]);
             int upperi = CS_ASCII_UPPER.indexOf(arr[i]);
 
@@ -204,91 +290,74 @@ public class TStringUtils {
     }
 
 
-    /*////////////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  CHAR UTILITIES  ///////////////////////////*/
-    /*////////////////////////////////////////////////////////////////////////*/
-
-
-    public static char getRandCharFrom(String text, TRandomGenerator random) {
-        return text.charAt(random.nextInt(0, text.length()));
+    /**
+     * Converts a single character to its Morse code representation.
+     * @param c any character (case insensitive for letters)
+     * @return the Morse code string, or "?" if unsupported
+     */
+    public static String morseCodec(char c) {
+        if (isAsciiLower(c)) return MORSE_LETTERS[c - 'a'];
+        if (isAsciiUpper(c)) return MORSE_LETTERS[c - 'A'];
+        if (isDecimal(c)) return MORSE_DIGITS[c - '0'];
+        if (c == ' ') return "/";
+        return "?";
     }
 
 
-    public static char swapCharCase(char c) {
-        return Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c);
-    }
+    public static String morseCodec(String str) {
+        if (str == null) return "";
+        if (str.isEmpty()) return "";
 
-
-    /*///////////////////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  CHAR CHECKING METHODS  ///////////////////////////*/
-    /*///////////////////////////////////////////////////////////////////////////////*/
-
-
-    public static boolean isVowel(char c) { return CS_VOWELS_ALL.indexOf(c) != -1; }
-    public static boolean isVowelLower(char c) { return CS_VOWELS_LOWER.indexOf(c) != -1; }
-    public static boolean isVowelUpper(char c) { return CS_VOWELS_UPPER.indexOf(c) != -1; }
-
-    public static boolean isConsonant(char c) { return CS_CONSONANTS_ALL.indexOf(c) != -1; }
-    public static boolean isConsonantLower(char c) { return CS_CONSONANTS_LOWER.indexOf(c) != -1; }
-    public static boolean isConsonantUpper(char c) { return CS_CONSONANTS_UPPER.indexOf(c) != -1; }
-
-    public static boolean isAscii(char c) { return CS_ASCII_ALL.indexOf(c) != -1; }
-    public static boolean isAsciiLower(char c) { return CS_ASCII_LOWER.indexOf(c) != -1; }
-    public static boolean isAsciiUpper(char c) { return CS_ASCII_UPPER.indexOf(c) != -1; }
-
-
-    /*/////////////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  SPECIAL STRINGS  ///////////////////////////*/
-    /*/////////////////////////////////////////////////////////////////////////*/
-
-
-    private static final HashMap<Character, String> mapCharToMorse = TCollections.newHashMap (
-        new Character[] {
-            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r',
-            's','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0',
-            ' '
-        },
-        ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-",
-        ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-",
-        ".--", "-..-", "-.--", "--..", ".----", "..---", "...--", "....-", ".....",
-        "-....", "--...", "---..", "----.", "-----", "/"
-    );
-
-
-    public static String convertToMorse(String str) {
         final int strLen = str.length();
-        str = str.toLowerCase();
         StringBuilder sb = new StringBuilder(strLen * 5);
 
-        for(int i = 0; i < strLen; i++) {
-            sb.append(mapCharToMorse.getOrDefault(str.charAt(i), "?"));
-            if(i+1 != strLen) sb.append(' ');
+        for (int i = 0; i < strLen; i++) {
+            sb.append(morseCodec(str.charAt(i)));
+            if (i + 1 != strLen) sb.append(' ');
         }
 
         return sb.toString();
     }
 
 
-    /**
-     * Compares two version strings that are separated by a dot, for example "1.0.2" and "1.0.3".
-     * @param v1 any version string in form "MAJOR.MINOR.PATCH"
-     * @param v2 any version string in form "MAJOR.MINOR.PATCH"
-     * @return 0 if they are the same version, negative value if v1 is an older version that v2, positive
-     *         value if v2 is an older version that v1
-     */
-    public static int compareVersionStrings(String v1, String v2) {
-        final String[] parts1 = v1.split("\\.");
-        final String[] parts2 = v2.split("\\.");
-        final int len1 = parts1.length;
-        final int len2 = parts2.length;
-        final int minLen = TMath.min(len1, len2);
+    /*////////////////////////////////////////////////////////////////////////////////*/
+    /*///////////////////////////  INTERNAL LOOKUP TABLES  ///////////////////////////*/
+    /*////////////////////////////////////////////////////////////////////////////////*/
 
-        for (int i = 0; i < minLen; i++) {
-            int comparison = Integer.compare(Integer.parseInt(parts1[i]), Integer.parseInt(parts2[i]));
-            if (comparison != 0) return comparison;
-        }
 
-        return Integer.compare(len1, len2);
+    private static final String[] MORSE_LETTERS = { // index 0-25 for a-z
+        ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
+        "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."
+    };
+
+    private static final String[] MORSE_DIGITS = { // index 0-9 for 0-9
+        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----."
+    };
+
+    private static final boolean[] IS_VOWEL_LOWER = newLookupTable(CS_VOWELS_LOWER),
+            IS_VOWEL_UPPER = newLookupTable(CS_VOWELS_UPPER),
+            IS_VOWEL = newLookupTable(CS_VOWELS),
+            IS_CONSONANT_LOWER = newLookupTable(CS_CONSONANTS_LOWER),
+            IS_CONSONANT_UPPER = newLookupTable(CS_CONSONANTS_UPPER),
+            IS_CONSONANT = newLookupTable(CS_CONSONANTS),
+            IS_ASCII_LOWER = newLookupTable(CS_ASCII_LOWER),
+            IS_ASCII_UPPER = newLookupTable(CS_ASCII_UPPER),
+            IS_ASCII = newLookupTable(CS_ASCII),
+            IS_BINARY = newLookupTable(CS_BINARY),
+            IS_OCTAL = newLookupTable(CS_OCTAL),
+            IS_DECIMAL = newLookupTable(CS_DECIMAL),
+            IS_HEXADECIMAL = newLookupTable(CS_HEXADECIMAL),
+            IS_WHITESPACE = newLookupTable(CS_WHITESPACE);
+
+
+    // Generates precomputed O(1) lookup tables for chars
+    private static boolean[] newLookupTable(String alphabet) {
+        final boolean[] table = new boolean[128];
+
+        for (int i = 0, alphabetLen = alphabet.length(); i < alphabetLen; i++)
+            table[alphabet.charAt(i)] = true;
+
+        return table;
     }
 
 

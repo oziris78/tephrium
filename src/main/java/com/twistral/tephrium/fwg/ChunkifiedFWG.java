@@ -18,6 +18,7 @@ package com.twistral.tephrium.fwg;
 
 
 import com.twistral.tephrium.TMath;
+import com.twistral.tephrium.UnreachableException;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import com.twistral.tephrium.prng.TRandomGenerator;
 
@@ -34,10 +35,11 @@ import static com.twistral.tephrium.strings.TStringUtils.*;
 public class ChunkifiedFWG {
 
     // Static variables
+    public static final int DEF_REWIND_LIMIT = 200;
     private static final int LETTER_COUNT = CS_ASCII_LOWER.length();
     private static final int LETTER_COUNT_2 = LETTER_COUNT * LETTER_COUNT;
     private static final int LETTER_COUNT_3 = LETTER_COUNT_2 * LETTER_COUNT;
-    public static final int DEF_REWIND_LIMIT = 200;
+    private static final char CNULL = '\u0000';
 
     // Instance variables
     private final TRandomGenerator random;

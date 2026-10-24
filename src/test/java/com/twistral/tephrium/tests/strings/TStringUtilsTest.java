@@ -56,7 +56,7 @@ public class TStringUtilsTest {
             // Get random text
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < 20; j++) {
-                char randChar = CS_ASCII_ALL.charAt((int)(Math.random() * CS_ASCII_ALL.length()));
+                char randChar = CS_ASCII.charAt((int)(Math.random() * CS_ASCII.length()));
                 sb.append(randChar);
             }
             String text = sb.toString();
@@ -119,8 +119,8 @@ public class TStringUtilsTest {
     @DisplayName("swapCharCaseTest")
     void swapCharCaseTest() {
         for(int i = 0; i < CS_ASCII_LOWER.length(); i++) {
-            assertEquals(swapCharCase(CS_ASCII_LOWER.charAt(i)), CS_ASCII_UPPER.charAt(i));
-            assertEquals(swapCharCase(CS_ASCII_UPPER.charAt(i)), CS_ASCII_LOWER.charAt(i));
+            assertEquals(swapCase(CS_ASCII_LOWER.charAt(i)), CS_ASCII_UPPER.charAt(i));
+            assertEquals(swapCase(CS_ASCII_UPPER.charAt(i)), CS_ASCII_LOWER.charAt(i));
         }
     }
 
@@ -153,9 +153,9 @@ public class TStringUtilsTest {
     @Test
     @DisplayName("parseNumberAsStringTest")
     void parseNumberAsStringTest() {
-        assertEquals("1010", parseNumberAsString(10, 2));
-        assertEquals("101", parseNumberAsString(10, 3));
-        assertEquals("22", parseNumberAsString(10, 4));
+        assertEquals("1010", parseIntAsString(10, 2));
+        assertEquals("101", parseIntAsString(10, 3));
+        assertEquals("22", parseIntAsString(10, 4));
     }
 
 
@@ -163,7 +163,7 @@ public class TStringUtilsTest {
     @DisplayName("codecTests")
     void codecTests() {
         assertEquals("ifmmp", functionalCodec("hello", x -> x+1));
-        assertEquals("ofbhu", consowelShiftCodec("abxde", 3));
+        assertEquals("ofbhu", consowelShiftCipher("abxde", 3));
         assertEquals(".... . .-.. .-.. ---", convertToMorse("hello"));
     }
 

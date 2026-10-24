@@ -57,9 +57,9 @@ public class PaletteExporter {
             int g = rgbColorValues.get(i*3 + 1);
             int b = rgbColorValues.get(i*3 + 2);
             sb.append(String.format("%d\t%d\t%d\t%s", r, g, b,
-                    TStringUtils.parseNumberAsString(r, 16) +
-                    TStringUtils.parseNumberAsString(g, 16) +
-                    TStringUtils.parseNumberAsString(b, 16) )
+                    TStringUtils.parseIntAsString(r, 16) +
+                    TStringUtils.parseIntAsString(g, 16) +
+                    TStringUtils.parseIntAsString(b, 16) )
             );
             if(i+1 != colorCount) sb.append("\n");
         }
@@ -84,10 +84,10 @@ public class PaletteExporter {
             int b = rgbaColorValues.get(i*4 + 2);
             int a = rgbaColorValues.get(i*4 + 3);
             sb.append(
-                    TStringUtils.parseNumberAsString(a, 16) +
-                    TStringUtils.parseNumberAsString(r, 16) +
-                    TStringUtils.parseNumberAsString(g, 16) +
-                    TStringUtils.parseNumberAsString(b, 16)
+                    TStringUtils.parseIntAsString(a, 16) +
+                    TStringUtils.parseIntAsString(r, 16) +
+                    TStringUtils.parseIntAsString(g, 16) +
+                    TStringUtils.parseIntAsString(b, 16)
             );
             if(i+1 != colorCount) sb.append("\n");
         }
