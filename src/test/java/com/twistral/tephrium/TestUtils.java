@@ -87,8 +87,8 @@ public class TestUtils {
             final boolean oneWins = (v1 < v2);
             double winningValue = oneWins ? v1 : v2;
             double losingValue = oneWins ? v2 : v1;
-            String winningName = oneWins ? d1.dataName : d2.dataName;
-            String losingName = oneWins ? d2.dataName : d1.dataName;
+            String winningName = oneWins ? d1.name : d2.name;
+            String losingName = oneWins ? d2.name : d1.name;
             System.out.printf("%s winner: %s (%.2f ns < %.2f ns)\n", valStr, winningName, winningValue, losingValue);
         }
         else System.out.printf("%s winner: same\n", valStr);

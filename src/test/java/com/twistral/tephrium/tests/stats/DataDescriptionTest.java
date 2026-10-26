@@ -58,7 +58,7 @@ public class DataDescriptionTest {
         assertTrue(TMath.equals(heightDesc.quartile2, 176));
         assertTrue(TMath.equals(heightDesc.quartile3, 180.5));
         assertTrue(TMath.equals(heightDesc.median, 176));
-        assertTrue(TMath.equals(heightDesc.interquartileRange, 11.25));
+        assertTrue(TMath.equals(heightDesc.iqr, 11.25));
         assertTrue(TMath.equals(heightDesc.bowleySkewCoef, -0.2));
         assertTrue(TMath.equals(heightDesc.pearsonSkewCoef, -0.0570160887));
 
@@ -76,7 +76,7 @@ public class DataDescriptionTest {
         assertTrue(TMath.equals(ageDesc.quartile2, 20));
         assertTrue(TMath.equals(ageDesc.quartile3, 38));
         assertTrue(TMath.equals(ageDesc.median, 20));
-        assertTrue(TMath.equals(ageDesc.interquartileRange, 20));
+        assertTrue(TMath.equals(ageDesc.iqr, 20));
         assertTrue(TMath.equals(ageDesc.bowleySkewCoef, 0.8));
         assertTrue(TMath.equals(ageDesc.pearsonSkewCoef, 1.528137008));
 
@@ -101,7 +101,7 @@ public class DataDescriptionTest {
         assertTrue(TMath.equals(heightDesc2.quartile2, 176));
         assertTrue(TMath.equals(heightDesc2.quartile3, 180.5));
         assertTrue(TMath.equals(heightDesc2.median, 176));
-        assertTrue(TMath.equals(heightDesc2.interquartileRange, 11.25));
+        assertTrue(TMath.equals(heightDesc2.iqr, 11.25));
         assertTrue(TMath.equals(heightDesc2.bowleySkewCoef, -0.2));
         assertTrue(TMath.equals(heightDesc2.pearsonSkewCoef, -0.057016088));
 
