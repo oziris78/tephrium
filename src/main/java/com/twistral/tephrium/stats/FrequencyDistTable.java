@@ -1,3 +1,5 @@
+
+
 // Copyright 2020-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,49 +18,170 @@
 package com.twistral.tephrium.stats;
 
 
-import com.twistral.tephrium.TephriumException;
-import com.twistral.tephrium.TMath;
-
+import com.twistral.tephrium.*;
 import java.util.*;
 
 
-public class FrequencyDistTable {
+public final class FrequencyDistTable {
 
-    private final int classCount;
-    private double[] cLefts; // inclusive
-    private double[] cRights; // exclusive
-    private double[] midpoints;
-    private double[] freqs;
-    private double[] relFreqs;
-    private double[] incCumFreqs; // increasing cumulative distribution's frequency
-    private double[] incRelFreqs; // increasing relative distribution's frequency
+    /** Number of rows in the table */
+    public final int classCount;
+
+    /** Inclusive left values of each interval */
+    public final double[] interLefts;
+
+    /** Exclusive right values of each interval */
+    public final double[] interRights;
+
+    /** Midpoints of each interval */
+    public final double[] interMids;
+
+    /** Frequency of each row */
+    public final double[] freqs;
+
+    /** Relative frequency of each row */
+    public final double[] relFreqs;
+
+    /** Increasing cumulative distribution's frequency of each row */
+    public final double[] incCumFreqs;
+
+    /** Increasing relative distribution's frequency of each row */
+    public final double[] incRelFreqs;
+
 
     /*//////////////////////////////////////////////////////////////////////*/
     /*///////////////////////////  CONSTRUCTORS  ///////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
 
-    public FrequencyDistTable(double[] frequencies, double min, double classInterval){
-        if(frequencies.length <= 0) {
-            throw new TephriumException("Invalid classCount value (must be >0): %d", frequencies.length);
+    // Internal main constructor
+    private FrequencyDistTable(int classCount) {
+        if (classCount <= 0)
+            throw new TephriumException("Class count must be greater than zero.");
+
+        this.classCount = classCount;
+        this.interLefts = new double[classCount];
+        this.interRights = new double[classCount];
+        this.interMids = new double[classCount];
+        this.freqs = new double[classCount];
+        this.relFreqs = new double[classCount];
+        this.incCumFreqs = new double[classCount];
+        this.incRelFreqs = new double[classCount];
+    }
+
+    /*/////////// KNOWN FREQUENCY ///////////*/
+
+    public FrequencyDistTable(double[] frequencies, double min, double classInterval) {
+        this(frequencies.length);
+
+        // Fill the frequency array
+        for (int i = 0; i < this.classCount; i++)
+            this.freqs[i] = frequencies[i];
+
+        // Fill the frequency array
+        fillRemainingTables(min, classInterval, TMath.sum(frequencies));
+    }
+
+    public FrequencyDistTable(float[] frequencies, float min, float classInterval) {
+        this(frequencies.length);
+
+        // Fill the frequency array
+        for (int i = 0; i < this.classCount; i++)
+            this.freqs[i] = frequencies[i];
+
+        // Fill the frequency array
+        fillRemainingTables(min, classInterval, TMath.sum(frequencies));
+    }
+
+    public FrequencyDistTable(int[] frequencies, int min, int classInterval) {
+        this(frequencies.length);
+
+        // Fill the frequency array
+        for (int i = 0; i < this.classCount; i++)
+            this.freqs[i] = frequencies[i];
+
+        // Fill the frequency array
+        fillRemainingTables(min, classInterval, TMath.sum(frequencies));
+    }
+
+    /*/////////// UNKNOWN FREQUENCY ///////////*/
+
+    public FrequencyDistTable(double[] population, int classCount) {
+        this(classCount);
+
+        // Get the unknown population information
+        double[] out = TMath.minMax(population);
+        final double min = out[0], max = out[1];
+        final double classInterval = TMath.ceil((max - min) / classCount);
+
+        // Fill the frequency array
+        for (int pi = 0, len = population.length; pi < len; pi++)
+            addFrequency(population[pi], min, classInterval);
+
+        // Fill the other arrays
+        fillRemainingTables(min, classInterval, population.length);
+    }
+
+    public FrequencyDistTable(float[] population, int classCount) {
+        this(classCount);
+
+        // Get the unknown population information
+        float[] out = TMath.minMax(population);
+        final double min = out[0], max = out[1];
+        final double classInterval = TMath.ceil((max - min) / classCount);
+
+        // Fill the frequency array
+        for (int pi = 0, len = population.length; pi < len; pi++)
+            addFrequency(population[pi], min, classInterval);
+
+        // Fill the other arrays
+        fillRemainingTables(min, classInterval, population.length);
+    }
+
+    public FrequencyDistTable(int[] population, int classCount) {
+        this(classCount);
+
+        // Get the unknown population information
+        int[] out = TMath.minMax(population);
+        final double min = out[0], max = out[1];
+        final double classInterval = TMath.ceil((max - min) / classCount);
+
+        // Fill the frequency array
+        for (int pi = 0, len = population.length; pi < len; pi++)
+            addFrequency(population[pi], min, classInterval);
+
+        // Fill the other arrays
+        fillRemainingTables(min, classInterval, population.length);
+    }
+
+
+    /*//////////////////////////////////////////////////////////////////////////*/
+    /*///////////////////////////  HELPER FUNCTIONS  ///////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////////*/
+
+
+    private void addFrequency(double popValue, double min, double classInterval) {
+        for (int i = 0; i < this.classCount; i++) {
+            double interLeft = min + i * classInterval;
+            double interRight = interLeft + classInterval;
+
+            boolean matches = (i == this.classCount - 1)
+                    ? (interLeft <= popValue && popValue <= interRight)
+                    : (interLeft <= popValue && popValue < interRight);
+
+            if (matches) {
+                this.freqs[i] += 1; // cl <= val < cr
+                break;
+            }
         }
+    }
 
-        classCount = frequencies.length;
-        cLefts = new double[classCount];
-        cRights = new double[classCount];
-        midpoints = new double[classCount];
-        relFreqs = new double[classCount];
-        incCumFreqs = new double[classCount];
-        incRelFreqs = new double[classCount];
-        freqs = new double[classCount];
 
-        double totalFreqs = TMath.sum(frequencies);
-        System.arraycopy(frequencies, 0, freqs, 0, classCount);
-
+    private void fillRemainingTables(double min, double classInterval, double totalFreqs) {
         for (int i = 0; i < classCount; i++) {
-            cLefts[i] = min + i * classInterval;
-            midpoints[i] = cLefts[i] + classInterval / 2d;
-            cRights[i] = cLefts[i] + classInterval;
+            interLefts[i] = min + i * classInterval;
+            interMids[i] = interLefts[i] + (classInterval / 2d);
+            interRights[i] = interLefts[i] + classInterval;
             relFreqs[i] = freqs[i] / totalFreqs;
             incCumFreqs[i] = freqs[i] + (i == 0 ? 0 : incCumFreqs[i-1]);
             incRelFreqs[i] = relFreqs[i] + (i == 0 ? 0 : incRelFreqs[i-1]);
@@ -66,75 +189,24 @@ public class FrequencyDistTable {
     }
 
 
-    /**
-     * Creates a frequency distribution table.
-     * @param population any population (can be unsorted)
-     * @param classCount an integer specifying how many rows this frequency distribution table will have
-     */
-    public FrequencyDistTable(double[] population, int classCount) {
-        if(classCount <= 0) {
-            throw new TephriumException("Invalid classCount value (must be >0): %d", classCount);
-        }
-
-        this.classCount = classCount;
-        this.cLefts = new double[classCount];
-        this.cRights = new double[classCount];
-        this.midpoints = new double[classCount];
-        this.relFreqs = new double[classCount];
-        this.incCumFreqs = new double[classCount];
-        this.incRelFreqs = new double[classCount];
-        this.freqs = new double[classCount];
-
-        final double min = TMath.min(population);
-        final double max = TMath.max(population);
-        final double classInterval = TMath.ceil((max - min) / classCount);
-
-        for (int i = 0; i < classCount; i++) {
-            cLefts[i] = min + i * classInterval;
-            midpoints[i] = cLefts[i] + classInterval / 2d;
-            cRights[i] = cLefts[i] + classInterval;
-            for (int j = 0; j < population.length; j++) { // cl <= val < cr
-                if(cLefts[i] <= population[j] && population[j] < cRights[i])
-                    freqs[i] += 1;
-            }
-            relFreqs[i] = freqs[i] / population.length;
-            incCumFreqs[i] = freqs[i] + (i == 0 ? 0 : incCumFreqs[i-1]);
-            incRelFreqs[i] = relFreqs[i] + (i == 0 ? 0 : incRelFreqs[i-1]);
-        }
-    }
-
-
-    /*/////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  METHODS  ///////////////////////////*/
-    /*/////////////////////////////////////////////////////////////////*/
-
-
-    public double getIntervalLeft(int row) { return cLefts[row]; }
-    public double getIntervalRight(int row) { return cRights[row]; }
-    public double getMidpoint(int row) { return midpoints[row]; }
-    public double getFrequency(int row) { return freqs[row]; }
-    public double getRelativeFreq(int row) { return relFreqs[row]; }
-    public int getRowCount() { return classCount; }
-    public double getIncCumFreq(int row) { return incCumFreqs[row]; }
-    public double getIncRelFreq(int row) { return incRelFreqs[row]; }
-
-
-    /*////////////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  OBJECT METHODS  ///////////////////////////*/
-    /*////////////////////////////////////////////////////////////////////////*/
+    /*////////////////////////////////////////////////////////////////*/
+    /*///////////////////////  OBJECT METHODS  ///////////////////////*/
+    /*////////////////////////////////////////////////////////////////*/
 
 
     @Override
     public String toString() {
-        String startStr = "class intervals | midpoints | freq. | relative freq. | inc. cum. freq. | inc. rel. freq.\n";
-        StringBuilder sb = new StringBuilder(startStr);
+        StringBuilder sb = new StringBuilder(
+            "class intervals | midpoints | freq | relative freq | inc cum freq | inc rel freq\n"
+        );
 
-        String tab = "     "; // tab string
-        int lastIndex = classCount-1;
+        final int lastIndex = classCount-1;
         for (int i = 0; i < classCount; i++) {
-            sb.append(String.format("[%.3f, %.3f)%s%.3f%s%.3f%s%.3f%s%.3f%s%.3f",
-                    getIntervalLeft(i), getIntervalRight(i), tab, getMidpoint(i), tab, getFrequency(i),
-                    tab, getRelativeFreq(i), tab, getIncCumFreq(i), tab, getIncRelFreq(i)));
+            sb.append(String.format(
+                "[%.3f, %.3f)     %.3f     %.3f     %.3f     %.3f     %.3f",
+                interLefts[i], interRights[i], interMids[i], freqs[i],
+                relFreqs[i], incCumFreqs[i], incRelFreqs[i]
+            ));
             if(i != lastIndex) sb.append("\n");
         }
 
@@ -144,32 +216,28 @@ public class FrequencyDistTable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if ((o == null) || (getClass() != o.getClass())) {
-            return false;
-        }
-        FrequencyDistTable other = (FrequencyDistTable) o;
-        return (classCount == other.classCount) && Arrays.equals(cLefts, other.cLefts) &&
-            Arrays.equals(cRights, other.cRights) && Arrays.equals(midpoints, other.midpoints) &&
-            Arrays.equals(freqs, other.freqs) && Arrays.equals(relFreqs, other.relFreqs) &&
-            Arrays.equals(incCumFreqs, other.incCumFreqs) && Arrays.equals(incRelFreqs, other.incRelFreqs);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrequencyDistTable t = (FrequencyDistTable) o;
+        return classCount == t.classCount && Objects.deepEquals(interLefts, t.interLefts)
+            && Objects.deepEquals(interRights, t.interRights)
+            && Objects.deepEquals(interMids, t.interMids)
+            && Objects.deepEquals(freqs, t.freqs)
+            && Objects.deepEquals(relFreqs, t.relFreqs)
+            && Objects.deepEquals(incCumFreqs, t.incCumFreqs)
+            && Objects.deepEquals(incRelFreqs, t.incRelFreqs);
     }
 
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(classCount);
-        result = (31 * result) + Arrays.hashCode(cLefts);
-        result = (31 * result) + Arrays.hashCode(cRights);
-        result = (31 * result) + Arrays.hashCode(midpoints);
-        result = (31 * result) + Arrays.hashCode(freqs);
-        result = (31 * result) + Arrays.hashCode(relFreqs);
-        result = (31 * result) + Arrays.hashCode(incCumFreqs);
-        result = (31 * result) + Arrays.hashCode(incRelFreqs);
-        return result;
+        return Objects.hash(
+            classCount, Arrays.hashCode(interLefts), Arrays.hashCode(interRights),
+            Arrays.hashCode(interMids), Arrays.hashCode(freqs), Arrays.hashCode(relFreqs),
+            Arrays.hashCode(incCumFreqs), Arrays.hashCode(incRelFreqs)
+        );
     }
 
 
 }
+
