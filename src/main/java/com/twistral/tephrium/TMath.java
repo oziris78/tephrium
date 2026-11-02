@@ -91,6 +91,12 @@ public final class TMath {
         out[1] = max;
     }
 
+    public static int[] minMax(int[] values) {
+        int[] out = new int[2];
+        minMax(out, values);
+        return out;
+    }
+
     // Long support
 
     public static long min(long a, long b) { return (a <= b) ? a : b; }
@@ -126,6 +132,12 @@ public final class TMath {
 
         out[0] = min;
         out[1] = max;
+    }
+
+    public static long[] minMax(long[] values) {
+        long[] out = new long[2];
+        minMax(out, values);
+        return out;
     }
 
     // Float support
@@ -165,6 +177,12 @@ public final class TMath {
         out[1] = max;
     }
 
+    public static float[] minMax(float[] values) {
+        float[] out = new float[2];
+        minMax(out, values);
+        return out;
+    }
+
     // Double support
 
     public static double min(double a, double b) { return Math.min(a, b); }
@@ -200,6 +218,12 @@ public final class TMath {
 
         out[0] = min;
         out[1] = max;
+    }
+
+    public static double[] minMax(double[] values) {
+        double[] out = new double[2];
+        minMax(out, values);
+        return out;
     }
 
 
