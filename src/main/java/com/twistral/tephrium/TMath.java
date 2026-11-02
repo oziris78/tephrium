@@ -78,6 +78,19 @@ public final class TMath {
         return res;
     }
 
+    public static void minMax(int[] out, int[] values) {
+        int min = values[0], max = values[0];
+
+        for (int i = 1, len = values.length; i < len; i++) {
+            int val = values[i];
+            if (val < min) min = val;
+            if (val > max) max = val;
+        }
+
+        out[0] = min;
+        out[1] = max;
+    }
+
     // Long support
 
     public static long min(long a, long b) { return (a <= b) ? a : b; }
@@ -100,6 +113,19 @@ public final class TMath {
         for (int i = 1, len = values.length; i < len; i++)
             res = max(res, values[i]);
         return res;
+    }
+
+    public static void minMax(long[] out, long[] values) {
+        long min = values[0], max = values[0];
+
+        for (int i = 1, len = values.length; i < len; i++) {
+            long val = values[i];
+            if (val < min) min = val;
+            if (val > max) max = val;
+        }
+
+        out[0] = min;
+        out[1] = max;
     }
 
     // Float support
@@ -126,6 +152,19 @@ public final class TMath {
         return res;
     }
 
+    public static void minMax(float[] out, float[] values) {
+        float min = values[0], max = values[0];
+
+        for (int i = 1, len = values.length; i < len; i++) {
+            float val = values[i];
+            if (val < min) min = val;
+            if (val > max) max = val;
+        }
+
+        out[0] = min;
+        out[1] = max;
+    }
+
     // Double support
 
     public static double min(double a, double b) { return Math.min(a, b); }
@@ -148,6 +187,19 @@ public final class TMath {
         for (int i = 1, len = values.length; i < len; i++)
             res = max(res, values[i]);
         return res;
+    }
+
+    public static void minMax(double[] out, double[] values) {
+        double min = values[0], max = values[0];
+
+        for (int i = 1, len = values.length; i < len; i++) {
+            double val = values[i];
+            if (val < min) min = val;
+            if (val > max) max = val;
+        }
+
+        out[0] = min;
+        out[1] = max;
     }
 
 
