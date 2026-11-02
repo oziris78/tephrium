@@ -19,8 +19,6 @@ package com.twistral.tephrium.strings;
 
 
 import com.twistral.tephrium.TMath;
-import com.twistral.tephrium.pairs.IntObjPair;
-
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -40,7 +38,7 @@ public class FuzzyStringMatcher {
     private int[] btm;
 
     // Max heap is ordered descending by dist so that the worst match is easily removable
-    private PriorityQueue<IntObjPair<String>> maxHeap;
+    private PriorityQueue<Match> maxHeap;
 
 
     /**
@@ -50,7 +48,7 @@ public class FuzzyStringMatcher {
     public FuzzyStringMatcher(int initCapacity) {
         this.top = new int[initCapacity];
         this.btm = new int[initCapacity];
-        this.maxHeap = new PriorityQueue<>(64, (x, y) -> Integer.compare(y.getA(), x.getA()));
+        this.maxHeap = new PriorityQueue<>(64, (x, y) -> Integer.compare(y.dist, x.dist));
     }
 
 
@@ -159,7 +157,7 @@ public class FuzzyStringMatcher {
         words.forEach(s -> {
             int dist = levenshteinDistance(input, s);
             if (dist <= maxDist) {
-                maxHeap.offer(new IntObjPair<>(dist, s));
+                maxHeap.offer(new Match(dist, s));
                 if (maxHeap.size() > maxWordCount) {
                     maxHeap.poll(); // Drop the worst match
                 }
@@ -170,7 +168,7 @@ public class FuzzyStringMatcher {
         final int size = maxHeap.size();
         String[] closestWords = new String[size];
         for (int i = size - 1; i >= 0; i--) {
-            closestWords[i] = maxHeap.poll().getB();
+            closestWords[i] = maxHeap.poll().word;
         }
         return closestWords;
     }
@@ -202,6 +200,22 @@ public class FuzzyStringMatcher {
 
     public String[] getClosestWords(Collection<String> words, String input) {
         return getClosestWords(words, input, DEF_MAX_WORD_COUNT, DEF_MAX_DIST);
+    }
+
+
+    /*//////////////////////////////////////////////////////////////*/
+    /*/////////////////////  INTERNAL CLASSES  /////////////////////*/
+    /*//////////////////////////////////////////////////////////////*/
+
+    // Internal match class for storing Strings with their already known distances
+    private static final class Match {
+        final int dist;
+        final String word;
+
+        Match(int dist, String word) {
+            this.dist = dist;
+            this.word = word;
+        }
     }
 
 
