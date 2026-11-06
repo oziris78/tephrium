@@ -1,3 +1,5 @@
+
+
 // Copyright 2024-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -72,7 +74,7 @@ public class FrommatFWG {
     /**
      * Generates a random string using the given TFFN format string. <br><br>
      *
-     * Here is a list of all actions that were defined to the parser: <br>
+     * Here is a list of all actions that are defined to the parser: <br>
      * - <b>[al]</b>  =>   any lowercase ascii letter <br>
      * - <b>[au]</b>  =>   any uppercase ascii letter <br>
      * - <b>[aa]</b>  =>   any ascii letter (including both lowercase and uppercase) <br>
@@ -87,7 +89,7 @@ public class FrommatFWG {
      * - <b>[#o]</b>  =>   any octal number (from "01234567") <br>
      * - <b>[#d]</b>  =>   any decimal number (from "0123...89") <br>
      * - <b>[#x]</b>  =>   any hexadecimal number (from "0123...CDEF") <br>
-     *
+     * <br>
      * Here are some examples: <br>
      * - getRandomString("T[al][au]")                   => "ThA", "TuX", ...                    <br>
      * - getRandomString("C[vl][cl][vl]")               => "Cuxa", "Coke", ...                  <br>

@@ -1,3 +1,5 @@
+
+
 // Copyright 2024-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 package com.twistral.tephrium.prng;
 
 
@@ -25,27 +28,37 @@ public class JavaSplittableRandom implements TRandomGenerator {
 
     private final SplittableRandom random;
 
-    public JavaSplittableRandom(final SplittableRandom random) { this.random = random; }
-    public JavaSplittableRandom() { this.random = new SplittableRandom(); }
+    public JavaSplittableRandom(SplittableRandom random) {
+        this.random = random;
+    }
 
-    /*/////////////////////////////////////////////////////////////////*/
-    /*///////////////////////////  METHODS  ///////////////////////////*/
-    /*/////////////////////////////////////////////////////////////////*/
+    public JavaSplittableRandom() {
+        this(new SplittableRandom());
+    }
 
-    // -------------- WRAPPERS -------------- //
+    /*/////////////// WRAPPER FUNCS ///////////////*/
 
-    @Override public long nextLong() { return random.nextLong(); }
     @Override public int nextInt() { return random.nextInt(); }
-    @Override public boolean nextBoolean() { return random.nextBoolean(); }
+    @Override public long nextLong() { return random.nextLong(); }
     @Override public double nextDouble() { return random.nextDouble(); }
-    @Override public double nextDouble(double rangeLeftInc, double rangeRightExc)
-    { return random.nextDouble(rangeLeftInc, rangeRightExc); }
-    @Override public long nextLong(long rangeLeftInc, long rangeRightExc)
-    { return random.nextLong(rangeLeftInc, rangeRightExc); }
-    @Override public int nextInt(int rangeLeftInc, int rangeRightExc)
-    { return random.nextInt(rangeLeftInc, rangeRightExc); }
+    @Override public boolean nextBoolean() { return random.nextBoolean(); }
 
-    // -------------- FOLLOWING FUNCS DONT EXIST IN SPLITTABLERANDOM -------------- //
+    @Override
+    public double nextDouble(double rangeLeftInc, double rangeRightExc) {
+        return random.nextDouble(rangeLeftInc, rangeRightExc);
+    }
+
+    @Override
+    public long nextLong(long rangeLeftInc, long rangeRightExc) {
+        return random.nextLong(rangeLeftInc, rangeRightExc);
+    }
+
+    @Override
+    public int nextInt(int rangeLeftInc, int rangeRightExc) {
+        return random.nextInt(rangeLeftInc, rangeRightExc);
+    }
+
+    /*/////////////// FOLLOWING FUNCS DONT EXIST IN SPLITTABLERANDOM ///////////////*/
 
     @Override
     public float nextFloat() {
@@ -54,8 +67,9 @@ public class JavaSplittableRandom implements TRandomGenerator {
 
     @Override
     public float nextFloat(float rangeLeftInc, float rangeRightExc) {
-        final float f = (float) random.nextDouble();
-        return rangeLeftInc + f * (rangeRightExc - rangeLeftInc);
+        return rangeLeftInc + nextFloat() * (rangeRightExc - rangeLeftInc);
     }
 
+
 }
+

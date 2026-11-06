@@ -1,3 +1,5 @@
+
+
 // Copyright 2024-2026 Oğuzhan Topaloğlu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,13 +71,11 @@ public class ChunkifiedFWG {
     }
 
 
-    /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
     public ChunkifiedFWG(int[] frequencies) {
         this(frequencies, new SplitMix64Random(), DEF_REWIND_LIMIT);
     }
 
 
-    /** @see ChunkifiedFWG#ChunkifiedFWG(int[], TRandomGenerator, int) */
     public ChunkifiedFWG() {
         this(freqFromCorpus(), new SplitMix64Random(), DEF_REWIND_LIMIT);
     }
