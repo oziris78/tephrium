@@ -24,9 +24,9 @@ import java.util.function.Function;
 /**
  * A fast and mutable 3x3 double matrix class. <br>
  * All methods either return a numeric value or this matrix for method chaining purposes. <br>
- * Also see {@link TMat2}, {@link TMat4}, {@link TMatN}
+ * Also see {@link TMat2d}, {@link TMat4d}, {@link TMatNd}
  */
-public class TMat3 {
+public class TMat3d {
 
     private double m00, m01, m02,   /*    [ m00, m01, m02 ]    */
                    m10, m11, m12,   /*    [ m10, m11, m12 ]    */
@@ -37,9 +37,9 @@ public class TMat3 {
     /*///////////////////////////  CONSTRUCTORS  ///////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
-    public TMat3(double m00, double m01, double m02,
-                 double m10, double m11, double m12,
-                 double m20, double m21, double m22)
+    public TMat3d(double m00, double m01, double m02,
+                  double m10, double m11, double m12,
+                  double m20, double m21, double m22)
     {
         set(
                 m00, m01, m02,
@@ -50,7 +50,7 @@ public class TMat3 {
 
 
     /**  Returns I<sub>3</sub> which is the 3x3 identity matrix.  */
-    public TMat3(){
+    public TMat3d(){
         set(
                 1d, 0d, 0d,
                 0d, 1d, 0d,
@@ -59,7 +59,7 @@ public class TMat3 {
     }
 
 
-    public TMat3(double fillValue){
+    public TMat3d(double fillValue){
         set(
                 fillValue, fillValue, fillValue,
                 fillValue, fillValue, fillValue,
@@ -77,8 +77,8 @@ public class TMat3 {
     }
 
 
-    public TMat3 copy(){
-        return new TMat3(
+    public TMat3d copy(){
+        return new TMat3d(
                 m00, m01, m02,
                 m10, m11, m12,
                 m20, m21, m22
@@ -91,9 +91,9 @@ public class TMat3 {
     /*///////////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat3 set(double m00, double m01, double m02,
-                     double m10, double m11, double m12,
-                     double m20, double m21, double m22)
+    public TMat3d set(double m00, double m01, double m02,
+                      double m10, double m11, double m12,
+                      double m20, double m21, double m22)
     {
         this.m00 = m00; this.m01 = m01; this.m02 = m02;
         this.m10 = m10; this.m11 = m11; this.m12 = m12;
@@ -102,7 +102,7 @@ public class TMat3 {
     }
 
 
-    public TMat3 setCell(int row, int col, double value){
+    public TMat3d setCell(int row, int col, double value){
         if(row == 0 && col == 0) m00 = value;
         else if(row == 0 && col == 1) m01 = value;
         else if(row == 0 && col == 2) m02 = value;
@@ -183,9 +183,9 @@ public class TMat3 {
     /*///////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat3 add(double m00, double m01, double m02,
-                     double m10, double m11, double m12,
-                     double m20, double m21, double m22)
+    public TMat3d add(double m00, double m01, double m02,
+                      double m10, double m11, double m12,
+                      double m20, double m21, double m22)
     {
         this.m00 += m00; this.m01 += m01; this.m02 += m02;
         this.m10 += m10; this.m11 += m11; this.m12 += m12;
@@ -194,7 +194,7 @@ public class TMat3 {
     }
 
 
-    public TMat3 add(TMat3 mat){
+    public TMat3d add(TMat3d mat){
         return add(
                 mat.m00, mat.m01, mat.m02,
                 mat.m10, mat.m11, mat.m12,
@@ -204,9 +204,9 @@ public class TMat3 {
 
     // ----------------------- //
 
-    public TMat3 sub(double m00, double m01, double m02,
-                     double m10, double m11, double m12,
-                     double m20, double m21, double m22)
+    public TMat3d sub(double m00, double m01, double m02,
+                      double m10, double m11, double m12,
+                      double m20, double m21, double m22)
     {
         this.m00 -= m00; this.m01 -= m01; this.m02 -= m02;
         this.m10 -= m10; this.m11 -= m11; this.m12 -= m12;
@@ -215,7 +215,7 @@ public class TMat3 {
     }
 
 
-    public TMat3 sub(TMat3 mat){
+    public TMat3d sub(TMat3d mat){
         return sub(
                 mat.m00, mat.m01, mat.m02,
                 mat.m10, mat.m11, mat.m12,
@@ -225,7 +225,7 @@ public class TMat3 {
 
     // ----------------------- //
 
-    public TMat3 scale(double scale){
+    public TMat3d scale(double scale){
         this.m00 *= scale; this.m01 *= scale; this.m02 *= scale;
         this.m10 *= scale; this.m11 *= scale; this.m12 *= scale;
         this.m20 *= scale; this.m21 *= scale; this.m22 *= scale;
@@ -239,9 +239,9 @@ public class TMat3 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat3 multiply(double m00, double m01, double m02,
-                          double m10, double m11, double m12,
-                          double m20, double m21, double m22)
+    public TMat3d multiply(double m00, double m01, double m02,
+                           double m10, double m11, double m12,
+                           double m20, double m21, double m22)
     {
         double newM00 = this.m00 * m00 + this.m01 * m10 + this.m02 * m20;
         double newM01 = this.m00 * m01 + this.m01 * m11 + this.m02 * m21;
@@ -268,7 +268,7 @@ public class TMat3 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat3 multiply(TMat3 mat) {
+    public TMat3d multiply(TMat3d mat) {
         return multiply(
                 mat.m00, mat.m01, mat.m02,
                 mat.m10, mat.m11, mat.m12,
@@ -278,9 +278,9 @@ public class TMat3 {
 
     // ----------------------- //
 
-    public TMat3 divide(double m00, double m01, double m02,
-                        double m10, double m11, double m12,
-                        double m20, double m21, double m22)
+    public TMat3d divide(double m00, double m01, double m02,
+                         double m10, double m11, double m12,
+                         double m20, double m21, double m22)
     {
         this.m00 /= m00; this.m01 /= m01; this.m02 /= m02;
         this.m10 /= m10; this.m11 /= m11; this.m12 /= m12;
@@ -294,7 +294,7 @@ public class TMat3 {
      * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMat3 divide(TMat3 mat){
+    public TMat3d divide(TMat3d mat){
         return divide(
                 mat.m00, mat.m01, mat.m02,
                 mat.m10, mat.m11, mat.m12,
@@ -309,7 +309,7 @@ public class TMat3 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat3 invert(){
+    public TMat3d invert(){
         double det = this.determinant();
         if(TMath.equals(det, 0d))
             return null;
@@ -337,7 +337,7 @@ public class TMat3 {
      * @param function any function that takes in a double and returns one
      * @return this matrix for method chaining
      */
-    public TMat3 applyFunctionElementWise(Function<Double, Double> function) {
+    public TMat3d applyFunctionElementWise(Function<Double, Double> function) {
         set(
             function.apply(m00), function.apply(m01), function.apply(m02),
             function.apply(m10), function.apply(m11), function.apply(m12),
@@ -346,19 +346,19 @@ public class TMat3 {
         return this;
     }
 
-    public TMat3 sin() { return applyFunctionElementWise(TMath::sin); }
-    public TMat3 cos() { return applyFunctionElementWise(TMath::cos); }
-    public TMat3 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat3 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
-    public TMat3 arccos() { return applyFunctionElementWise(TMath::arccos); }
-    public TMat3 arctan() { return applyFunctionElementWise(TMath::arctan); }
-    public TMat3 floor() { return applyFunctionElementWise(TMath::floor); }
-    public TMat3 ceil() { return applyFunctionElementWise(TMath::ceil); }
-    public TMat3 sqrt() { return applyFunctionElementWise(TMath::sqrt); }
-    public TMat3 square() { return applyFunctionElementWise(TMath::square); }
-    public TMat3 sinh() { return applyFunctionElementWise(TMath::sinh); }
-    public TMat3 cosh() { return applyFunctionElementWise(TMath::cosh); }
-    public TMat3 tanh() { return applyFunctionElementWise(TMath::tanh); }
+    public TMat3d sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMat3d cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMat3d tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMat3d arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat3d arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat3d arctan() { return applyFunctionElementWise(TMath::arctan); }
+    public TMat3d floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMat3d ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMat3d sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMat3d square() { return applyFunctionElementWise(TMath::square); }
+    public TMat3d sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMat3d cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMat3d tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
     /*//////////////////////////////////////////////////////////////////////*/
@@ -374,7 +374,7 @@ public class TMat3 {
      * [7 8 9]  =>  [9 8 7]  <br>
      * @return this matrix for method chaining
      */
-    public TMat3 flipHorizontally(){
+    public TMat3d flipHorizontally(){
         double temp;
         temp = this.m00;
         this.m00 = this.m02;
@@ -397,7 +397,7 @@ public class TMat3 {
      * [7 8 9]  =>  [1 2 3]  <br>
      * @return this matrix for method chaining
      */
-    public TMat3 flipVertically(){
+    public TMat3d flipVertically(){
         double temp;
         temp = this.m00;
         this.m00 = this.m20;
@@ -420,7 +420,7 @@ public class TMat3 {
      * [7 8 9]  =>  [9 6 3]  <br>
      * @return this matrix for method chaining
      */
-    public TMat3 rotate90DegClockwise(){
+    public TMat3d rotate90DegClockwise(){
         double temp;
         temp = this.m20;
         this.m20 = this.m22;
@@ -444,7 +444,7 @@ public class TMat3 {
      * [7 8 9]  =>  [1 4 7]  <br>
      * @return this matrix for method chaining
      */
-    public TMat3 rotate90DegAntiClockwise(){
+    public TMat3d rotate90DegAntiClockwise(){
         double temp;
         temp = this.m20;
         this.m20 = this.m00;
@@ -468,7 +468,7 @@ public class TMat3 {
      * [7 8 9]  =>  [3 2 1]  <br>
      * @return this matrix for method chaining
      */
-    public TMat3 rotate180Deg(){
+    public TMat3d rotate180Deg(){
         double temp;
         temp = this.m10;
         this.m10 = this.m12;
@@ -490,7 +490,7 @@ public class TMat3 {
      * Calculates the transpose of this matrix and assigns it to this matrix. <br>
      * @return this matrix for method chaining
      */
-    public TMat3 transpose(){
+    public TMat3d transpose(){
         double temp;
         temp = this.m01;
         this.m01 = this.m10;
@@ -577,7 +577,7 @@ public class TMat3 {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        TMat3 other = (TMat3) o;
+        TMat3d other = (TMat3d) o;
         return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) && TMath.equals(other.m02, m02) &&
             TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11) && TMath.equals(other.m12, m12) &&
             TMath.equals(other.m20, m20) && TMath.equals(other.m21, m21) && TMath.equals(other.m22, m22);

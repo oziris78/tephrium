@@ -24,9 +24,9 @@ import java.util.function.Function;
 /**
  * A fast and mutable 2x2 double matrix class. <br>
  * All methods either return a numeric value or this matrix for method chaining purposes. <br>
- * Also see {@link TMat3}, {@link TMat4}, {@link TMatN}
+ * Also see {@link TMat3d}, {@link TMat4d}, {@link TMatNd}
  */
-public class TMat2 {
+public class TMat2d {
 
     private double m00, m01,   /*    [ m00, m01 ]    */
                    m10, m11;   /*    [ m10, m11 ]    */
@@ -35,18 +35,18 @@ public class TMat2 {
     /*///////////////////////////  CONSTRUCTORS  ///////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
-    public TMat2(double m00, double m01, double m10, double m11) {
+    public TMat2d(double m00, double m01, double m10, double m11) {
         set(m00, m01, m10, m11);
     }
 
 
     /**  Returns I<sub>2</sub> which is the 2x2 identity matrix.  */
-    public TMat2() {
+    public TMat2d() {
         set(1d, 0d, 0d, 1d);
     }
 
 
-    public TMat2(double fillValue) {
+    public TMat2d(double fillValue) {
         set(fillValue, fillValue, fillValue, fillValue);
     }
 
@@ -56,8 +56,8 @@ public class TMat2 {
     }
 
 
-    public TMat2 copy(){
-        return new TMat2(m00, m01, m10, m11);
+    public TMat2d copy(){
+        return new TMat2d(m00, m01, m10, m11);
     }
 
 
@@ -66,13 +66,13 @@ public class TMat2 {
     /*///////////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat2 set(double m00, double m01, double m10, double m11) {
+    public TMat2d set(double m00, double m01, double m10, double m11) {
         this.m00 = m00; this.m01 = m01; this.m10 = m10; this.m11 = m11;
         return this;
     }
 
 
-    public TMat2 setCell(int row, int col, double value){
+    public TMat2d setCell(int row, int col, double value){
         if(row == 0 && col == 0) m00 = value;
         else if(row == 0 && col == 1) m01 = value;
         else if(row == 1 && col == 0) m10 = value;
@@ -137,31 +137,31 @@ public class TMat2 {
     /*///////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat2 add(double m00, double m01, double m10, double m11) {
+    public TMat2d add(double m00, double m01, double m10, double m11) {
         this.m00 += m00; this.m01 += m01; this.m10 += m10; this.m11 += m11;
         return this;
     }
 
 
-    public TMat2 add(TMat2 mat){
+    public TMat2d add(TMat2d mat){
         return add(mat.m00, mat.m01, mat.m10, mat.m11);
     }
 
     // ----------------------- //
 
-    public TMat2 sub(double m00, double m01, double m10, double m11) {
+    public TMat2d sub(double m00, double m01, double m10, double m11) {
         this.m00 -= m00; this.m01 -= m01; this.m10 -= m10; this.m11 -= m11;
         return this;
     }
 
 
-    public TMat2 sub(TMat2 mat){
+    public TMat2d sub(TMat2d mat){
         return sub(mat.m00, mat.m01, mat.m10, mat.m11);
     }
 
     // ----------------------- //
 
-    public TMat2 scale(double scale){
+    public TMat2d scale(double scale){
         this.m00 *= scale; this.m01 *= scale; this.m10 *= scale; this.m11 *= scale;
         return this;
     }
@@ -173,7 +173,7 @@ public class TMat2 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat2 multiply(double m00, double m01, double m10, double m11) {
+    public TMat2d multiply(double m00, double m01, double m10, double m11) {
         double newM00 = this.m00 * m00 + this.m01 * m10;
         double newM01 = this.m00 * m01 + this.m01 * m11;
         double newM10 = this.m10 * m00 + this.m11 * m10;
@@ -190,13 +190,13 @@ public class TMat2 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat2 multiply(TMat2 mat) {
+    public TMat2d multiply(TMat2d mat) {
         return multiply(mat.m00, mat.m01, mat.m10, mat.m11);
     }
 
     // ----------------------- //
 
-    public TMat2 divide(double m00, double m01, double m10, double m11) {
+    public TMat2d divide(double m00, double m01, double m10, double m11) {
         this.m00 /= m00; this.m01 /= m01; this.m10 /= m10; this.m11 /= m11;
         return this;
     }
@@ -207,7 +207,7 @@ public class TMat2 {
      * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMat2 divide(TMat2 mat){
+    public TMat2d divide(TMat2d mat){
         return divide(mat.m00, mat.m01, mat.m10, mat.m11);
     }
 
@@ -218,7 +218,7 @@ public class TMat2 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat2 invert(){
+    public TMat2d invert(){
         double det = this.determinant();
         if(TMath.equals(det, 0d))
             return null;
@@ -240,24 +240,24 @@ public class TMat2 {
      * @param function any function that takes in a double and returns one
      * @return this matrix for method chaining
      */
-    public TMat2 applyFunctionElementWise(Function<Double, Double> function) {
+    public TMat2d applyFunctionElementWise(Function<Double, Double> function) {
         set(function.apply(m00), function.apply(m01), function.apply(m10), function.apply(m11));
         return this;
     }
 
-    public TMat2 sin() { return applyFunctionElementWise(TMath::sin); }
-    public TMat2 cos() { return applyFunctionElementWise(TMath::cos); }
-    public TMat2 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat2 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
-    public TMat2 arccos() { return applyFunctionElementWise(TMath::arccos); }
-    public TMat2 arctan() { return applyFunctionElementWise(TMath::arctan); }
-    public TMat2 floor() { return applyFunctionElementWise(TMath::floor); }
-    public TMat2 ceil() { return applyFunctionElementWise(TMath::ceil); }
-    public TMat2 sqrt() { return applyFunctionElementWise(TMath::sqrt); }
-    public TMat2 square() { return applyFunctionElementWise(TMath::square); }
-    public TMat2 sinh() { return applyFunctionElementWise(TMath::sinh); }
-    public TMat2 cosh() { return applyFunctionElementWise(TMath::cosh); }
-    public TMat2 tanh() { return applyFunctionElementWise(TMath::tanh); }
+    public TMat2d sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMat2d cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMat2d tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMat2d arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat2d arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat2d arctan() { return applyFunctionElementWise(TMath::arctan); }
+    public TMat2d floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMat2d ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMat2d sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMat2d square() { return applyFunctionElementWise(TMath::square); }
+    public TMat2d sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMat2d cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMat2d tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
     /*//////////////////////////////////////////////////////////////////////*/
@@ -272,7 +272,7 @@ public class TMat2 {
      * [7 8]  =>  [8 7]  <br>
      * @return this matrix for method chaining
      */
-    public TMat2 flipHorizontally(){
+    public TMat2d flipHorizontally(){
         double temp;
         temp = this.m00;
         this.m00 = this.m01;
@@ -291,7 +291,7 @@ public class TMat2 {
      * [7 8]  =>  [1 5]  <br>
      * @return this matrix for method chaining
      */
-    public TMat2 flipVertically(){
+    public TMat2d flipVertically(){
         double temp;
         temp = this.m00;
         this.m00 = this.m10;
@@ -310,7 +310,7 @@ public class TMat2 {
      * [7 8]  =>  [8 5]  <br>
      * @return this matrix for method chaining
      */
-    public TMat2 rotate90DegClockwise(){
+    public TMat2d rotate90DegClockwise(){
         double temp;
         temp = this.m10;
         this.m10 = this.m11;
@@ -328,7 +328,7 @@ public class TMat2 {
      * [7 8]  =>  [1 7]  <br>
      * @return this matrix for method chaining
      */
-    public TMat2 rotate90DegAntiClockwise(){
+    public TMat2d rotate90DegAntiClockwise(){
         double temp;
         temp = this.m10;
         this.m10 = this.m00;
@@ -346,7 +346,7 @@ public class TMat2 {
      * [7 8]  =>  [5 1]  <br>
      * @return this matrix for method chaining
      */
-    public TMat2 rotate180Deg(){
+    public TMat2d rotate180Deg(){
         double temp = this.m01;
         this.m01 = this.m10;
         this.m10 = temp;
@@ -361,7 +361,7 @@ public class TMat2 {
      * Calculates the transpose of this matrix and assigns it to this matrix. <br>
      * @return this matrix for method chaining
      */
-    public TMat2 transpose(){
+    public TMat2d transpose(){
         double temp = this.m01;
         this.m01 = this.m10;
         this.m10 = temp;
@@ -429,7 +429,7 @@ public class TMat2 {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        TMat2 other = (TMat2) o;
+        TMat2d other = (TMat2d) o;
         return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) &&
                 TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11);
     }

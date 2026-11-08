@@ -18,9 +18,9 @@
 package com.twistral.tephrium.benchmarks;
 
 import com.twistral.tephrium.TMath;
-import com.twistral.tephrium.matrices.TMat2;
-import com.twistral.tephrium.matrices.TMat3;
-import com.twistral.tephrium.matrices.TMat4;
+import com.twistral.tephrium.matrices.TMat2d;
+import com.twistral.tephrium.matrices.TMat3d;
+import com.twistral.tephrium.matrices.TMat4d;
 import com.twistral.tephrium.prng.SplitMix64Random;
 import org.joml.*;
 import org.junit.jupiter.api.*;
@@ -58,8 +58,8 @@ public class MatrixVersus {
         benchmark(
                 "TMat2",
                 () -> {
-                    TMat2 tMat = new TMat2(m00, m01, m10, m11);
-                    tMat.scale(5d).add(tMat).sub(new TMat2(m11, m01, m10, m00)).multiply(tMat);
+                    TMat2d tMat = new TMat2d(m00, m01, m10, m11);
+                    tMat.scale(5d).add(tMat).sub(new TMat2d(m11, m01, m10, m00)).multiply(tMat);
                     det1 = tMat.determinant();
                     if(!TMath.equals(det1, 0d))
                         tMat.invert();
@@ -85,8 +85,8 @@ public class MatrixVersus {
 
         benchmark("TMat3",
                 () -> {
-                    TMat3 tMat = new TMat3(m00, m01, m02, m10, m11, m12, m20, m21, m22);
-                    tMat.scale(5d).add(tMat).sub(new TMat3(1, 4, 7, 2, 5, 8, 3, 6, 9)).multiply(tMat);
+                    TMat3d tMat = new TMat3d(m00, m01, m02, m10, m11, m12, m20, m21, m22);
+                    tMat.scale(5d).add(tMat).sub(new TMat3d(1, 4, 7, 2, 5, 8, 3, 6, 9)).multiply(tMat);
                     det1 = tMat.determinant();
                     if(!TMath.equals(det1, 0d))
                         tMat.invert();
@@ -113,7 +113,7 @@ public class MatrixVersus {
         benchmark(
                 "TMat4",
                 () -> {
-                    TMat4 tMat = new TMat4(
+                    TMat4d tMat = new TMat4d(
                             m00, m01, m02, m03,
                             m10, m11, m12, m13,
                             m20, m21, m22, m23,
@@ -121,7 +121,7 @@ public class MatrixVersus {
                     );
                     tMat.scale(5d);
                     tMat.add(tMat);
-                    tMat.sub(new TMat4(
+                    tMat.sub(new TMat4d(
                             16, 27, 38, 40,
                             10, 29, 32, 40,
                             10, 26, 37, 48,

@@ -27,11 +27,11 @@ import java.util.stream.IntStream;
 
 /**
  * A mutable and variable sized (NxN) double matrix class. <br>
- * This class is slower than {@link TMat2}, {@link TMat3}, {@link TMat4} classes
+ * This class is slower than {@link TMat2d}, {@link TMat3d}, {@link TMat4d} classes
  * so if your matrix size is less than 5, use those classes instead. <br>
  * All methods either return a numeric value or this matrix for method chaining purposes.
  */
-public class TMatN {
+public class TMatNd {
 
     private int N;
     private double[][] mat;
@@ -46,7 +46,7 @@ public class TMatN {
      * Creates I<sub>N</sub> which is the NxN identity matrix.
      * @param N matrix's size
      */
-    public TMatN(int N){
+    public TMatNd(int N){
         if(N <= 0) throw new TephriumException("Invalid matrix size: N=%d", N);
 
         this.N = N;
@@ -65,7 +65,7 @@ public class TMatN {
      * the matrix only references the given double[][].
      * @param matrixToReference any square two-dimensional double array
      */
-    public TMatN(double[][] matrixToReference){
+    public TMatNd(double[][] matrixToReference){
         if(matrixToReference.length <= 0) 
             throw new TephriumException("Invalid matrix size: N=%d", matrixToReference.length);
 
@@ -83,7 +83,7 @@ public class TMatN {
      * @param N matrix's size
      * @param fillValue any double value
      */
-    public TMatN(int N, double fillValue) {
+    public TMatNd(int N, double fillValue) {
         if(N <= 0) throw new TephriumException("Invalid matrix size: N=%d", N);
 
         this.N = N;
@@ -98,8 +98,8 @@ public class TMatN {
 
 
     /**
-     * This method does not create a new double array unlike {@link TMat2#getAsArray()},
-     * {@link TMat3#getAsArray()}, {@link TMat4#getAsArray()} methods. <br>
+     * This method does not create a new double array unlike {@link TMat2d#getAsArray()},
+     * {@link TMat3d#getAsArray()}, {@link TMat4d#getAsArray()} methods. <br>
      * @return the matrix referenced or stored by this matrix
      */
     public double[][] getAsArray(){
@@ -107,7 +107,7 @@ public class TMatN {
     }
 
 
-    public TMatN copy(){
+    public TMatNd copy(){
         double[][] matCopy = new double[this.N][this.N];
         for (int i = 0; i < this.N; i++) {
             for (int j = 0; j < this.N; j++) {
@@ -115,7 +115,7 @@ public class TMatN {
             }
         }
 
-        return new TMatN(matCopy);
+        return new TMatNd(matCopy);
     }
 
 
@@ -123,7 +123,7 @@ public class TMatN {
      * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
      * @param matrix any matrix
      */
-    public TMatN(TMat2 matrix) {
+    public TMatNd(TMat2d matrix) {
         this(matrix.getAsArray());
     }
 
@@ -132,7 +132,7 @@ public class TMatN {
      * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
      * @param matrix any matrix
      */
-    public TMatN(TMat3 matrix) {
+    public TMatNd(TMat3d matrix) {
         this(matrix.getAsArray());
     }
 
@@ -141,7 +141,7 @@ public class TMatN {
      * Creates a new double[][] with the contents of the given matrix and inits this TMatN instance.
      * @param matrix any matrix
      */
-    public TMatN(TMat4 matrix) {
+    public TMatNd(TMat4d matrix) {
         this(matrix.getAsArray());
     }
 
@@ -164,7 +164,7 @@ public class TMatN {
      * @param value any double
      * @return this matrix for method chaining
      */
-    public TMatN setCell(int row, int col, double value){
+    public TMatNd setCell(int row, int col, double value){
         if(!(row < 0 || row >= N || col < 0 || col >= N)) // If valid;
             this.mat[row][col] = value;
 
@@ -241,7 +241,7 @@ public class TMatN {
     /*///////////////////////////////////////////////////////////////////////*/
 
 
-    public TMatN add(double[][] other) {
+    public TMatNd add(double[][] other) {
         if(!parametersAreFine(this.N, other))
             return this;
 
@@ -255,13 +255,13 @@ public class TMatN {
     }
 
 
-    public TMatN add(TMatN other){
+    public TMatNd add(TMatNd other){
         return this.add(other.getAsArray());
     }
 
     // ----------------------- //
 
-    public TMatN sub(double[][] other){
+    public TMatNd sub(double[][] other){
         if(!parametersAreFine(this.N, other))
             return this;
 
@@ -275,13 +275,13 @@ public class TMatN {
     }
 
 
-    public TMatN sub(TMatN other){
+    public TMatNd sub(TMatNd other){
         return this.sub(other.getAsArray());
     }
 
     // ----------------------- //
 
-    public TMatN divide(double[][] other){
+    public TMatNd divide(double[][] other){
         if(!parametersAreFine(this.N, other))
             return this;
 
@@ -300,13 +300,13 @@ public class TMatN {
      * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMatN divide(TMatN mat){
+    public TMatNd divide(TMatNd mat){
         return this.divide(mat.getAsArray());
     }
 
     // ----------------------- //
 
-    public TMatN scale(double scale){
+    public TMatNd scale(double scale){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 this.mat[i][j] *= scale;
@@ -319,7 +319,7 @@ public class TMatN {
     // ----------------------- //
 
 
-    public TMatN multiply(double[][] other) {
+    public TMatNd multiply(double[][] other) {
         if(!parametersAreFine(this.N, other))
             return this;
 
@@ -338,7 +338,7 @@ public class TMatN {
     }
 
 
-    public TMatN multiply(TMatN other) {
+    public TMatNd multiply(TMatNd other) {
         return this.multiply(other.getAsArray());
     }
 
@@ -349,13 +349,13 @@ public class TMatN {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMatN invert() {
+    public TMatNd invert() {
         double det = this.determinant();
         if (TMath.equals(det, 0d)) {
             return null; // Not invertable
         }
 
-        TMatN matInverted = new TMatN(N);
+        TMatNd matInverted = new TMatNd(N);
         int[] index = IntStream.range(0, N).toArray(); // [0, 1, ..., N-1]
         double[] maxRowValues = IntStream.range(0, N).mapToDouble(i -> getMaxOfRow(i)).toArray();
 
@@ -416,7 +416,7 @@ public class TMatN {
      * @param function any function that takes in a double and returns one
      * @return this matrix for method chaining
      */
-    public TMatN applyFunctionElementWise(Function<Double, Double> function) {
+    public TMatNd applyFunctionElementWise(Function<Double, Double> function) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 this.mat[i][j] = function.apply(this.mat[i][j]);
@@ -426,26 +426,26 @@ public class TMatN {
         return this;
     }
 
-    public TMatN sin() { return applyFunctionElementWise(TMath::sin); }
-    public TMatN cos() { return applyFunctionElementWise(TMath::cos); }
-    public TMatN tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMatN arcsin() { return applyFunctionElementWise(TMath::arcsin); }
-    public TMatN arccos() { return applyFunctionElementWise(TMath::arccos); }
-    public TMatN arctan() { return applyFunctionElementWise(TMath::arctan); }
-    public TMatN floor() { return applyFunctionElementWise(TMath::floor); }
-    public TMatN ceil() { return applyFunctionElementWise(TMath::ceil); }
-    public TMatN sqrt() { return applyFunctionElementWise(TMath::sqrt); }
-    public TMatN square() { return applyFunctionElementWise(TMath::square); }
-    public TMatN sinh() { return applyFunctionElementWise(TMath::sinh); }
-    public TMatN cosh() { return applyFunctionElementWise(TMath::cosh); }
-    public TMatN tanh() { return applyFunctionElementWise(TMath::tanh); }
+    public TMatNd sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMatNd cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMatNd tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMatNd arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMatNd arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMatNd arctan() { return applyFunctionElementWise(TMath::arctan); }
+    public TMatNd floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMatNd ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMatNd sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMatNd square() { return applyFunctionElementWise(TMath::square); }
+    public TMatNd sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMatNd cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMatNd tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
     /*//////////////////////////////////////////////////////////////////////*/
     /*///////////////////////  GEOMETRIC OPERATIONS  ///////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
-    public TMatN flipHorizontally(){
+    public TMatNd flipHorizontally(){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N / 2; j++) {
                 double temp = this.getCell(i,j);
@@ -458,7 +458,7 @@ public class TMatN {
     }
 
 
-    public TMatN flipVertically(){
+    public TMatNd flipVertically(){
         for (int i = 0; i < N / 2; i++) {
             for (int j = 0; j < N; j++) {
                 double temp = this.mat[i][j];
@@ -471,7 +471,7 @@ public class TMatN {
     }
 
 
-    public TMatN rotate90DegClockwise() {
+    public TMatNd rotate90DegClockwise() {
         for (int i = 0; i < N / 2; i++) {
             for (int j = i; j < N - i - 1; j++) {
                 double temp = this.mat[i][j];
@@ -485,7 +485,7 @@ public class TMatN {
     }
 
 
-    public TMatN rotate90DegAntiClockwise() {
+    public TMatNd rotate90DegAntiClockwise() {
         for (int i = 0; i < N / 2; i++) {
             for (int j = i; j < N - i - 1; j++) {
                 double temp = this.mat[i][j];
@@ -499,7 +499,7 @@ public class TMatN {
     }
 
 
-    public TMatN rotate180Deg(){
+    public TMatNd rotate180Deg(){
         final int N2 = N * N;
         for (int i = 0; i < N2 / 2; i++) {
             final int i1 = i / N;
@@ -514,7 +514,7 @@ public class TMatN {
     }
 
 
-    public TMatN transpose() {
+    public TMatNd transpose() {
         for (int i = 0; i < N; i++) {
             for (int j = i + 1; j < N; j++) {
                 double temp = this.mat[i][j];
@@ -668,7 +668,7 @@ public class TMatN {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        TMatN other = (TMatN) o;
+        TMatNd other = (TMatNd) o;
 
         if (N != other.N)
             return false;

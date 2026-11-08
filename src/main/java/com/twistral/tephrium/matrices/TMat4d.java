@@ -24,9 +24,9 @@ import java.util.function.Function;
 /**
  * A fast and mutable 4x4 double matrix class. <br>
  * All methods either return a numeric value or this matrix for method chaining purposes. <br>
- * Also see {@link TMat2}, {@link TMat3}, {@link TMatN}
+ * Also see {@link TMat2d}, {@link TMat3d}, {@link TMatNd}
  */
-public class TMat4 {
+public class TMat4d {
 
     private double m00, m01, m02, m03,   /*    [ m00, m01, m02, m03 ]    */
                    m10, m11, m12, m13,   /*    [ m10, m11, m12, m13 ]    */
@@ -38,10 +38,10 @@ public class TMat4 {
     /*///////////////////////////  CONSTRUCTORS  ///////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
-    public TMat4(double m00, double m01, double m02, double m03,
-                 double m10, double m11, double m12, double m13,
-                 double m20, double m21, double m22, double m23,
-                 double m30, double m31, double m32, double m33)
+    public TMat4d(double m00, double m01, double m02, double m03,
+                  double m10, double m11, double m12, double m13,
+                  double m20, double m21, double m22, double m23,
+                  double m30, double m31, double m32, double m33)
     {
         set(
             m00, m01, m02, m03,
@@ -53,7 +53,7 @@ public class TMat4 {
 
 
     /**  Returns I<sub>4</sub> which is the 4x4 identity matrix.  */
-    public TMat4(){
+    public TMat4d(){
         set(
                 1d, 0d, 0d, 0d,
                 0d, 1d, 0d, 0d,
@@ -63,7 +63,7 @@ public class TMat4 {
     }
 
 
-    public TMat4(double fillValue){
+    public TMat4d(double fillValue){
         set(
                 fillValue, fillValue, fillValue, fillValue,
                 fillValue, fillValue, fillValue, fillValue,
@@ -83,8 +83,8 @@ public class TMat4 {
     }
 
 
-    public TMat4 copy(){
-        return new TMat4(
+    public TMat4d copy(){
+        return new TMat4d(
             m00, m01, m02, m03,
             m10, m11, m12, m13,
             m20, m21, m22, m23,
@@ -98,10 +98,10 @@ public class TMat4 {
     /*///////////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat4 set(double m00, double m01, double m02, double m03,
-                     double m10, double m11, double m12, double m13,
-                     double m20, double m21, double m22, double m23,
-                     double m30, double m31, double m32, double m33)
+    public TMat4d set(double m00, double m01, double m02, double m03,
+                      double m10, double m11, double m12, double m13,
+                      double m20, double m21, double m22, double m23,
+                      double m30, double m31, double m32, double m33)
     {
         this.m00 = m00; this.m01 = m01; this.m02 = m02; this.m03 = m03;
         this.m10 = m10; this.m11 = m11; this.m12 = m12; this.m13 = m13;
@@ -111,7 +111,7 @@ public class TMat4 {
     }
 
 
-    public TMat4 setCell(int row, int col, double value){
+    public TMat4d setCell(int row, int col, double value){
         if(row == 0 && col == 0) m00 = value;
         else if(row == 0 && col == 1) m01 = value;
         else if(row == 0 && col == 2) m02 = value;
@@ -212,10 +212,10 @@ public class TMat4 {
     /*///////////////////////////////////////////////////////////////////////*/
 
 
-    public TMat4 add(double m00, double m01, double m02, double m03,
-                     double m10, double m11, double m12, double m13,
-                     double m20, double m21, double m22, double m23,
-                     double m30, double m31, double m32, double m33)
+    public TMat4d add(double m00, double m01, double m02, double m03,
+                      double m10, double m11, double m12, double m13,
+                      double m20, double m21, double m22, double m23,
+                      double m30, double m31, double m32, double m33)
     {
         this.m00 += m00; this.m01 += m01; this.m02 += m02; this.m03 += m03;
         this.m10 += m10; this.m11 += m11; this.m12 += m12; this.m13 += m13;
@@ -225,7 +225,7 @@ public class TMat4 {
     }
 
 
-    public TMat4 add(TMat4 mat){
+    public TMat4d add(TMat4d mat){
         return add(
             mat.m00, mat.m01, mat.m02, mat.m03,
             mat.m10, mat.m11, mat.m12, mat.m13,
@@ -236,10 +236,10 @@ public class TMat4 {
 
     // ----------------------- //
 
-    public TMat4 sub(double m00, double m01, double m02, double m03,
-                     double m10, double m11, double m12, double m13,
-                     double m20, double m21, double m22, double m23,
-                     double m30, double m31, double m32, double m33)
+    public TMat4d sub(double m00, double m01, double m02, double m03,
+                      double m10, double m11, double m12, double m13,
+                      double m20, double m21, double m22, double m23,
+                      double m30, double m31, double m32, double m33)
     {
         this.m00 -= m00; this.m01 -= m01; this.m02 -= m02; this.m03 -= m03;
         this.m10 -= m10; this.m11 -= m11; this.m12 -= m12; this.m13 -= m13;
@@ -249,7 +249,7 @@ public class TMat4 {
     }
 
 
-    public TMat4 sub(TMat4 mat){
+    public TMat4d sub(TMat4d mat){
         return sub(
                 mat.m00, mat.m01, mat.m02, mat.m03,
                 mat.m10, mat.m11, mat.m12, mat.m13,
@@ -260,7 +260,7 @@ public class TMat4 {
 
     // ----------------------- //
 
-    public TMat4 scale(double scale) {
+    public TMat4d scale(double scale) {
         return applyFunctionElementWise(x -> x * scale);
     }
 
@@ -271,10 +271,10 @@ public class TMat4 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat4 multiply(double m00, double m01, double m02, double m03,
-                          double m10, double m11, double m12, double m13,
-                          double m20, double m21, double m22, double m23,
-                          double m30, double m31, double m32, double m33)
+    public TMat4d multiply(double m00, double m01, double m02, double m03,
+                           double m10, double m11, double m12, double m13,
+                           double m20, double m21, double m22, double m23,
+                           double m30, double m31, double m32, double m33)
     {
         double newM00 = this.m00 * m00 + this.m01 * m10 + this.m02 * m20 + this.m03 * m30;
         double newM01 = this.m00 * m01 + this.m01 * m11 + this.m02 * m21 + this.m03 * m31;
@@ -312,7 +312,7 @@ public class TMat4 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat4 multiply(TMat4 mat) {
+    public TMat4d multiply(TMat4d mat) {
         return multiply(
                 mat.m00, mat.m01, mat.m02, mat.m03,
                 mat.m10, mat.m11, mat.m12, mat.m13,
@@ -323,10 +323,10 @@ public class TMat4 {
 
     // ----------------------- //
 
-    public TMat4 divide(double m00, double m01, double m02, double m03,
-                        double m10, double m11, double m12, double m13,
-                        double m20, double m21, double m22, double m23,
-                        double m30, double m31, double m32, double m33)
+    public TMat4d divide(double m00, double m01, double m02, double m03,
+                         double m10, double m11, double m12, double m13,
+                         double m20, double m21, double m22, double m23,
+                         double m30, double m31, double m32, double m33)
     {
         this.m00 /= m00; this.m01 /= m01; this.m02 /= m02; this.m03 /= m03;
         this.m10 /= m10; this.m11 /= m11; this.m12 /= m12; this.m13 /= m13;
@@ -341,7 +341,7 @@ public class TMat4 {
      * @param mat any matrix
      * @return this matrix for method chaining
      */
-    public TMat4 divide(TMat4 mat) {
+    public TMat4d divide(TMat4d mat) {
         return divide(
                 mat.m00, mat.m01, mat.m02, mat.m03,
                 mat.m10, mat.m11, mat.m12, mat.m13,
@@ -357,7 +357,7 @@ public class TMat4 {
      * Make sure to use {@link #copy()} method to keep the original matrix.
      * @return this matrix for method chaining
      */
-    public TMat4 invert(){
+    public TMat4d invert(){
         double det = this.determinant();
         if(TMath.equals(det, 0d))
             return null;
@@ -392,7 +392,7 @@ public class TMat4 {
      * @param function any function that takes in a double and returns one
      * @return this matrix for method chaining
      */
-    public TMat4 applyFunctionElementWise(Function<Double, Double> function) {
+    public TMat4d applyFunctionElementWise(Function<Double, Double> function) {
         set(
                 function.apply(m00), function.apply(m01), function.apply(m02), function.apply(m03),
                 function.apply(m10), function.apply(m11), function.apply(m12), function.apply(m13),
@@ -402,19 +402,19 @@ public class TMat4 {
         return this;
     }
 
-    public TMat4 sin() { return applyFunctionElementWise(TMath::sin); }
-    public TMat4 cos() { return applyFunctionElementWise(TMath::cos); }
-    public TMat4 tan() { return applyFunctionElementWise(TMath::tan); }
-    public TMat4 arcsin() { return applyFunctionElementWise(TMath::arcsin); }
-    public TMat4 arccos() { return applyFunctionElementWise(TMath::arccos); }
-    public TMat4 arctan() { return applyFunctionElementWise(TMath::arctan); }
-    public TMat4 floor() { return applyFunctionElementWise(TMath::floor); }
-    public TMat4 ceil() { return applyFunctionElementWise(TMath::ceil); }
-    public TMat4 sqrt() { return applyFunctionElementWise(TMath::sqrt); }
-    public TMat4 square() { return applyFunctionElementWise(TMath::square); }
-    public TMat4 sinh() { return applyFunctionElementWise(TMath::sinh); }
-    public TMat4 cosh() { return applyFunctionElementWise(TMath::cosh); }
-    public TMat4 tanh() { return applyFunctionElementWise(TMath::tanh); }
+    public TMat4d sin() { return applyFunctionElementWise(TMath::sin); }
+    public TMat4d cos() { return applyFunctionElementWise(TMath::cos); }
+    public TMat4d tan() { return applyFunctionElementWise(TMath::tan); }
+    public TMat4d arcsin() { return applyFunctionElementWise(TMath::arcsin); }
+    public TMat4d arccos() { return applyFunctionElementWise(TMath::arccos); }
+    public TMat4d arctan() { return applyFunctionElementWise(TMath::arctan); }
+    public TMat4d floor() { return applyFunctionElementWise(TMath::floor); }
+    public TMat4d ceil() { return applyFunctionElementWise(TMath::ceil); }
+    public TMat4d sqrt() { return applyFunctionElementWise(TMath::sqrt); }
+    public TMat4d square() { return applyFunctionElementWise(TMath::square); }
+    public TMat4d sinh() { return applyFunctionElementWise(TMath::sinh); }
+    public TMat4d cosh() { return applyFunctionElementWise(TMath::cosh); }
+    public TMat4d tanh() { return applyFunctionElementWise(TMath::tanh); }
 
 
     /*//////////////////////////////////////////////////////////////////////*/
@@ -431,7 +431,7 @@ public class TMat4 {
      * [22 23 24 25]   =>   [25 24 23 22]  <br>
      * @return this matrix for method chaining
      */
-    public TMat4 flipHorizontally(){
+    public TMat4d flipHorizontally(){
         double temp;
 
         temp = m00;
@@ -479,7 +479,7 @@ public class TMat4 {
      * [22 23 24 25]   =>   [10 11 12 13]  <br>
      * @return this matrix for method chaining
      */
-    public TMat4 flipVertically(){
+    public TMat4d flipVertically(){
         double temp;
 
         temp = m20;
@@ -527,7 +527,7 @@ public class TMat4 {
      * [22 23 24 25]   =>   [25 21 17 13]  <br>
      * @return this matrix for method chaining
      */
-    public TMat4 rotate90DegClockwise(){
+    public TMat4d rotate90DegClockwise(){
         double temp;
 
         temp = m12;
@@ -567,7 +567,7 @@ public class TMat4 {
      * [22 23 24 25]   =>   [10 14 18 22]  <br>
      * @return this matrix for method chaining
      */
-    public TMat4 rotate90DegAntiClockwise(){
+    public TMat4d rotate90DegAntiClockwise(){
         double temp;
 
         temp = m11;
@@ -607,7 +607,7 @@ public class TMat4 {
      * [22 23 24 25]   =>   [13 12 11 10]  <br>
      * @return this matrix for method chaining
      */
-    public TMat4 rotate180Deg(){
+    public TMat4d rotate180Deg(){
         double temp;
 
         temp = m00;
@@ -650,7 +650,7 @@ public class TMat4 {
      * Calculates the transpose of this matrix and assigns it to this matrix. <br>
      * @return this matrix for method chaining
      */
-    public TMat4 transpose() {
+    public TMat4d transpose() {
         double temp;
 
         temp = this.m01;
@@ -717,7 +717,7 @@ public class TMat4 {
     }
 
     public double determinant3x3UpperLeft() {
-        return TMat3.determinant(
+        return TMat3d.determinant(
             m00, m01, m02,
             m10, m11, m12,
             m20, m21, m22
@@ -726,7 +726,7 @@ public class TMat4 {
 
 
     public double determinant3x3UpperRight() {
-        return TMat3.determinant(
+        return TMat3d.determinant(
             m01, m02, m03,
             m11, m12, m13,
             m21, m22, m23
@@ -734,7 +734,7 @@ public class TMat4 {
     }
 
     public double determinant3x3BottomLeft() {
-        return TMat3.determinant(
+        return TMat3d.determinant(
             m10, m11, m12,
             m20, m21, m22,
             m30, m31, m32
@@ -743,7 +743,7 @@ public class TMat4 {
 
 
     public double determinant3x3BottomRight() {
-        return TMat3.determinant(
+        return TMat3d.determinant(
             m11, m12, m13,
             m21, m22, m23,
             m31, m32, m33
@@ -797,7 +797,7 @@ public class TMat4 {
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        TMat4 other = (TMat4) o;
+        TMat4d other = (TMat4d) o;
         return TMath.equals(other.m00, m00) && TMath.equals(other.m01, m01) && TMath.equals(other.m02, m02) &&
             TMath.equals(other.m03, m03) && TMath.equals(other.m10, m10) && TMath.equals(other.m11, m11) &&
             TMath.equals(other.m12, m12) && TMath.equals(other.m13, m13) && TMath.equals(other.m20, m20) &&
