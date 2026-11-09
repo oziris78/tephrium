@@ -47,7 +47,7 @@ public class TMatTests {
         assertArrayEquals(new double[][]{
                 {1, -1},
                 {-5, 1}
-        }, mat2.getAsArray());
+        }, mat2.toArray());
 
         mat1.add(0d, -1d, -5d, 0d);
         assertEquals(mat1, mat2);
@@ -59,7 +59,7 @@ public class TMatTests {
 
         TMat2d t1 = new TMat2d(15, 6, 7, 8);
         TMat2d t2 = new TMat2d(6, 9, -4, 1);
-        assertEquals(new TMat2d(66, 141, 10, 71), t1.multiply(t2));
+        assertEquals(new TMat2d(66, 141, 10, 71), t1.mul(t2));
 
 
         Random random = new Random();
@@ -84,7 +84,7 @@ public class TMatTests {
             TMat2d tm2 = new TMat2d(m00, m01, m10, m11);
 
             am1 = am1.multiply(am2);
-            tm1.multiply(m00, m01, m10, m11);
+            tm1.mul(m00, m01, m10, m11);
 
             TMat2d res = new TMat2d(am1.getRow(0)[0],am1.getRow(0)[1], am1.getRow(1)[0], am1.getRow(1)[1]);
             assertEquals(res, tm1);
@@ -123,7 +123,7 @@ public class TMatTests {
 
 
         mat1.set(2, 3, 4, 5);
-        mat1.applyFunctionElementWise(x -> x*x+1);
+        mat1.map(x -> x*x+1);
         assertEquals(mat1, new TMat2d(5, 10, 17, 26));
 
         mat1.set(2, 3, 4, 5);
@@ -175,27 +175,27 @@ public class TMatTests {
                 20, 10,
                 40, 30
         );
-        assertEquals(mflipHorizontally, mat1.copy().flipHorizontally());
+        assertEquals(mflipHorizontally, mat1.copy().permuteGridFlipHorizontally());
         TMat2d mflipVertically = new TMat2d(
                 30, 40,
                 10, 20
         );
-        assertEquals(mflipVertically, mat1.copy().flipVertically());
+        assertEquals(mflipVertically, mat1.copy().permuteGridFlipVertically());
         TMat2d mrotate90DegAntiClockwise = new TMat2d(
                 20, 40,
                 10, 30
         );
-        assertEquals(mrotate90DegAntiClockwise, mat1.copy().rotate90DegAntiClockwise());
+        assertEquals(mrotate90DegAntiClockwise, mat1.copy().permuteGridRotate90AntiClockwise());
         TMat2d mrotate90DegClockwise = new TMat2d(
                 30, 10,
                 40, 20
         );
-        assertEquals(mrotate90DegClockwise, mat1.copy().rotate90DegClockwise());
+        assertEquals(mrotate90DegClockwise, mat1.copy().permuteGridRotate90Clockwise());
         TMat2d mrotate180Deg = new TMat2d(
                 40, 30,
                 20, 10
         );
-        assertEquals(mrotate180Deg, mat1.copy().rotate180Deg());
+        assertEquals(mrotate180Deg, mat1.copy().permuteGridRotate180());
         TMat2d mtranspose = new TMat2d(
                 10, 30,
                 20, 40

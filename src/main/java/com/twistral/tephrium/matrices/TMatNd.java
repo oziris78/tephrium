@@ -98,7 +98,7 @@ public class TMatNd {
 
 
     /**
-     * This method does not create a new double array unlike {@link TMat2d#getAsArray()},
+     * This method does not create a new double array unlike {@link TMat2d#toArray()},
      * {@link TMat3d#getAsArray()}, {@link TMat4d#getAsArray()} methods. <br>
      * @return the matrix referenced or stored by this matrix
      */
@@ -124,7 +124,7 @@ public class TMatNd {
      * @param matrix any matrix
      */
     public TMatNd(TMat2d matrix) {
-        this(matrix.getAsArray());
+        this(matrix.toArray());
     }
 
 

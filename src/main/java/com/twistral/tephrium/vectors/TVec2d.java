@@ -41,13 +41,13 @@ public class TVec2d {
         this(0d, 0d);
     }
 
-    // Copy constructors
+    // Copying constructors & functions
 
     public TVec2d(TVec2d other) {
         this(other.x, other.y);
     }
 
-    public TVec2d copy(){
+    public TVec2d copy() {
         return new TVec2d(this.x, this.y);
     }
 

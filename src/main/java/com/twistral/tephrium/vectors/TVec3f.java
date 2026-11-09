@@ -41,13 +41,13 @@ public class TVec3f {
         this(0f, 0f, 0f);
     }
 
-    // Copy constructors
+    // Copying constructors & functions
 
     public TVec3f(TVec3f other) {
         this(other.x, other.y, other.z);
     }
 
-    public TVec3f copy(){
+    public TVec3f copy() {
         return new TVec3f(this.x, this.y, this.z);
     }
 

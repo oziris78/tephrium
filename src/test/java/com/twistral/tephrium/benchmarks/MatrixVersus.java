@@ -59,7 +59,7 @@ public class MatrixVersus {
                 "TMat2",
                 () -> {
                     TMat2d tMat = new TMat2d(m00, m01, m10, m11);
-                    tMat.scale(5d).add(tMat).sub(new TMat2d(m11, m01, m10, m00)).multiply(tMat);
+                    tMat.scale(5d).add(tMat).sub(new TMat2d(m11, m01, m10, m00)).mul(tMat);
                     det1 = tMat.determinant();
                     if(!TMath.equals(det1, 0d))
                         tMat.invert();
