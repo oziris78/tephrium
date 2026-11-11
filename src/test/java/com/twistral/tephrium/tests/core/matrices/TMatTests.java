@@ -232,16 +232,16 @@ public class TMatTests {
         TMat3d mat3 = new TMat3d(50d);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                assertEquals(mat3.getCell(i, j), 50d);
-                mat3.setCell(i, j, -50d);
-                assertEquals(mat3.getCell(i, j), -50d);
+                assertEquals(mat3.get(i, j), 50d);
+                mat3.set(i, j, -50d);
+                assertEquals(mat3.get(i, j), -50d);
             }
         }
 
-        assertEquals(mat2.getCell(0, 1), 2d);
-        assertEquals(mat2.getCell(1, 1), 5d);
-        assertEquals(mat2.getCell(2, 2), 9d);
-        assertEquals(mat2.getCell(20, 2), Double.NaN);
+        assertEquals(mat2.get(0, 1), 2d);
+        assertEquals(mat2.get(1, 1), 5d);
+        assertEquals(mat2.get(2, 2), 9d);
+        assertEquals(mat2.get(20, 2), Double.NaN);
 
         // special values
         assertEquals(mat2.trace(), 1 + 5 + 9);

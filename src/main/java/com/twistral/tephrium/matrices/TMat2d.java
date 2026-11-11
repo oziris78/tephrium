@@ -40,12 +40,18 @@ public class TMat2d {
     }
 
     public TMat2d(double fillValue) {
-        this(fillValue, fillValue, fillValue, fillValue);
+        this(
+            fillValue, fillValue,
+            fillValue, fillValue
+        );
     }
 
     /** Returns I<sub>2</sub> which is the 2x2 identity matrix */
     public TMat2d() {
-        this(1d, 0d, 0d, 1d);
+        this(
+            1d, 0d,
+            0d, 1d
+        );
     }
 
     // Copying constructors & functions
@@ -61,10 +67,7 @@ public class TMat2d {
     // Special static factory methods
 
     public static TMat2d zero() {
-        return new TMat2d(
-            0d, 0d,
-            0d, 0d
-        );
+        return new TMat2d(0d);
     }
 
     /** Returns a diagonal matrix with the specified diagonal values */
@@ -327,13 +330,13 @@ public class TMat2d {
     public TMat2d arccos() { return map(TMath::arccos); }
     public TMat2d arctan() { return map(TMath::arctan); }
 
-    public TMat2d abs() { return this.map(TMath::abs); }
+    public TMat2d abs() { return map(TMath::abs); }
     public TMat2d floor() { return map(TMath::floor); }
     public TMat2d ceil() { return map(TMath::ceil); }
     public TMat2d sqrt() { return map(TMath::sqrt); }
-    public TMat2d cbrt() { return this.map(TMath::cbrt); }
+    public TMat2d cbrt() { return map(TMath::cbrt); }
     public TMat2d square() { return map(TMath::square); }
-    public TMat2d cube() { return this.map(TMath::cube); }
+    public TMat2d cube() { return map(TMath::cube); }
 
 
     /*/////////////////////////////////////////////////////////////////*/
@@ -477,8 +480,8 @@ public class TMat2d {
 
     public double[][] toArray(){
         return new double[][] {
-            { m00, m01 },
-            { m10, m11 }
+            { this.m00, this.m01 },
+            { this.m10, this.m11 }
         };
     }
 
@@ -639,7 +642,11 @@ public class TMat2d {
 
     @Override
     public String toString() {
-        return String.format("[%.5f, %.5f]\n[%.5f, %.5f]\n", m00, m01, m10, m11);
+        return String.format(
+            "[%.5f, %.5f]\n[%.5f, %.5f]\n",
+            this.m00, this.m01,
+            this.m10, this.m11
+        );
     }
 
     @Override
@@ -650,7 +657,10 @@ public class TMat2d {
 
     @Override
     public int hashCode() {
-        return Objects.hash(m00, m01, m10, m11);
+        return Objects.hash(
+            this.m00, this.m01,
+            this.m10, this.m11
+        );
     }
 
 
