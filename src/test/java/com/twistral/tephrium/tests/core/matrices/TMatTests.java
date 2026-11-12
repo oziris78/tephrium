@@ -115,11 +115,11 @@ public class TMatTests {
 
         mat1.set(2, 3, 4, 5);
         mat2.set(8, 3, 1, 5);
-        mat1.divide(mat2);
-        assertEquals(mat1.getCell(0, 0), 0.25d);
-        assertEquals(mat1.getCell(1, 0), 4d);
-        assertEquals(mat1.getCell(0, 1), 1);
-        assertEquals(mat1.getCell(1, 1), 1);
+        mat1.div(mat2);
+        assertEquals(mat1.get(0, 0), 0.25d);
+        assertEquals(mat1.get(1, 0), 4d);
+        assertEquals(mat1.get(0, 1), 1);
+        assertEquals(mat1.get(1, 1), 1);
 
 
         mat1.set(2, 3, 4, 5);
@@ -127,11 +127,11 @@ public class TMatTests {
         assertEquals(mat1, new TMat2d(5, 10, 17, 26));
 
         mat1.set(2, 3, 4, 5);
-        mat1.divide(8, 3, 1, 1d/5d);
-        assertEquals(mat1.getCell(0, 0), 0.25d);
-        assertEquals(mat1.getCell(1, 0), 4d);
-        assertEquals(mat1.getCell(0, 1), 1);
-        assertEquals(mat1.getCell(1, 1), 25);
+        mat1.div(8, 3, 1, 1d/5d);
+        assertEquals(mat1.get(0, 0), 0.25d);
+        assertEquals(mat1.get(1, 0), 4d);
+        assertEquals(mat1.get(0, 1), 1);
+        assertEquals(mat1.get(1, 1), 25);
 
         mat1.set(100, -100,
                  200, 500);
@@ -150,19 +150,19 @@ public class TMatTests {
         assertEquals(mat1.getSumOfRow(1), 700);
 
         mat1 = new TMat2d();
-        mat1.setCell(0, 0, 1);
-        mat1.setCell(0, 1, -1);
-        mat1.setCell(1, 0, 5);
-        mat1.setCell(1, 1, 8);
-        mat1.setCell(1, 2, 51561561561d);
+        mat1.set(0, 0, 1);
+        mat1.set(0, 1, -1);
+        mat1.set(1, 0, 5);
+        mat1.set(1, 1, 8);
+        mat1.set(1, 2, 51561561561d);
         /*
         1 -1
         5 8
         */
-        assertEquals(mat1.getCell(0, 0), 1);
-        assertEquals(mat1.getCell(0, 1), -1);
-        assertEquals(mat1.getCell(1, 0), 5);
-        assertEquals(mat1.getCell(1, 1), 8);
+        assertEquals(mat1.get(0, 0), 1);
+        assertEquals(mat1.get(0, 1), -1);
+        assertEquals(mat1.get(1, 0), 5);
+        assertEquals(mat1.get(1, 1), 8);
         assertEquals(mat1.trace(), 9);
 
 
@@ -223,7 +223,7 @@ public class TMatTests {
         );
 
         assertEquals(mat1, mat1.copy());
-        assertArrayEquals(mat2.getAsArray(), new double[][]{
+        assertArrayEquals(mat2.toArray(), new double[][]{
                 {1, 2, 3},
                 {4, 5, 6},
                 {7, 8, 9}
@@ -300,11 +300,11 @@ public class TMatTests {
 
         mat1.set(20, 30, 40, 50, 60, 70, 80, 80, 90);
         mat2.set(1, 2, 3, -1, -2, 3, 7, 8, 9);
-        mat1.multiply(mat2);
+        mat1.mul(mat2);
         assertEquals(mat1, new TMat3d(270, 300, 510, 480, 540, 960, 630, 720, 1290));
 
         mat2.set(1, 2, 3, -1, -2, 3, 7, 8, 9);
-        mat2.multiply(20, 30, 40, 50, 60, 70, 80, 80, 90);
+        mat2.mul(20, 30, 40, 50, 60, 70, 80, 80, 90);
         assertEquals(mat2, new TMat3d(360, 390, 450, 120, 90, 90, 1260, 1410, 1650));
 
         assertEquals(new TMat3d(1, 2, 3, 4, 5, 6, 7, 8, 9).invert(), null);
@@ -322,11 +322,11 @@ public class TMatTests {
                 4, -5, 6,
                 7, 8, -9
         );
-        TMat3d flipHorizontally = mat1.copy().flipHorizontally();
-        TMat3d flipVertically = mat1.copy().flipVertically();
-        TMat3d rotate90DegAntiClockwise = mat1.copy().rotate90DegAntiClockwise();
-        TMat3d rotate90DegClockwise = mat1.copy().rotate90DegClockwise();
-        TMat3d rotate180Deg = mat1.copy().rotate180Deg();
+        TMat3d flipHorizontally = mat1.copy().permuteGridFlipHorizontally();
+        TMat3d flipVertically = mat1.copy().permuteGridFlipVertically();
+        TMat3d rotate90DegAntiClockwise = mat1.copy().permuteGridRotate90AntiClockwise();
+        TMat3d rotate90DegClockwise = mat1.copy().permuteGridRotate90Clockwise();
+        TMat3d rotate180Deg = mat1.copy().permuteGridRotate180();
         TMat3d transpose = mat1.copy().transpose();
 
         TMat3d flipHorizontallyRes = new TMat3d(
@@ -379,15 +379,15 @@ public class TMatTests {
 
         mat1.set(2, 3, 4, 5, 6, 7, 8, 9, 10);
         mat2.set(1, 3, 1, 5, 1, 7, 1, 9, 1);
-        mat1.divide(mat2);
+        mat1.div(mat2);
         assertEquals(mat1, new TMat3d(2, 1, 4, 1, 6, 1, 8, 1, 10));
 
         mat1.set(2, 3, 4, 5, 6, 7, 8, 9, 10);
-        mat1.divide(1, 30, 1, 50, 1, 70, 1, 90, 1);
+        mat1.div(1, 30, 1, 50, 1, 70, 1, 90, 1);
         assertEquals(mat1, new TMat3d(2, 0.1d, 4, 0.1d, 6, 0.1d, 8, 0.1d, 10));
 
         mat1.set(2, 3, 4, 5, 6, 7, 8, 9, 10);
-        mat1.applyFunctionElementWise(x -> x*x+1);
+        mat1.map(x -> x*x+1);
         assertEquals(mat1, new TMat3d(5, 10, 17, 26, 37, 50, 65, 82, 101));
 
 
@@ -406,52 +406,52 @@ public class TMatTests {
         assertEquals(mat, mat3.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1));
         assertEquals(mat,
                 mat3.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-                        .setCell(0, 0, 20)
+                        .set(0, 0, 20)
                         .sub(19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-        assertTrue(TMath.equals(mat2.getCell(0, 0), 1d));
-        assertTrue(TMath.equals(mat2.getCell(3, 3), 16d));
-        assertTrue(TMath.equals(mat2.getCell(2, 30), Double.NaN));
-        assertTrue(TMath.equals(mat2.getCell(2, 3), 12d));
+        assertTrue(TMath.equals(mat2.get(0, 0), 1d));
+        assertTrue(TMath.equals(mat2.get(3, 3), 16d));
+        assertTrue(TMath.equals(mat2.get(2, 30), Double.NaN));
+        assertTrue(TMath.equals(mat2.get(2, 3), 12d));
 
 
         mat2 = new TMat4d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                assertTrue(TMath.equals(mat2.getCell(i, j), i * 4 + j + 1));
+                assertTrue(TMath.equals(mat2.get(i, j), i * 4 + j + 1));
             }
         }
         mat2 = new TMat4d();
         mat2.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
-                assertTrue(TMath.equals(mat2.getCell(i, j), i * 4 + j + 1));
+                assertTrue(TMath.equals(mat2.get(i, j), i * 4 + j + 1));
 
         mat2 = new TMat4d();
         mat2.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
-                assertTrue(TMath.equals(mat2.getCell(i, j), i * 4 + j + 1));
+                assertTrue(TMath.equals(mat2.get(i, j), i * 4 + j + 1));
 
         mat2 = new TMat4d();
-        mat2.setCell(0, 0, 1);
-        mat2.setCell(0, 1, 2);
-        mat2.setCell(0, 2, 3);
-        mat2.setCell(0, 3, 4);
-        mat2.setCell(1, 0, 5);
-        mat2.setCell(1, 1, 6);
-        mat2.setCell(1, 2, 7);
-        mat2.setCell(1, 3, 8);
-        mat2.setCell(2, 0, 9);
-        mat2.setCell(2, 1, 10);
-        mat2.setCell(2, 2, 11);
-        mat2.setCell(2, 3, 12);
-        mat2.setCell(3, 0, 13);
-        mat2.setCell(3, 1, 14);
-        mat2.setCell(3, 2, 15);
-        mat2.setCell(3, 3, 16);
+        mat2.set(0, 0, 1);
+        mat2.set(0, 1, 2);
+        mat2.set(0, 2, 3);
+        mat2.set(0, 3, 4);
+        mat2.set(1, 0, 5);
+        mat2.set(1, 1, 6);
+        mat2.set(1, 2, 7);
+        mat2.set(1, 3, 8);
+        mat2.set(2, 0, 9);
+        mat2.set(2, 1, 10);
+        mat2.set(2, 2, 11);
+        mat2.set(2, 3, 12);
+        mat2.set(3, 0, 13);
+        mat2.set(3, 1, 14);
+        mat2.set(3, 2, 15);
+        mat2.set(3, 3, 16);
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
-                assertTrue(TMath.equals(mat2.getCell(i, j), i * 4 + j + 1));
+                assertTrue(TMath.equals(mat2.get(i, j), i * 4 + j + 1));
 
         mat2.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         assertTrue(TMath.equals(mat2.determinant(), 0d));
@@ -467,9 +467,9 @@ public class TMatTests {
                 3, 7, 8, 9,
                 0, 0, -90, 12).scale(2d);
         assertTrue(TMath.equals(mat2.trace(), 26d * 2d));
-        assertTrue(TMath.equals(mat2.getCell(0, 0), 10d));
-        assertTrue(TMath.equals(mat2.getCell(0, 2), -16d));
-        assertTrue(TMath.equals(mat2.getCell(2, 2), 16d));
+        assertTrue(TMath.equals(mat2.get(0, 0), 10d));
+        assertTrue(TMath.equals(mat2.get(0, 2), -16d));
+        assertTrue(TMath.equals(mat2.get(2, 2), 16d));
 
         mat2.set(5, 7, -8, 10, 6, 1, 2, 2, 3, 7, 8, 9, 0, 0, -90, 12).sub(
                 new TMat4d(
@@ -486,9 +486,9 @@ public class TMatTests {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if(i == j)
-                    assertEquals(mat2.getCell(i, j), 2d);
+                    assertEquals(mat2.get(i, j), 2d);
                 else
-                    assertEquals(mat2.getCell(i, j), 0d);
+                    assertEquals(mat2.get(i, j), 0d);
             }
         }
 
@@ -497,9 +497,9 @@ public class TMatTests {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if(i == j)
-                    assertEquals(mat2.getCell(i, j), 2d);
+                    assertEquals(mat2.get(i, j), 2d);
                 else
-                    assertEquals(mat2.getCell(i, j), 0d);
+                    assertEquals(mat2.get(i, j), 0d);
             }
         }
 
@@ -508,11 +508,11 @@ public class TMatTests {
         mat.set(1, 4, 7, -9, 2, 0, 4, 7, 0, 0, 15, 61, 84, 10, 20, -30);
         mat2.set(7, 8, 1, 4, 6, 0, 7, 9, 2, 1, 7, 2, 0, 41, 91, -16);
         res = new TMat4d(45,-354,-741,198,22,307,667,-96,30,2516,5656,-946,688,-538,-2436,946);
-        assertEquals(mat.multiply(mat2), res);
+        assertEquals(mat.mul(mat2), res);
 
         mat.set(1, 4, 7, -9, 2, 0, 4, 7, 0, 0, 15, 61, 84, 10, 20, -30);
         res = new TMat4d(45,-354,-741,198,22,307,667,-96,30,2516,5656,-946,688,-538,-2436,946);
-        assertEquals(mat.multiply(7, 8, 1, 4, 6, 0, 7, 9, 2, 1, 7, 2, 0, 41, 91, -16), res);
+        assertEquals(mat.mul(7, 8, 1, 4, 6, 0, 7, 9, 2, 1, 7, 2, 0, 41, 91, -16), res);
 
         mat.set(
                 30, 2, 3, 10,
@@ -551,7 +551,7 @@ public class TMatTests {
         assertTrue(mat.isSymmetrical());
         assertFalse(mat.isIdentity());
         assertTrue(new TMat4d().isIdentity());
-        mat.setCell(0, 1, 50);
+        mat.set(0, 1, 50);
         assertFalse(mat.isSymmetrical());
         mat.set(
                 1, 2, 3, 4,
@@ -606,12 +606,12 @@ public class TMatTests {
                 12, 16, 20, 24,
                 13, 17, 21, 25
         );
-        assertEquals(mat.copy().flipHorizontally(), flipHorizontally);
-        assertEquals(mat.copy().flipVertically(), flipVertically);
+        assertEquals(mat.copy().permuteGridFlipHorizontally(), flipHorizontally);
+        assertEquals(mat.copy().permuteGridFlipVertically(), flipVertically);
         assertEquals(mat.copy().transpose(), transpose);
-        assertEquals(mat.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise);
-        assertEquals(mat.copy().rotate90DegClockwise(), rotate90DegClockwise);
-        assertEquals(mat.copy().rotate180Deg(), rotate180Deg);
+        assertEquals(mat.copy().permuteGridRotate90AntiClockwise(), rotate90DegAntiClockwise);
+        assertEquals(mat.copy().permuteGridRotate90Clockwise(), rotate90DegClockwise);
+        assertEquals(mat.copy().permuteGridRotate180(), rotate180Deg);
 
         mat.set(
                 100, 200, 600, -100,
@@ -619,7 +619,7 @@ public class TMatTests {
                 0, -100, -200, -300,
                 -1000, 200, 300, 400
         );
-        assertArrayEquals(mat.getAsArray(), new double[][]{
+        assertArrayEquals(mat.toArray(), new double[][]{
                 {100, 200, 600, -100},
                 {500, 900, -400, 500},
                 {0, -100, -200, -300},
@@ -670,22 +670,22 @@ public class TMatTests {
         assertEquals(mat.determinant3x3BottomRight(), 22000000);
 
         mat.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        mat.applyFunctionElementWise(x -> x*x+1);
+        mat.map(x -> x*x+1);
         int v = 1;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                assertEquals(mat.getCell(i, j), v*v+1);
+                assertEquals(mat.get(i, j), v*v+1);
                 v++;
             }
         }
 
         mat.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         mat2.set(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 11, 120, 130, 140, 150, 160);
-        mat.divide(mat2);
+        mat.div(mat2);
         assertEquals(mat, new TMat4d(0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,1,0.1d,0.1d,0.1d,0.1d,0.1d));
 
         mat.set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        mat.divide(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 11, 120, 130, 140, 150, 160);
+        mat.div(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 11, 120, 130, 140, 150, 160);
         assertEquals(mat, new TMat4d(0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,0.1d,1,0.1d,0.1d,0.1d,0.1d,0.1d));
     }
 
@@ -729,7 +729,7 @@ public class TMatTests {
         assertTrue(TMath.equals(mat1.getCell(0, 1), 2));
         assertTrue(TMath.equals(mat1.getCell(2, 2), 11));
         assertTrue(TMath.equals(mat1.getCell(0, 200), Double.NaN));
-        assertTrue(TMath.equals(mat1.setCell(0, 0, -20).getCell(0, 0), -20));
+        assertTrue(TMath.equals(mat1.set(0, 0, -20).get(0, 0), -20));
         assertTrue(TMath.equals(mat1.getN(), 4));
         mat1 = new TMatNd(new double[][]{ {100, 20}, {3, 4} });
         assertTrue(TMath.equals(mat1.getN(), 2));
@@ -822,11 +822,11 @@ public class TMatTests {
         mat1.sub(mat2);
         assertEquals(mat3, mat1);
         mat1.scale(0d);
-        mat1.setCell(0, 0, 1);
-        mat1.setCell(1, 1, 1);
-        mat1.setCell(2, 2, 1);
-        mat1.setCell(3, 3, 1);
-        mat1.setCell(4, 4, 1);
+        mat1.set(0, 0, 1);
+        mat1.set(1, 1, 1);
+        mat1.set(2, 2, 1);
+        mat1.set(3, 3, 1);
+        mat1.set(4, 4, 1);
         assertEquals(mat1, new TMatNd(5));
 
 
@@ -1036,7 +1036,7 @@ public class TMatTests {
                 {2, 2, 2, 515050}
         });
         assertTrue(mat1.isSymmetrical());
-        mat1.setCell(0, 1, 50);
+        mat1.set(0, 1, 50);
         assertFalse(mat1.isSymmetrical());
 
         for (int i = 1; i < 200; i++)
@@ -1118,7 +1118,7 @@ public class TMatTests {
         int v = 1;
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-                mat.setCell(i, j, v++);
+                mat.set(i, j, v++);
             }
         }
         mat.applyFunctionElementWise(x -> x*x*x + 5);
@@ -1144,7 +1144,7 @@ public class TMatTests {
                 {1, 1, 1, 1, 5},
                 {1, 1, 1, 1, 5}
         });
-        mat.divide(mat2);
+        mat.div(mat2);
         assertEquals(mat, new TMatNd(new double[][]{
                 {1, 1, 1, 1, 1},
                 {10, 2, 3, 40, 1},
@@ -1161,7 +1161,7 @@ public class TMatTests {
                 {1, 2, 30, 4, 5},
                 {1, 2, 3, 40, 5}
         });
-        mat.divide(new double[][]{
+        mat.div(new double[][]{
                 {1, 20, 3, 4, 50},
                 {1, 1, 1, 1, 5},
                 {1, 4, 1, 1, 5},

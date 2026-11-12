@@ -127,7 +127,7 @@ public class MatrixVersus {
                             10, 26, 37, 48,
                             16, 27, 38, 41
                     ));
-                    tMat.multiply(tMat);
+                    tMat.mul(tMat);
                     det1 = tMat.determinant() / 1E10d;
                     if(!TMath.equals(det1, 0d))
                         tMat.invert();

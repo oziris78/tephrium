@@ -109,8 +109,8 @@ public class TMat3d {
     }
 
     /** Returns a 3D rotation matrix around the X-axis for the given cos and sin values. */
-    public static TMat3d rotationX(double cos, double sin) {
-        return new TMat3d( // "Pitch"
+    public static TMat3d rotationX(double cos, double sin) { // "Pitch"
+        return new TMat3d(
             1d, 0d, 0d,
             0d, cos, -sin,
             0d, sin, cos
@@ -590,15 +590,19 @@ public class TMat3d {
      * @return this matrix for method chaining
      */
     public TMat3d permuteGridRotate180() {
+        // Swap m10 and m12
         double temp = this.m10;
         this.m10 = this.m12;
         this.m12 = temp;
+        // Swap m22 and m00
         temp = this.m22;
         this.m22 = this.m00;
         this.m00 = temp;
+        // Swap m20 and m02
         temp = this.m20;
         this.m20 = this.m02;
         this.m02 = temp;
+        // Swap m21 and m01
         temp = this.m21;
         this.m21 = this.m01;
         this.m01 = temp;
