@@ -171,6 +171,19 @@ public class TMat4d {
         return rotationZRad(TMath.toRadians(degrees));
     }
 
+    public static TMat4d translation(double x, double y, double z) {
+        return new TMat4d(
+            1d, 0d, 0d, x,
+            0d, 1d, 0d, y,
+            0d, 0d, 1d, z,
+            0d, 0d, 0d, 1d
+        );
+    }
+
+    public static TMat4d translation(TVec3d translation) {
+        return translation(translation.getX(), translation.getY(), translation.getZ());
+    }
+
     public static TMat4d fromRows(TVec4d row0, TVec4d row1, TVec4d row2, TVec4d row3) {
         return new TMat4d(
             row0.getX(), row0.getY(), row0.getZ(), row0.getW(),

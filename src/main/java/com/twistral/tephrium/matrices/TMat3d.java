@@ -159,6 +159,18 @@ public class TMat3d {
         return rotationZRad(TMath.toRadians(degrees));
     }
 
+    public static TMat3d translation(double x, double y) {
+        return new TMat3d(
+            1d, 0d, x,
+            0d, 1d, y,
+            0d, 0d, 1d
+        );
+    }
+
+    public static TMat3d translation(TVec2d translation) {
+        return translation(translation.getX(), translation.getY());
+    }
+
     public static TMat3d fromRows(TVec3d row0, TVec3d row1, TVec3d row2) {
         return new TMat3d(
             row0.getX(), row0.getY(), row0.getZ(),
