@@ -395,20 +395,20 @@ public class TVec2f {
     /*//////////////////////////////////////////////////////////////////*/
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        TVec2f v = (TVec2f) o;
-        return TMath.equals(this.x, v.x) && TMath.equals(this.y, v.y);
+    public boolean equals(float x, float y) {
+        return TMath.equals(this.x, x) && TMath.equals(this.y, y);
     }
 
     public boolean equals(TVec2f v) {
         if (v == null) return false;
-        return TMath.equals(this.x, v.x) && TMath.equals(this.y, v.y);
+        return equals(v.x, v.y);
     }
 
-    public boolean equals(float x, float y) {
-        return TMath.equals(this.x, x) && TMath.equals(this.y, y);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TVec2f v = (TVec2f) o;
+        return equals(v.x, v.y);
     }
 
     @Override

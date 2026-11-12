@@ -394,20 +394,20 @@ public class TVec2d {
     /*//////////////////////////////////////////////////////////////////*/
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        TVec2d v = (TVec2d) o;
-        return TMath.equals(this.x, v.x) && TMath.equals(this.y, v.y);
+    public boolean equals(double x, double y) {
+        return TMath.equals(this.x, x) && TMath.equals(this.y, y);
     }
 
     public boolean equals(TVec2d v) {
         if (v == null) return false;
-        return TMath.equals(this.x, v.x) && TMath.equals(this.y, v.y);
+        return equals(v.x, v.y);
     }
 
-    public boolean equals(double x, double y) {
-        return TMath.equals(this.x, x) && TMath.equals(this.y, y);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TVec2d v = (TVec2d) o;
+        return equals(v.x, v.y);
     }
 
     @Override
