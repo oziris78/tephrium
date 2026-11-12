@@ -1153,6 +1153,7 @@ public class TMat4d {
 
 
     public boolean equals(TMat4d other) {
+        if (other == null) return false;
         return TMath.equals(this.m00, other.m00) && TMath.equals(this.m01, other.m01) &&
                TMath.equals(this.m02, other.m02) && TMath.equals(this.m03, other.m03) &&
                TMath.equals(this.m10, other.m10) && TMath.equals(this.m11, other.m11) &&
