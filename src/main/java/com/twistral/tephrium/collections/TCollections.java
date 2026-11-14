@@ -38,31 +38,79 @@ public final class TCollections {
     /*////////////////////////  ARRAY CREATION  ////////////////////////*/
     /*//////////////////////////////////////////////////////////////////*/
 
-    public static int[] newArray(int size, int fillValue) {
-        if(fillValue == INT_DEF_VALUE) return new int[size];
+    // 1D Arrays
+
+    public static int[] newArray1D(int size, int fillValue) {
         int[] arr = new int[size];
-        Arrays.fill(arr, fillValue);
+        if(fillValue != INT_DEF_VALUE) {
+            Arrays.fill(arr, fillValue);
+        }
         return arr;
     }
 
-    public static float[] newArray(int size, float fillValue) {
-        if(fillValue == FLOAT_DEF_VALUE) return new float[size];
-        float[] arr = new float[size];
-        Arrays.fill(arr, fillValue);
-        return arr;
-    }
-
-    public static double[] newArray(int size, double fillValue) {
-        if(fillValue == DOUBLE_DEF_VALUE) return new double[size];
-        double[] arr = new double[size];
-        Arrays.fill(arr, fillValue);
-        return arr;
-    }
-
-    public static long[] newArray(int size, long fillValue) {
-        if(fillValue == LONG_DEF_VALUE) return new long[size];
+    public static long[] newArray1D(int size, long fillValue) {
         long[] arr = new long[size];
-        Arrays.fill(arr, fillValue);
+        if (fillValue != LONG_DEF_VALUE) {
+            Arrays.fill(arr, fillValue);
+        }
+        return arr;
+    }
+
+    public static float[] newArray1D(int size, float fillValue) {
+        float[] arr = new float[size];
+        if(fillValue != FLOAT_DEF_VALUE) {
+            Arrays.fill(arr, fillValue);
+        }
+        return arr;
+    }
+
+    public static double[] newArray1D(int size, double fillValue) {
+        double[] arr = new double[size];
+        if (fillValue != DOUBLE_DEF_VALUE) {
+            Arrays.fill(arr, fillValue);
+        }
+        return arr;
+    }
+
+    // 2D Arrays
+
+    public static int[][] newArray2D(int rows, int cols, int fillValue) {
+        int[][] arr = new int[rows][cols];
+        if (fillValue != INT_DEF_VALUE) {
+            for (int i = 0; i < rows; i++) {
+                Arrays.fill(arr[i], fillValue);
+            }
+        }
+        return arr;
+    }
+
+    public static long[][] newArray2D(int rows, int cols, long fillValue) {
+        long[][] arr = new long[rows][cols];
+        if (fillValue != LONG_DEF_VALUE) {
+            for (int i = 0; i < rows; i++) {
+                Arrays.fill(arr[i], fillValue);
+            }
+        }
+        return arr;
+    }
+
+    public static float[][] newArray2D(int rows, int cols, float fillValue) {
+        float[][] arr = new float[rows][cols];
+        if (fillValue != FLOAT_DEF_VALUE) {
+            for (int i = 0; i < rows; i++) {
+                Arrays.fill(arr[i], fillValue);
+            }
+        }
+        return arr;
+    }
+
+    public static double[][] newArray2D(int rows, int cols, double fillValue) {
+        double[][] arr = new double[rows][cols];
+        if (fillValue != DOUBLE_DEF_VALUE) {
+            for (int i = 0; i < rows; i++) {
+                Arrays.fill(arr[i], fillValue);
+            }
+        }
         return arr;
     }
 

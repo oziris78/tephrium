@@ -18,6 +18,7 @@ package com.twistral.tephrium.matrices;
 
 import com.twistral.tephrium.TephriumException;
 import com.twistral.tephrium.TMath;
+import com.twistral.tephrium.collections.TCollections;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -133,7 +134,7 @@ public class TMatNd {
      * @param matrix any matrix
      */
     public TMatNd(TMat3d matrix) {
-        this(matrix.getAsArray());
+        this(matrix.toArray());
     }
 
 
@@ -142,7 +143,7 @@ public class TMatNd {
      * @param matrix any matrix
      */
     public TMatNd(TMat4d matrix) {
-        this(matrix.getAsArray());
+        this(matrix.toArray());
     }
 
 
