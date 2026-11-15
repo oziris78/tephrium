@@ -40,32 +40,32 @@ public final class TCollections {
 
     // 1D Arrays
 
-    public static int[] newArray1D(int size, int fillValue) {
-        int[] arr = new int[size];
+    public static int[] newArray(int length, int fillValue) {
+        int[] arr = new int[length];
         if(fillValue != INT_DEF_VALUE) {
             Arrays.fill(arr, fillValue);
         }
         return arr;
     }
 
-    public static long[] newArray1D(int size, long fillValue) {
-        long[] arr = new long[size];
+    public static long[] newArray(int length, long fillValue) {
+        long[] arr = new long[length];
         if (fillValue != LONG_DEF_VALUE) {
             Arrays.fill(arr, fillValue);
         }
         return arr;
     }
 
-    public static float[] newArray1D(int size, float fillValue) {
-        float[] arr = new float[size];
+    public static float[] newArray(int length, float fillValue) {
+        float[] arr = new float[length];
         if(fillValue != FLOAT_DEF_VALUE) {
             Arrays.fill(arr, fillValue);
         }
         return arr;
     }
 
-    public static double[] newArray1D(int size, double fillValue) {
-        double[] arr = new double[size];
+    public static double[] newArray(int length, double fillValue) {
+        double[] arr = new double[length];
         if (fillValue != DOUBLE_DEF_VALUE) {
             Arrays.fill(arr, fillValue);
         }
@@ -74,7 +74,7 @@ public final class TCollections {
 
     // 2D Arrays
 
-    public static int[][] newArray2D(int rows, int cols, int fillValue) {
+    public static int[][] newArray(int rows, int cols, int fillValue) {
         int[][] arr = new int[rows][cols];
         if (fillValue != INT_DEF_VALUE) {
             for (int i = 0; i < rows; i++) {
@@ -84,7 +84,7 @@ public final class TCollections {
         return arr;
     }
 
-    public static long[][] newArray2D(int rows, int cols, long fillValue) {
+    public static long[][] newArray(int rows, int cols, long fillValue) {
         long[][] arr = new long[rows][cols];
         if (fillValue != LONG_DEF_VALUE) {
             for (int i = 0; i < rows; i++) {
@@ -94,7 +94,7 @@ public final class TCollections {
         return arr;
     }
 
-    public static float[][] newArray2D(int rows, int cols, float fillValue) {
+    public static float[][] newArray(int rows, int cols, float fillValue) {
         float[][] arr = new float[rows][cols];
         if (fillValue != FLOAT_DEF_VALUE) {
             for (int i = 0; i < rows; i++) {
@@ -104,7 +104,7 @@ public final class TCollections {
         return arr;
     }
 
-    public static double[][] newArray2D(int rows, int cols, double fillValue) {
+    public static double[][] newArray(int rows, int cols, double fillValue) {
         double[][] arr = new double[rows][cols];
         if (fillValue != DOUBLE_DEF_VALUE) {
             for (int i = 0; i < rows; i++) {
@@ -112,6 +112,95 @@ public final class TCollections {
             }
         }
         return arr;
+    }
+
+
+    /*/////////////////////////////////////////////////////////////////*/
+    /*////////////////////////  ARRAY COPYING  ////////////////////////*/
+    /*/////////////////////////////////////////////////////////////////*/
+
+    // 1D Arrays
+
+    public static int[] copyArray(int[] arrToCopy) {
+        if (arrToCopy == null) return null;
+        int[] copy = new int[arrToCopy.length];
+        System.arraycopy(arrToCopy, 0, copy, 0, arrToCopy.length);
+        return copy;
+    }
+
+    public static long[] copyArray(long[] arrToCopy) {
+        if (arrToCopy == null) return null;
+        long[] copy = new long[arrToCopy.length];
+        System.arraycopy(arrToCopy, 0, copy, 0, arrToCopy.length);
+        return copy;
+    }
+
+    public static float[] copyArray(float[] arrToCopy) {
+        if (arrToCopy == null) return null;
+        float[] copy = new float[arrToCopy.length];
+        System.arraycopy(arrToCopy, 0, copy, 0, arrToCopy.length);
+        return copy;
+    }
+
+    public static double[] copyArray(double[] arrToCopy) {
+        if (arrToCopy == null) return null;
+        double[] copy = new double[arrToCopy.length];
+        System.arraycopy(arrToCopy, 0, copy, 0, arrToCopy.length);
+        return copy;
+    }
+
+    // 2D Arrays
+
+    public static int[][] copyArray(int[][] arrToCopy) {
+        if (arrToCopy == null) return null;
+        final int rows = arrToCopy.length;
+        int[][] copy = new int[rows][];
+        for (int i = 0; i < rows; i++) {
+            if (arrToCopy[i] != null) {
+                copy[i] = new int[arrToCopy[i].length];
+                System.arraycopy(arrToCopy[i], 0, copy[i], 0, arrToCopy[i].length);
+            }
+        }
+        return copy;
+    }
+
+    public static long[][] copyArray(long[][] arrToCopy) {
+        if (arrToCopy == null) return null;
+        final int rows = arrToCopy.length;
+        long[][] copy = new long[rows][];
+        for (int i = 0; i < rows; i++) {
+            if (arrToCopy[i] != null) {
+                copy[i] = new long[arrToCopy[i].length];
+                System.arraycopy(arrToCopy[i], 0, copy[i], 0, arrToCopy[i].length);
+            }
+        }
+        return copy;
+    }
+
+    public static float[][] copyArray(float[][] arrToCopy) {
+        if (arrToCopy == null) return null;
+        final int rows = arrToCopy.length;
+        float[][] copy = new float[rows][];
+        for (int i = 0; i < rows; i++) {
+            if (arrToCopy[i] != null) {
+                copy[i] = new float[arrToCopy[i].length];
+                System.arraycopy(arrToCopy[i], 0, copy[i], 0, arrToCopy[i].length);
+            }
+        }
+        return copy;
+    }
+
+    public static double[][] copyArray(double[][] arrToCopy) {
+        if (arrToCopy == null) return null;
+        final int rows = arrToCopy.length;
+        double[][] copy = new double[rows][];
+        for (int i = 0; i < rows; i++) {
+            if (arrToCopy[i] != null) {
+                copy[i] = new double[arrToCopy[i].length];
+                System.arraycopy(arrToCopy[i], 0, copy[i], 0, arrToCopy[i].length);
+            }
+        }
+        return copy;
     }
 
 
