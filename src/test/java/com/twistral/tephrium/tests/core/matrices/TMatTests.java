@@ -805,7 +805,7 @@ public class TMatTests {
                 {31, 31, 28, 34, 34}
         }));
 
-        assertArrayEquals(mat1.getAsArray(), (new double[][]{
+        assertArrayEquals(mat1.toArray(), (new double[][]{
                 {11, 11, 8, 14, 14},
                 {16, 16, 13, 19, 19},
                 {21, 21, 18, 24, 24},
@@ -958,11 +958,11 @@ public class TMatTests {
                 {14, 19, 24, 29, 34}
         });
         assertEquals(mat1.copy().transpose(), transpose1);
-        assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
-        assertEquals(mat1.copy().flipVertically(), flipVertically1);
-        assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
-        assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
-        assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
+        assertEquals(mat1.copy().permuteGridFlipHorizontally(), flipHorizontally1);
+        assertEquals(mat1.copy().permuteGridFlipVertically(), flipVertically1);
+        assertEquals(mat1.copy().permuteGridRotate90AntiClockwise(), rotate90DegAntiClockwise1);
+        assertEquals(mat1.copy().permuteGridRotate90Clockwise(), rotate90DegClockwise1);
+        assertEquals(mat1.copy().permuteGridRotate180(), rotate180Deg1);
 
         mat1 = new TMatNd(new double[][]{
                 {10, 11, 12, 13, 14, 15},
@@ -1021,11 +1021,11 @@ public class TMatTests {
                 {15, 21, 27, 33, 39, 45}
         });
         assertEquals(mat1.copy().transpose(), transpose1);
-        assertEquals(mat1.copy().flipHorizontally(), flipHorizontally1);
-        assertEquals(mat1.copy().flipVertically(), flipVertically1);
-        assertEquals(mat1.copy().rotate90DegAntiClockwise(), rotate90DegAntiClockwise1);
-        assertEquals(mat1.copy().rotate90DegClockwise(), rotate90DegClockwise1);
-        assertEquals(mat1.copy().rotate180Deg(), rotate180Deg1);
+        assertEquals(mat1.copy().permuteGridFlipHorizontally(), flipHorizontally1);
+        assertEquals(mat1.copy().permuteGridFlipVertically(), flipVertically1);
+        assertEquals(mat1.copy().permuteGridRotate90AntiClockwise(), rotate90DegAntiClockwise1);
+        assertEquals(mat1.copy().permuteGridRotate90Clockwise(), rotate90DegClockwise1);
+        assertEquals(mat1.copy().permuteGridRotate180(), rotate180Deg1);
 
 
         // special matrix methods
@@ -1121,7 +1121,7 @@ public class TMatTests {
                 mat.set(i, j, v++);
             }
         }
-        mat.applyFunctionElementWise(x -> x*x*x + 5);
+        mat.map(x -> x*x*x + 5);
         v = 1;
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
