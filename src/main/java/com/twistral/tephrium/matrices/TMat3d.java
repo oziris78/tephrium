@@ -825,7 +825,7 @@ public class TMat3d {
         return TMath.equals(det, 0d);
     }
 
-    public boolean isInvertable(double det) {
+    public boolean isInvertible(double det) {
         return !this.isSingular(det);
     }
 
@@ -833,7 +833,7 @@ public class TMat3d {
         return TMath.equals(this.determinant(), 0d);
     }
 
-    public boolean isInvertable() {
+    public boolean isInvertible() {
         return !this.isSingular();
     }
 
