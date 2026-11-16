@@ -651,7 +651,7 @@ public class TMatNd {
 
     // Gauss elimination method, O(N^3)
     private static double determinantInner(double[][] matrix, int N) {
-        if (N == 0) return 0;
+        if (N == 0) return 0d;
 
         double[][] m = new double[N][N];
         for (int i = 0; i < N; i++) {
