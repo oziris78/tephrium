@@ -355,15 +355,15 @@ public class TMat3d {
                       double m10, double m11, double m12,
                       double m20, double m21, double m22)
     {
-        double newM00 = this.m00 * m00 + this.m01 * m10 + this.m02 * m20;
-        double newM01 = this.m00 * m01 + this.m01 * m11 + this.m02 * m21;
-        double newM02 = this.m00 * m02 + this.m01 * m12 + this.m02 * m22;
-        double newM10 = this.m10 * m00 + this.m11 * m10 + this.m12 * m20;
-        double newM11 = this.m10 * m01 + this.m11 * m11 + this.m12 * m21;
-        double newM12 = this.m10 * m02 + this.m11 * m12 + this.m12 * m22;
-        double newM20 = this.m20 * m00 + this.m21 * m10 + this.m22 * m20;
-        double newM21 = this.m20 * m01 + this.m21 * m11 + this.m22 * m21;
-        double newM22 = this.m20 * m02 + this.m21 * m12 + this.m22 * m22;
+        final double newM00 = this.m00 * m00 + this.m01 * m10 + this.m02 * m20;
+        final double newM01 = this.m00 * m01 + this.m01 * m11 + this.m02 * m21;
+        final double newM02 = this.m00 * m02 + this.m01 * m12 + this.m02 * m22;
+        final double newM10 = this.m10 * m00 + this.m11 * m10 + this.m12 * m20;
+        final double newM11 = this.m10 * m01 + this.m11 * m11 + this.m12 * m21;
+        final double newM12 = this.m10 * m02 + this.m11 * m12 + this.m12 * m22;
+        final double newM20 = this.m20 * m00 + this.m21 * m10 + this.m22 * m20;
+        final double newM21 = this.m20 * m01 + this.m21 * m11 + this.m22 * m21;
+        final double newM22 = this.m20 * m02 + this.m21 * m12 + this.m22 * m22;
 
         this.m00 = newM00; this.m01 = newM01; this.m02 = newM02;
         this.m10 = newM10; this.m11 = newM11; this.m12 = newM12;
@@ -421,15 +421,15 @@ public class TMat3d {
         final double determinant = this.determinant();
         final double s = 1d / determinant;
 
-        double newM00 = s * (this.m11 * this.m22 - this.m12 * this.m21);
-        double newM01 = s * (this.m02 * this.m21 - this.m01 * this.m22);
-        double newM02 = s * (this.m01 * this.m12 - this.m02 * this.m11);
-        double newM10 = s * (this.m12 * this.m20 - this.m10 * this.m22);
-        double newM11 = s * (this.m00 * this.m22 - this.m02 * this.m20);
-        double newM12 = s * (this.m02 * this.m10 - this.m00 * this.m12);
-        double newM20 = s * (this.m10 * this.m21 - this.m11 * this.m20);
-        double newM21 = s * (this.m01 * this.m20 - this.m00 * this.m21);
-        double newM22 = s * (this.m00 * this.m11 - this.m01 * this.m10);
+        final double newM00 = s * (this.m11 * this.m22 - this.m12 * this.m21);
+        final double newM01 = s * (this.m02 * this.m21 - this.m01 * this.m22);
+        final double newM02 = s * (this.m01 * this.m12 - this.m02 * this.m11);
+        final double newM10 = s * (this.m12 * this.m20 - this.m10 * this.m22);
+        final double newM11 = s * (this.m00 * this.m22 - this.m02 * this.m20);
+        final double newM12 = s * (this.m02 * this.m10 - this.m00 * this.m12);
+        final double newM20 = s * (this.m10 * this.m21 - this.m11 * this.m20);
+        final double newM21 = s * (this.m01 * this.m20 - this.m00 * this.m21);
+        final double newM22 = s * (this.m00 * this.m11 - this.m01 * this.m10);
 
         this.m00 = newM00; this.m01 = newM01; this.m02 = newM02;
         this.m10 = newM10; this.m11 = newM11; this.m12 = newM12;
