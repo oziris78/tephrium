@@ -881,6 +881,7 @@ public class TMat3d {
     @Override
     public String toString() {
         return String.format(
+            Locale.ROOT,
             "[%.5f, %.5f, %.5f]\n[%.5f, %.5f, %.5f]\n[%.5f, %.5f, %.5f]\n",
             this.m00, this.m01, this.m02,
             this.m10, this.m11, this.m12,

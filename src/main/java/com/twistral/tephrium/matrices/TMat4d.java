@@ -1187,6 +1187,7 @@ public class TMat4d {
     @Override
     public String toString() {
         return String.format(
+            Locale.ROOT,
             TMAT4D_STR_FORMAT,
             this.m00, this.m01, this.m02, this.m03,
             this.m10, this.m11, this.m12, this.m13,

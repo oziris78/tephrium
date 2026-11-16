@@ -418,8 +418,7 @@ public class TMat2d {
      * @return this matrix for method chaining
      */
     public TMat2d permuteGridRotate90AntiClockwise() {
-        double temp;
-        temp = this.m10;
+        double temp = this.m10;
         this.m10 = this.m00;
         this.m00 = this.m01;
         this.m01 = this.m11;
@@ -644,6 +643,7 @@ public class TMat2d {
     @Override
     public String toString() {
         return String.format(
+            Locale.ROOT,
             "[%.5f, %.5f]\n[%.5f, %.5f]\n",
             this.m00, this.m01,
             this.m10, this.m11
