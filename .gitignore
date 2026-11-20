@@ -17,5 +17,5 @@ hs_err_pid*
 # My stuff
 /build/
 .gradle
-/scripts/EnglishCorpusData/words_pos.csv
+/scripts/CorpusData/words_pos.csv
 .hprof
