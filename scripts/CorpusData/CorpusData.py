@@ -62,7 +62,7 @@ def valid_word_tuple(word_tuple) -> bool:
 
 
 # Read the CSV file's lines
-with open(CSV_PATH, "r") as csv_file:
+with open(CSV_PATH, "r", encoding="utf-8") as csv_file:
     lines = csv_file.read().split('\n')
     lines = lines[1:]
     lines = [line for line in lines if line.strip() != ""]
@@ -78,10 +78,7 @@ words.sort()
 
 
 # Generate CorpusData.java
-with open(OUT_PATH, "a+", encoding="utf-8") as file:
-    file.seek(0)
-    file.truncate(0)
-
+with open(OUT_PATH, "w", encoding="utf-8") as file:
     file.write("class CorpusData {\n\n")
     file.write(sp(4) + f"static final int TOTAL_WORD_COUNT = {len(words)};\n\n")
 
