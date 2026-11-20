@@ -44,7 +44,7 @@ public class FWGTests {
         final char[] chrarr = TStringUtils.CS_ASCII_LOWER.toCharArray();
         for (char c : chrarr)
             for (int i = 0; i < 100_000; i++)
-                assertEquals(Corpus.randomWordStartingWith(c, rand).charAt(0), c);
+                assertEquals(Corpus.randomWord(rand, c).charAt(0), c);
 
         for (int i = 0; i < 100_000; i++)
             assertDoesNotThrow(() -> Corpus.randomWord(rand));

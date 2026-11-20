@@ -18,39 +18,57 @@
 package com.twistral.tephrium.fwg;
 
 
-import com.twistral.tephrium.UnreachableException;
-import com.twistral.tephrium.prng.TRandomGenerator;
-import static com.twistral.tephrium.strings.TStringUtils.CS_ASCII_LOWER;
+import com.twistral.tephrium.*;
+import com.twistral.tephrium.prng.*;
 import static com.twistral.tephrium.fwg.CorpusData.*;
+import static com.twistral.tephrium.strings.TStringUtils.*;
 
 
-
-class Corpus {
+/**
+ * An English Corpus class that can be used to obtain random words from the English dictionary.
+ * This class simply exposes {@link CorpusData}'s internal data.
+ */
+public class Corpus {
 
     // No constructor
     private Corpus() {}
 
-
-    static final String[][] ws = new String[][] {
-            CP_A.W, CP_B.W, CP_C.W, CP_D.W, CP_E.W, CP_F.W, CP_G.W, CP_H.W, CP_I.W,
-            CP_J.W, CP_K.W, CP_L.W, CP_M.W, CP_N.W, CP_O.W, CP_P.W, CP_Q.W, CP_R.W,
-            CP_S.W, CP_T.W, CP_U.W, CP_V.W, CP_W.W, CP_X.W, CP_Y.W, CP_Z.W
-    };
-
-    private static final int[] ls = new int[] {
-            CP_A.L, CP_B.L, CP_C.L, CP_D.L, CP_E.L, CP_F.L, CP_G.L, CP_H.L, CP_I.L,
-            CP_J.L, CP_K.L, CP_L.L, CP_M.L, CP_N.L, CP_O.L, CP_P.L, CP_Q.L, CP_R.L,
-            CP_S.L, CP_T.L, CP_U.L, CP_V.L, CP_W.L, CP_X.L, CP_Y.L, CP_Z.L
-    };
+    private static final TRandomGenerator DEF_RNG = new SplitMix64Random();
 
 
-    public static String randomWordStartingWith(char c, TRandomGenerator random) {
-        final int alphabetIndex = CS_ASCII_LOWER.indexOf(Character.toLowerCase(c));
-        if(alphabetIndex == -1) return "";
-        return ws[alphabetIndex][random.nextInt(0, ls[alphabetIndex])];
+    /**
+     * Returns a random word from the English corpus that starts with the given letter.
+     *
+     * @param random prng instance to use for index generation
+     * @param initialChar first letter of the word
+     * @return a random word starting with the given letter
+     */
+    public static String randomWord(TRandomGenerator random, char initialChar) {
+        final int li = indexOfAsciiLower(initialChar);
+        final int alphabetIndex = (li != -1) ? li : indexOfAsciiUpper(initialChar);
+        if (alphabetIndex == -1) return "";
+        final int randIndex = random.nextInt(0, ls[alphabetIndex]);
+        return ws[alphabetIndex][randIndex];
     }
 
 
+    /**
+     * Returns a random word from the English corpus that starts with the given letter.
+     *
+     * @param initialChar first letter of the word
+     * @return a random word starting with the given letter
+     */
+    public static String randomWord(char initialChar) {
+        return randomWord(DEF_RNG, initialChar);
+    }
+
+
+    /**
+     * Returns a random word from the English corpus.
+     *
+     * @param random prng instance to use for index generation
+     * @return a random word
+     */
     public static String randomWord(TRandomGenerator random) {
         int randIndex = random.nextInt(0, TOTAL_WORD_COUNT);
         for (int alphaIndex = 0; alphaIndex < ls.length; alphaIndex++) {
@@ -61,6 +79,16 @@ class Corpus {
         throw new UnreachableException();
     }
 
-}
 
+    /**
+     * Returns a random word from the English corpus.
+     *
+     * @return a random word
+     */
+    public static String randomWord() {
+        return randomWord(DEF_RNG);
+    }
+
+
+}
 
