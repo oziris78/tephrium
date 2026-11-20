@@ -15,12 +15,7 @@
 // limitations under the License.
 
 
-
-
-
 package com.twistral.tephrium.fwg;
-
-
 
 
 /**
@@ -165,5 +160,4 @@ class CorpusData {
 
 
 }
-
 
