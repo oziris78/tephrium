@@ -15,14 +15,14 @@
 // limitations under the License.
 
 
-
 package com.twistral.tephrium.strings;
 
 
 import com.twistral.tephrium.*;
+import com.twistral.tephrium.collections.TCollections;
 import com.twistral.tephrium.prng.*;
 import java.util.*;
-import java.util.function.*;
+import java.util.function.IntUnaryOperator;
 
 
 public final class TStringUtils {
@@ -57,17 +57,18 @@ public final class TStringUtils {
     /*//////////////////////////  CHAR UTILITIES  //////////////////////////*/
     /*//////////////////////////////////////////////////////////////////////*/
 
+    // Char boolean checks for different charsets
 
-    public static boolean isVowelLower(char c) { return c < 128 && IS_VOWEL_LOWER[c]; }
-    public static boolean isVowelUpper(char c) { return c < 128 && IS_VOWEL_UPPER[c]; }
+    public static boolean isVowelLower(char c) { return c < 128 && IS_VOWEL_L[c]; }
+    public static boolean isVowelUpper(char c) { return c < 128 && IS_VOWEL_U[c]; }
     public static boolean isVowel(char c) { return c < 128 && IS_VOWEL[c]; }
 
-    public static boolean isConsonantLower(char c) { return c < 128 && IS_CONSONANT_LOWER[c]; }
-    public static boolean isConsonantUpper(char c) { return c < 128 && IS_CONSONANT_UPPER[c]; }
+    public static boolean isConsonantLower(char c) { return c < 128 && IS_CONSONANT_L[c]; }
+    public static boolean isConsonantUpper(char c) { return c < 128 && IS_CONSONANT_U[c]; }
     public static boolean isConsonant(char c) { return c < 128 && IS_CONSONANT[c]; }
 
-    public static boolean isAsciiLower(char c) { return c < 128 && IS_ASCII_LOWER[c]; }
-    public static boolean isAsciiUpper(char c) { return c < 128 && IS_ASCII_UPPER[c]; }
+    public static boolean isAsciiLower(char c) { return c < 128 && IS_ASCII_L[c]; }
+    public static boolean isAsciiUpper(char c) { return c < 128 && IS_ASCII_U[c]; }
     public static boolean isAscii(char c) { return c < 128 && IS_ASCII[c]; }
 
     public static boolean isBinary(char c) { return c < 128 && IS_BINARY[c]; }
@@ -76,6 +77,27 @@ public final class TStringUtils {
     public static boolean isHexadecimal(char c) { return c < 128 && IS_HEXADECIMAL[c]; }
     public static boolean isWhitespace(char c) { return c < 128 && IS_WHITESPACE[c]; }
 
+    // Char indexOf functions for different charsets
+
+    public static int indexOfVowelLower(char c) { return isVowelLower(c) ? IND_VOWEL_L[c] : -1; }
+    public static int indexOfVowelUpper(char c) { return isVowelUpper(c) ? IND_VOWEL_U[c] : -1; }
+    public static int indexOfVowel(char c) { return isVowel(c) ? IND_VOWEL[c] : -1; }
+
+    public static int indexOfConsonantLower(char c) { return isConsonantLower(c) ? IND_CONSONANT_L[c] : -1; }
+    public static int indexOfConsonantUpper(char c) { return isConsonantUpper(c) ? IND_CONSONANT_U[c] : -1; }
+    public static int indexOfConsonant(char c) { return isConsonant(c) ? IND_CONSONANT[c] : -1; }
+
+    public static int indexOfAsciiLower(char c) { return isAsciiLower(c) ? IND_ASCII_L[c] : -1; }
+    public static int indexOfAsciiUpper(char c) { return isAsciiUpper(c) ? IND_ASCII_U[c] : -1; }
+    public static int indexOfAscii(char c) { return isAscii(c) ? IND_ASCII[c] : -1; }
+
+    public static int indexOfBinary(char c) { return isBinary(c) ? IND_BINARY[c] : -1; }
+    public static int indexOfOctal(char c) { return isOctal(c) ? IND_OCTAL[c] : -1; }
+    public static int indexOfDecimal(char c) { return isDecimal(c) ? IND_DECIMAL[c] : -1; }
+    public static int indexOfHexadecimal(char c) { return isHexadecimal(c) ? IND_HEXADECIMAL[c] : -1; }
+    public static int indexOfWhitespace(char c) { return isWhitespace(c) ? IND_WHITESPACE[c] : -1; }
+
+    // Misc char utilities
 
     public static char getRandCharFrom(String text, TRandomGenerator random) {
         return text.charAt(random.nextInt(0, text.length()));
@@ -233,8 +255,8 @@ public final class TStringUtils {
         final int size = arr.length;
 
         for (int i = 0; i < size; i++) {
-            int cnsi = CS_CONSONANTS.indexOf(arr[i]);
-            int vowi = CS_VOWELS.indexOf(arr[i]);
+            int cnsi = indexOfConsonant(arr[i]);
+            int vowi = indexOfVowel(arr[i]);
 
             if(cnsi == -1 && vowi == -1) continue; // not a letter
 
@@ -264,19 +286,20 @@ public final class TStringUtils {
      *                    value aka an int in range [0, 26).
      * @return the functionally transformed/processed string
      */
-    public static String functionalCodec(String str, Function<Integer, Integer> indexMapper) {
+    public static String functionalCodec(String str, IntUnaryOperator indexMapper) {
+        if (str == null) return "";
         char[] arr = str.toCharArray();
 
         for (int i = 0, arrLen = arr.length; i < arrLen; i++) {
-            int loweri = CS_ASCII_LOWER.indexOf(arr[i]);
-            int upperi = CS_ASCII_UPPER.indexOf(arr[i]);
+            int loweri = indexOfAsciiLower(arr[i]);
+            int upperi = indexOfAsciiUpper(arr[i]);
 
             if(loweri == -1 && upperi == -1) continue; // not a letter
 
             String alphabet = (loweri != -1) ? CS_ASCII_LOWER : CS_ASCII_UPPER;
             final int alphabetLen = alphabet.length();
             // I used max() because one of them is -1 and other is [0,26) so the valid one is always the max
-            int newIndex = indexMapper.apply(TMath.max(loweri, upperi)) % alphabetLen;
+            int newIndex = indexMapper.applyAsInt(TMath.max(loweri, upperi)) % alphabetLen;
             newIndex = (newIndex < 0) ? newIndex + alphabetLen : newIndex;
             arr[i] = alphabet.charAt(newIndex);
         }
@@ -334,14 +357,14 @@ public final class TStringUtils {
         "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----."
     };
 
-    private static final boolean[] IS_VOWEL_LOWER = newLookupTable(CS_VOWELS_LOWER),
-            IS_VOWEL_UPPER = newLookupTable(CS_VOWELS_UPPER),
+    private static final boolean[] IS_VOWEL_L = newLookupTable(CS_VOWELS_LOWER),
+            IS_VOWEL_U = newLookupTable(CS_VOWELS_UPPER),
             IS_VOWEL = newLookupTable(CS_VOWELS),
-            IS_CONSONANT_LOWER = newLookupTable(CS_CONSONANTS_LOWER),
-            IS_CONSONANT_UPPER = newLookupTable(CS_CONSONANTS_UPPER),
+            IS_CONSONANT_L = newLookupTable(CS_CONSONANTS_LOWER),
+            IS_CONSONANT_U = newLookupTable(CS_CONSONANTS_UPPER),
             IS_CONSONANT = newLookupTable(CS_CONSONANTS),
-            IS_ASCII_LOWER = newLookupTable(CS_ASCII_LOWER),
-            IS_ASCII_UPPER = newLookupTable(CS_ASCII_UPPER),
+            IS_ASCII_L = newLookupTable(CS_ASCII_LOWER),
+            IS_ASCII_U = newLookupTable(CS_ASCII_UPPER),
             IS_ASCII = newLookupTable(CS_ASCII),
             IS_BINARY = newLookupTable(CS_BINARY),
             IS_OCTAL = newLookupTable(CS_OCTAL),
@@ -356,6 +379,37 @@ public final class TStringUtils {
 
         for (int i = 0, alphabetLen = alphabet.length(); i < alphabetLen; i++)
             table[alphabet.charAt(i)] = true;
+
+        return table;
+    }
+
+
+    private static final int[] IND_VOWEL_L = newIndexTable(CS_VOWELS_LOWER),
+            IND_VOWEL_U = newIndexTable(CS_VOWELS_UPPER),
+            IND_VOWEL = newIndexTable(CS_VOWELS),
+            IND_CONSONANT_L = newIndexTable(CS_CONSONANTS_LOWER),
+            IND_CONSONANT_U = newIndexTable(CS_CONSONANTS_UPPER),
+            IND_CONSONANT = newIndexTable(CS_CONSONANTS),
+            IND_ASCII_L = newIndexTable(CS_ASCII_LOWER),
+            IND_ASCII_U = newIndexTable(CS_ASCII_UPPER),
+            IND_ASCII = newIndexTable(CS_ASCII),
+            IND_BINARY = newIndexTable(CS_BINARY),
+            IND_OCTAL = newIndexTable(CS_OCTAL),
+            IND_DECIMAL = newIndexTable(CS_DECIMAL),
+            IND_HEXADECIMAL = newIndexTable(CS_HEXADECIMAL),
+            IND_WHITESPACE = newIndexTable(CS_WHITESPACE);
+
+
+    // Generates precomputed O(1) lookup tables for char indices
+    private static int[] newIndexTable(String charset) {
+        final int[] table = TCollections.newArray(128, -1);
+
+        for (int i = 0, len = charset.length(); i < len; i++) {
+            char ch = charset.charAt(i);
+            if (ch < 128 && table[ch] == -1) {
+                table[ch] = i;
+            }
+        }
 
         return table;
     }
