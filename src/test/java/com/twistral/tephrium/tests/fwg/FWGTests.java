@@ -19,7 +19,7 @@ package com.twistral.tephrium.tests.fwg;
 
 
 import com.twistral.tephrium.fwg.ChunkifiedFWG;
-import com.twistral.tephrium.fwg.EnglishCorpus;
+import com.twistral.tephrium.fwg.Corpus;
 import com.twistral.tephrium.fwg.FrommatFWG;
 import com.twistral.tephrium.fwg.GibberishFWG;
 import com.twistral.tephrium.prng.JavaSplittableRandom;
@@ -44,10 +44,10 @@ public class FWGTests {
         final char[] chrarr = TStringUtils.CS_ASCII_LOWER.toCharArray();
         for (char c : chrarr)
             for (int i = 0; i < 100_000; i++)
-                assertEquals(EnglishCorpus.randomWordStartingWith(c, rand).charAt(0), c);
+                assertEquals(Corpus.randomWordStartingWith(c, rand).charAt(0), c);
 
         for (int i = 0; i < 100_000; i++)
-            assertDoesNotThrow(() -> EnglishCorpus.randomWord(rand));
+            assertDoesNotThrow(() -> Corpus.randomWord(rand));
 
     }
 

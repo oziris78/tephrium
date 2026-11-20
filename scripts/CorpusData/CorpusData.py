@@ -17,7 +17,7 @@ import os
 
 
 CSV_PATH = os.path.join(os.path.dirname( __file__ ), 'words_pos.csv')
-OUT_PATH = os.path.join(os.path.dirname( __file__ ), 'EnglishCorpusData.java')
+OUT_PATH = os.path.join(os.path.dirname( __file__ ), 'CorpusData.java')
 
 sp = lambda i: " " * i
 
@@ -77,12 +77,12 @@ words.sort()
 
 
 
-# Generate EnglishCorpusData.java
+# Generate CorpusData.java
 with open(OUT_PATH, "a+", encoding="utf-8") as file:
     file.seek(0)
     file.truncate(0)
 
-    file.write("class EnglishCorpusData {\n\n")
+    file.write("class CorpusData {\n\n")
     file.write(sp(4) + f"static final int TOTAL_WORD_COUNT = {len(words)};\n\n")
 
     for letter in 'abcdefghijklmnopqrstuvwxyz':

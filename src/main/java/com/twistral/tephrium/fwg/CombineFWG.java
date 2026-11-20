@@ -50,7 +50,7 @@ public class CombineFWG {
     public List<String> generateFakeWords(int wordCount) {
         String[] arr = new String[wordCount];
         for (int i = 0; i < wordCount; i++) {
-            arr[i] = EnglishCorpus.randomWord(random);
+            arr[i] = Corpus.randomWord(random);
         }
         return generateFakeWords(arr);
     }

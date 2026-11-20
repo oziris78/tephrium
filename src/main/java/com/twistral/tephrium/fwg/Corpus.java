@@ -21,14 +21,14 @@ package com.twistral.tephrium.fwg;
 import com.twistral.tephrium.UnreachableException;
 import com.twistral.tephrium.prng.TRandomGenerator;
 import static com.twistral.tephrium.strings.TStringUtils.CS_ASCII_LOWER;
-import static com.twistral.tephrium.fwg.EnglishCorpusData.*;
+import static com.twistral.tephrium.fwg.CorpusData.*;
 
 
 
-public class EnglishCorpus {
+class Corpus {
 
     // No constructor
-    private EnglishCorpus() {}
+    private Corpus() {}
 
 
     static final String[][] ws = new String[][] {

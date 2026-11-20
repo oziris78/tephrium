@@ -92,7 +92,7 @@ public class ChunkifiedFWG {
     public static int[] freqFromCorpus() {
         if(corpusFreqs == null) {
             corpusFreqs = new int[LETTER_COUNT_3];
-            for (String[] corpusPart : EnglishCorpus.ws) {
+            for (String[] corpusPart : Corpus.ws) {
                 Arrays.stream(corpusPart).forEach(word -> {
                     final int iterCount = word.length() - 3;
                     for (int i = 0; i <= iterCount; i++) {
